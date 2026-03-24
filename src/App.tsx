@@ -7,11 +7,12 @@ const randDigits = (n: number) => Array.from({length: n}, () => randInt(0, 9)).j
 type Discom = {
   name: string; fullName: string; state: string; lsa: string; brand: string; isGovt: boolean;
   minAmt: number; maxAmt: number; genCno: () => string;
-  sms: (c: string, m: string, a: number, d: string) => string;
+  sms: (c: string, m: string, a: number, d: string, b: string) => string;
 };
 
 const DISCOMS: Discom[] = [
   // Andhra Pradesh
+  { name: 'APCPDCL', fullName: 'Central Power Distribution Company of AP', state: 'Andhra Pradesh', lsa: 'A', brand: 'APCPDL', isGovt: true, minAmt: 400, maxAmt: 4000, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `${b} Bill for USC No. ${c} is Rs. ${a}/-. Due: ${d}. Pay via apcpdcl.in` },
   { name: 'APEPDCL', fullName: 'Eastern Power Distribution Company of AP', state: 'Andhra Pradesh', lsa: 'A', brand: 'APEPDL', isGovt: true, minAmt: 400, maxAmt: 3800, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `Rs. ${a}/- is your electricity bill for SC No. ${c} for the month ${m}. Please pay by ${d} to avoid a 2% surcharge. URL: https://apepdcl.in/ - ${b}` },
   { name: 'APSPDCL', fullName: 'Southern Power Distribution Company of AP', state: 'Andhra Pradesh', lsa: 'A', brand: 'APSPDL', isGovt: true, minAmt: 450, maxAmt: 4200, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `Dear Customer, your ${b} bill for Svc No. ${c} for the month of ${m} is Rs. ${a}. Please pay by due date ${d} via https://apspdcl.in/ to avoid disconnection.` },
   // Arunachal Pradesh
@@ -51,6 +52,7 @@ const DISCOMS: Discom[] = [
   { name: 'KPDCL', fullName: 'Kashmir Power Distribution', state: 'Jammu & Kashmir', lsa: 'J', brand: 'KPDCLX', isGovt: true, minAmt: 200, maxAmt: 1800, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `${b} Bill for Cons No. ${c} is Rs. ${a}/-, Due: ${d}. Pay via https://bills.kpdcl.co.in/` },
   // Jharkhand
   { name: 'JBVNL', fullName: 'Jharkhand Bijli Vitran', state: 'Jharkhand', lsa: 'B', brand: 'JBVNLX', isGovt: true, minAmt: 250, maxAmt: 2500, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `Priye Upbhokta, ${b} dwara Consumer No. ${c} ka maah ${m} ka bill Rs. ${a}/- hai. Antim tithi ${d}. JBVNL Suvidha App se jama karein.` },
+  { name: 'Jusco', fullName: 'Tata Steel Utilities', state: 'Jharkhand', lsa: 'B', brand: 'JUSCOX', isGovt: false, minAmt: 500, maxAmt: 4500, genCno: () => randDigits(12), sms: (c, m, a, d, b) => `${b} Bill for BP No. ${c} is Rs. ${a}/-. Due: ${d}. Pay via TSUISL App.` },
   // Karnataka (BESCOM - RR No)
   { name: 'BESCOM', fullName: 'Bangalore Electricity', state: 'Karnataka', lsa: 'X', brand: 'BESCOM', isGovt: true, minAmt: 700, maxAmt: 5000, genCno: () => randChoice(['E','W','S','N']) + randDigits(6), sms: (c, m, a, d, b) => `Dear Customer, Your ${b} electricity bill for the period ${m} has been generated. The payable amount for RR No. ${c} is Rs. ${a}. Kindly pay before the due date ${d} to avoid service interruption. You can pay via www.bescom.co.in. Thank you.` },
   { name: 'CESCOM', fullName: 'Chamundeshwari Electricity', state: 'Karnataka', lsa: 'X', brand: 'CESCOM', isGovt: true, minAmt: 350, maxAmt: 3000, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `Dear Customer, ${b} bill for Account ID ${c} is Rs. ${a} for ${m}. Due: ${d}. Pay at https://cescmysore.karnataka.gov.in/` },
@@ -65,6 +67,9 @@ const DISCOMS: Discom[] = [
   { name: 'MPMKVVCL', fullName: 'MP Madhya Kshetra', state: 'Madhya Pradesh', lsa: 'Y', brand: 'MPMKVL', isGovt: true, minAmt: 350, maxAmt: 3200, genCno: () => randDigits(12), sms: (c, m, a, d, b) => `${b}: IVRS No. ${c} ka bill Rs. ${a}/- deay tithi ${d} tak URJA app pe jama karein.` },
   { name: 'MPEPKVVCL', fullName: 'MP Poorv Kshetra', state: 'Madhya Pradesh', lsa: 'Y', brand: 'MPEPKL', isGovt: true, minAmt: 350, maxAmt: 3000, genCno: () => randDigits(12), sms: (c, m, a, d, b) => `${b}: IVRS No. ${c} ka bill Rs. ${a}/- deay tithi ${d} tak URJA app pe jama karein.` },
   // Maharashtra (MSEDCL dual dates and UPI QR)
+  { name: 'BEST', fullName: 'BEST Undertaking', state: 'Maharashtra', lsa: 'M', brand: 'BESTXX', isGovt: true, minAmt: 400, maxAmt: 4500, genCno: () => randDigits(9), sms: (c, m, a, d, b) => `${b} bill for Consumer No. ${c} is Rs. ${a}/-. Due: ${d}. Pay at bestundertaking.net` },
+  { name: 'Tata Power Mumbai', fullName: 'Tata Power Mumbai', state: 'Maharashtra', lsa: 'M', brand: 'TPCMUM', isGovt: false, minAmt: 500, maxAmt: 6000, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `Your ${b} bill for CA No. ${c} for ${m} is Rs. ${a}. Due Date: ${d}. Pay at powerindia.tatapower.com` },
+  { name: 'Torrent Power Bhiwandi', fullName: 'Torrent Power Bhiwandi', state: 'Maharashtra', lsa: 'Z', brand: 'TPBHIW', isGovt: false, minAmt: 500, maxAmt: 5000, genCno: () => randDigits(9), sms: (c, m, a, d, b) => `Rs. ${a}/- is due for ${b} Consumer No. ${c} against ${m}. Due: ${d}. Pay at connect.torrentpower.com` },
   { name: 'MSEDCL', fullName: 'Maharashtra State Electricity', state: 'Maharashtra', lsa: 'Z', brand: 'MSEDCL', isGovt: true, minAmt: 600, maxAmt: 5500, genCno: () => randDigits(12), sms: (c, m, a, d, b) => {
       const dParts = d.split('-');
       const dDate = new Date(`${dParts[2]}-${dParts[1]}-${dParts[0]}T00:00:00`);
@@ -104,6 +109,7 @@ const DISCOMS: Discom[] = [
   // Tripura
   { name: 'TSECL', fullName: 'Tripura State Electricity', state: 'Tripura', lsa: 'N', brand: 'TSECLX', isGovt: true, minAmt: 150, maxAmt: 1500, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `${b}: Cons No. ${c} balance is Rs. ${a}/-. Due: ${d}. www.tsecl.in` },
   // Uttar Pradesh (UPPCL standard 10 div Account No)
+  { name: 'NPCL', fullName: 'Noida Power Company Ltd', state: 'Uttar Pradesh', lsa: 'W', brand: 'NPCLXX', isGovt: false, minAmt: 800, maxAmt: 7000, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `Dear Consumer, ${b} bill for Account No. ${c} is Rs. ${a}. Due: ${d}. Pay via noidapower.com` },
   { name: 'PVVNL', fullName: 'Paschimanchal Vidyut Vitran', state: 'Uttar Pradesh', lsa: 'W', brand: 'PVVNLX', isGovt: true, minAmt: 450, maxAmt: 4500, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `Priye Upbhokta, Account No. ${c} ka ${m} ka bijli bill Rs. ${a} hai. Deay tithi ${d} hai. Kripya uppclonline.com se samay par jama karein. -${b}` },
   { name: 'DVVNL', fullName: 'Dakshinanchal Vidyut Vitran', state: 'Uttar Pradesh', lsa: 'W', brand: 'DVVNLX', isGovt: true, minAmt: 400, maxAmt: 4000, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `Priye Upbhokta, Account No. ${c} ka ${m} ka bijli bill Rs. ${a} hai. Deay tithi ${d} hai. Kripya uppclonline.com se samay par jama karein. -${b}` },
   { name: 'MVVNL', fullName: 'Madhyanchal Vidyut Vitran', state: 'Uttar Pradesh', lsa: 'E', brand: 'MVVNLX', isGovt: true, minAmt: 400, maxAmt: 4000, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `Priye Upbhokta, Account No. ${c} ka ${m} ka bijli bill Rs. ${a} hai. Deay tithi ${d} hai. Kripya uppclonline.com se samay par jama karein. -${b}` },
@@ -115,6 +121,7 @@ const DISCOMS: Discom[] = [
   { name: 'CESC', fullName: 'CESC Limited', state: 'West Bengal', lsa: 'K', brand: 'CESCLT', isGovt: false, minAmt: 600, maxAmt: 5200, genCno: () => randDigits(11), sms: (c, m, a, d, b) => `${b} Bill for Cons No. ${c}. Net Amt: Rs. ${a}/-, Due: ${d}. Pay via CESC App.` },
   { name: 'WBSEDCL', fullName: 'West Bengal State Electricity', state: 'West Bengal', lsa: 'V', brand: 'WBSEDL', isGovt: true, minAmt: 300, maxAmt: 2800, genCno: () => randDigits(9), sms: (c, m, a, d, b) => `${b} Bill for Id-${c} in ${m} is Rs.${a}. Due: ${d}. Pay at wbsedcl.in` },
   { name: 'DPL', fullName: 'Durgapur Projects Limited', state: 'West Bengal', lsa: 'V', brand: 'DPLXXX', isGovt: true, minAmt: 400, maxAmt: 3500, genCno: () => randDigits(11), sms: (c, m, a, d, b) => `${b} Bill for Cons No. ${c} is Rs. ${a}/-. Due: ${d}.` },
+  { name: 'IPCL', fullName: 'India Power Corporation Limited', state: 'West Bengal', lsa: 'V', brand: 'IPCLXX', isGovt: false, minAmt: 300, maxAmt: 3000, genCno: () => randDigits(11), sms: (c, m, a, d, b) => `${b} bill for CA No. ${c} is Rs. ${a}. Due Date: ${d}. Pay via indiapower.com` },
   // Islands
   { name: 'ANIIDCO A&N', fullName: 'A&N Electricity', state: 'Andaman & Nicobar', lsa: 'N', brand: 'ANIELO', isGovt: true, minAmt: 150, maxAmt: 1500, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `${b} Bill for Cons No. ${c} is Rs. ${a}/-. Due: ${d}.` },
   { name: 'Lakshadweep', fullName: 'Lakshadweep Electricity', state: 'Lakshadweep', lsa: 'N', brand: 'LKSELC', isGovt: true, minAmt: 100, maxAmt: 800, genCno: () => randDigits(10), sms: (c, m, a, d, b) => `${b} Bill for Cons No. ${c} is Rs. ${a}/-. Due: ${d}.` }
