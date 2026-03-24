@@ -279,7 +279,7 @@ const handleGenerate = () => {
     setActiveBoards(prev => prev.includes(name) ? prev.filter(x => x !== name) : [...prev, name]);
   };
 
-  const filteredBoards = DISCOMS.filter(d => d.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredBoards = DISCOMS.filter(d => d.name.toLowerCase().includes(searchTerm.toLowerCase()) || d.fullName.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <div style={{minHeight: '100vh', background: 'linear-gradient(135deg, #0f172a, #1e293b)', color: '#f8fafc', fontFamily: 'Inter, system-ui, sans-serif', padding: '24px'}}>
@@ -347,7 +347,7 @@ const handleGenerate = () => {
                     const color = d.isGovt ? '#a855f7' : '#3b82f6';
                     return (
                       <div key={d.name} onClick={()=>toggleBoard(d.name)} style={{background: active ? color : '#1e293b', border: `1px solid ${color}`, color: '#fff', padding: '6px 12px', borderRadius: '6px', cursor:'pointer', fontSize: '13px', transition:'all 0.2s'}}>
-                        {d.name}
+                        {d.fullName}
                       </div>
                     )
                   })}
