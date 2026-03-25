@@ -66,7 +66,35 @@ const paymentPortalRules: Array<{ test: RegExp; url: string }> = [
   { test: /tata power/i, url: 'https://www.tatapower.com' },
   { test: /deb|delhi electricity|deldisco/i, url: 'https://www.delsumo.gov.in' },
   { test: /power supply/i, url: 'https://www.cyberhubportal.com' },
-  
+  { test: /pspcl|punjab state power/i, url: 'https://www.pspcl.in' },
+  { test: /cesc\b|cesc limited/i, url: 'https://www.cesc.co.in' },
+  { test: /wbsedcl|west bengal state electricity distbn/i, url: 'https://www.wbsedcl.in' },
+  { test: /dgvcl|dakshin gujarat vij/i, url: 'https://www.dgvcl.com' },
+  { test: /mgvcl|madhya gujarat vij/i, url: 'https://bil.mgvcl.com' },
+  { test: /pgvcl|paschim gujarat vij/i, url: 'https://www.pgvcl.com' },
+  { test: /ugvcl|uttar gujarat vij/i, url: 'https://www.ugvcl.com' },
+  { test: /dhbvn|dakshin haryana bijli/i, url: 'https://dhbvn.org.in' },
+  { test: /uhbvn|uttar haryana bijli/i, url: 'https://uhbvn.org.in' },
+  { test: /jvvnl|jaipur vidyut/i, url: 'https://www.jaipurdiscom.com' },
+  { test: /avvnl|ajmer vidyut/i, url: 'https://www.avvnl.com' },
+  { test: /jdvvnl|jodhpur vidyut/i, url: 'https://www.jdvvnl.com' },
+  { test: /jbvnl|jharkhand bijli/i, url: 'https://www.jbvnl.co.in' },
+  { test: /southern power distribution.*telangana|tsspdcl/i, url: 'https://www.tssouthernpower.com' },
+  { test: /northern power distribution.*telangana|tsnpdcl/i, url: 'https://www.tsnpdcl.in' },
+  { test: /andhra pradesh central power|apcpdcl/i, url: 'https://www.apcpdcl.in' },
+  { test: /apepdcl/i, url: 'https://www.apepdcl.in' },
+  { test: /apspdcl/i, url: 'https://www.apspdcl.in' },
+  { test: /hescom|hubli electricity/i, url: 'https://www.hescom.co.in' },
+  { test: /gescom|gulbarga electricity/i, url: 'https://www.gescom.in' },
+  { test: /cescom|chamundeshwari/i, url: 'https://www.cescom.co.in' },
+  { test: /mescom|mangalore electricity/i, url: 'https://www.mescom.co.in' },
+  { test: /nbpdcl|north bihar power/i, url: 'https://www.nbpdcl.co.in' },
+  { test: /sbpdcl|south bihar power/i, url: 'https://www.sbpdcl.co.in' },
+  { test: /mp madhya kshetra/i, url: 'https://www.mpcz.co.in' },
+  { test: /mp poorv kshetra/i, url: 'https://www.mpez.co.in' },
+  { test: /mp paschim kshetra/i, url: 'https://www.mppkvvcl.co.in' },
+  { test: /bharatpur electricity services|besl\b/i, url: 'https://www.bescl.co.in' },
+
   // Telecom
   { test: /airtel/i, url: 'https://www.airtel.in' },
   { test: /jio/i, url: 'https://www.jio.com' },
@@ -94,9 +122,23 @@ const paymentPortalRules: Array<{ test: RegExp; url: string }> = [
   
   // Gas & LPG
   { test: /igl|indraprastha gas/i, url: 'https://www.iglonline.net' },
+  { test: /mahanagar gas|mgl\b/i, url: 'https://www.mahanagargas.com' },
+  { test: /gujarat gas/i, url: 'https://www.gujaratgas.com' },
+  { test: /gail gas/i, url: 'https://www.gailgasltd.com' },
+  { test: /adani total gas/i, url: 'https://www.adanitotalgas.in' },
+  { test: /maharashtra natural gas|mngl\b/i, url: 'https://www.mahanatutalgas.com' },
+  { test: /sabarmati gas/i, url: 'https://www.sabarmatigas.com' },
+  { test: /torrent gas/i, url: 'https://www.torrentgas.com' },
   { test: /gas|lpg/i, url: 'https://www.mylpg.in' },
-  
+
   // Water & Utilities
+  { test: /bangalore water supply|bwssb/i, url: 'https://bwssb.gov.in' },
+  { test: /delhi jal board/i, url: 'https://delhijalboard.nic.in' },
+  { test: /cmwssb|chennai metro water/i, url: 'https://www.chennaimetrowater.tn.gov.in' },
+  { test: /hmwssb|hyderabad metro water/i, url: 'https://hmwssb.gov.in' },
+  { test: /kerala water authority|kwa\b/i, url: 'https://www.kwa.kerala.gov.in' },
+  { test: /mcgm water/i, url: 'https://www.mcgm.gov.in' },
+  { test: /pune municipal.*water/i, url: 'https://pmc.gov.in' },
   { test: /water|jal|water board|water supply/i, url: 'https://www.bharatbillpay.com' },
 ];
 
@@ -108,14 +150,84 @@ const getBillerSpecificPortal = (billerName: string, category: string): string |
 
 const getElectricityIdentifier = (billerName: string, state: string) => {
   const n = billerName.toLowerCase();
+  // Major state boards — primary 5 (explicit formats)
   if (/bescom|bangalore electricity supply/.test(n)) return { label: 'RR No.', value: `E${randDigits(6)}` };
   if (/kseb|ksebl|kerala state electricity/.test(n)) return { label: 'Consumer No.', value: `11${randDigits(11)}` };
-  if (/tangedco|tneb|tamil nadu.*electric/.test(n)) return { label: 'Service Connection No.', value: `${randDigits(3)}-${randDigits(3)}-${randDigits(3)}` };
+  if (/tangedco|tneb|tamil nadu.*electric|tnpdcl/.test(n)) return { label: 'Service Connection No.', value: `${randDigits(3)}-${randDigits(3)}-${randDigits(3)}` };
   if (/msedcl|mahadiscom|maharashtra state electricity distbn/.test(n)) return { label: 'Consumer No.', value: randDigits(12) };
   if (/uppcl|uttar pradesh power/.test(n)) return { label: 'Account No.', value: randDigits(10) };
+  // Karnataka boards — each uses RR No. with board-specific alphabetic prefix
+  if (/hescom|hubli electricity/.test(n)) return { label: 'RR No.', value: `H${randDigits(7)}` };
+  if (/cescom|chamundeshwari/.test(n)) return { label: 'RR No.', value: `C${randDigits(7)}` };
+  if (/mescom|mangalore electricity/.test(n)) return { label: 'RR No.', value: `M${randDigits(7)}` };
+  if (/gescom|gulbarga electricity/.test(n)) return { label: 'RR No.', value: `G${randDigits(7)}` };
+  if (/hukkeri rural/.test(n)) return { label: 'RR No.', value: `HK${randDigits(6)}` };
+  // Gujarat fetch-and-pay boards — 11-digit consumer number
+  if (/dgvcl|dakshin gujarat vij/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
+  if (/mgvcl|madhya gujarat vij/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
+  if (/pgvcl|paschim gujarat vij/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
+  if (/ugvcl|uttar gujarat vij/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
+  // Punjab — 12-digit account number
+  if (/pspcl|punjab state power/.test(n)) return { label: 'Account No.', value: randDigits(12) };
+  // West Bengal
+  if (/cesc\b|cesc limited/.test(n)) return { label: 'CA No.', value: randDigits(11) };
+  if (/wbsedcl|west bengal state electricity/.test(n)) return { label: 'Consumer ID', value: `WB${randDigits(9)}` };
+  // Haryana — 12-digit account number
+  if (/dhbvn|dakshin haryana bijli/.test(n)) return { label: 'Account No.', value: randDigits(12) };
+  if (/uhbvn|uttar haryana bijli/.test(n)) return { label: 'Account No.', value: randDigits(12) };
+  // Rajasthan — K. No. format (K + 12 digits)
+  if (/jvvnl|jaipur vidyut/.test(n)) return { label: 'K. No.', value: `K${randDigits(12)}` };
+  if (/avvnl|ajmer vidyut/.test(n)) return { label: 'K. No.', value: `K${randDigits(12)}` };
+  if (/jdvvnl|jodhpur vidyut/.test(n)) return { label: 'K. No.', value: `K${randDigits(12)}` };
+  if (/bharatpur electricity services|besl\b/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Jharkhand — 12-digit consumer number
+  if (/jbvnl|jharkhand bijli/.test(n)) return { label: 'Consumer No.', value: randDigits(12) };
+  // Telangana — 10-digit service connection number
+  if (/southern power distribution.*telangana|tsspdcl/.test(n)) return { label: 'Service Connection No.', value: randDigits(10) };
+  if (/northern power distribution.*telangana|tsnpdcl/.test(n)) return { label: 'Service Connection No.', value: randDigits(10) };
+  // Andhra Pradesh — 10-digit IVRS number
+  if (/andhra pradesh central power|apcpdcl/.test(n)) return { label: 'IVRS No.', value: randDigits(10) };
+  if (/apepdcl/.test(n)) return { label: 'IVRS No.', value: randDigits(10) };
+  if (/apspdcl/.test(n)) return { label: 'IVRS No.', value: randDigits(10) };
+  // Bihar — 11-digit CA number
+  if (/north bihar power|nbpdcl/.test(n)) return { label: 'CA No.', value: randDigits(11) };
+  if (/south bihar power|sbpdcl/.test(n)) return { label: 'CA No.', value: randDigits(11) };
+  // Madhya Pradesh — 11-digit consumer number
+  if (/mp madhya kshetra/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
+  if (/mp poorv kshetra/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
+  if (/mp paschim kshetra/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
+  // BSES Delhi — 13-digit CA number
+  if (/bses/.test(n)) return { label: 'CA No.', value: randDigits(13) };
+  // Generic fallbacks
   if (/prepaid/.test(n)) return { label: 'Meter No.', value: `${stateShort(state)}${randDigits(10)}` };
   if (/north|south|east|west/.test(n)) return { label: 'CA No.', value: `${stateShort(state)}${randDigits(10)}` };
   return { label: 'Consumer No.', value: `${stateShort(state)}${randDigits(10)}` };
+};
+
+const getWaterIdentifier = (billerName: string, _state: string) => {
+  const n = billerName.toLowerCase();
+  if (/bangalore water supply|bwssb/.test(n)) return { label: 'Property No.', value: `BWSSB${randDigits(7)}` };
+  if (/delhi jal board/.test(n)) return { label: 'K No.', value: `K${randDigits(10)}` };
+  if (/cmwssb|chennai metro water/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
+  if (/mcgm water/.test(n)) return { label: 'Consumer No.', value: `${randDigits(3)}-${randDigits(3)}-${randDigits(5)}` };
+  if (/hmwssb|hyderabad metro water/.test(n)) return { label: 'Consumer No.', value: randDigits(12) };
+  if (/kerala water authority|kwa\b/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/pune municipal.*water/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  return { label: 'Connection No.', value: `WTR${randDigits(10)}` };
+};
+
+const getGasIdentifier = (billerName: string, _state: string) => {
+  const n = billerName.toLowerCase();
+  if (/indraprastha gas|igl\b/.test(n)) return { label: 'BP No.', value: `IGN${randDigits(7)}` };
+  if (/mahanagar gas|mgl\b/.test(n)) return { label: 'CA No.', value: randDigits(10) };
+  if (/gujarat gas/.test(n)) return { label: 'Customer No.', value: randDigits(11) };
+  if (/gail gas/.test(n)) return { label: 'Consumer No.', value: `GAIL${randDigits(7)}` };
+  if (/adani total gas/.test(n)) return { label: 'Customer ID', value: randDigits(10) };
+  if (/maharashtra natural gas|mngl/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/sabarmati gas/.test(n)) return { label: 'Customer No.', value: randDigits(11) };
+  if (/torrent gas/.test(n)) return { label: 'Customer No.', value: randDigits(10) };
+  if (/bharat gas|bpcl.*png|hp.*gas|indian oil.*gas|indane/.test(n)) return { label: 'LPG ID', value: `LPG${randDigits(8)}` };
+  return { label: 'Consumer No.', value: `GAS${randDigits(9)}` };
 };
 
 const getCategoryIdentifier = (category: string, billerName: string) => {
@@ -147,6 +259,12 @@ const getIdentifierForBiller = (category: string, billerName: string, state: str
   if (category === 'Electricity' || category === 'Prepaid Meter') {
     return getElectricityIdentifier(billerName, state);
   }
+  if (category === 'Water') {
+    return getWaterIdentifier(billerName, state);
+  }
+  if (category === 'Gas' || category === 'LPG Gas') {
+    return getGasIdentifier(billerName, state);
+  }
   return getCategoryIdentifier(category, billerName);
 };
 
@@ -156,88 +274,279 @@ type BillerRule = {
 };
 
 const billerSpecificRules: BillerRule[] = [
-  // Electricity - State Boards
+  // Electricity - State Boards (Primary 5 — explicit per-board logic)
   {
     test: (n) => /bescom|bangalore electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month, portal, idSpec }) =>
-      `Dear Customer, Your ${billerName} electricity bill for the period ${month} has been generated. The payable amount for RR No. ${identifier} is Rs. ${amount}. Kindly pay before the due date ${dueDate} to avoid service interruption.${portal ? ` You can pay via ${portal}` : ''} Thank you.`,
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Valued Consumer, Your ${billerName} electricity bill for the billing period ${month} has been generated. Your RR No. is ${identifier} and the total payable amount is Rs. ${amount}/-. We kindly request you to clear the outstanding dues on or before ${dueDate} to ensure uninterrupted power supply to your premises. You may pay online at bescom.co.in, via BBPS, or at any Bangalore One / GRAMA ONE service centre. Thank You for being our esteemed customer. -BESCOM`,
   },
   {
     test: (n) => /kseb|ksebl|kerala state electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month, portal }) =>
-      `Dear ${billerName} Customer, your bill for Cons No ${identifier} in month ${month} is Rs ${amount}. Pay before due date ${dueDate}${portal ? ` at ${portal}` : ''} or BBPS.`,
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear KSEBL Consumer, your electricity bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Please pay on or before ${dueDate} at wss.kseb.in or nearest KSEB office, BBPS, or K-SMART kiosk to avoid disconnection. For assistance call Helpline 1912. Thank You. -${billerName}`,
   },
   {
-    test: (n) => /tangedco|tneb|tamil nadu.*electric/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month, portal }) =>
-      `Your ${billerName} EB Bill amount for SC No ${identifier} is Rs. ${amount} for ${month}. Due date is ${dueDate}. ${portal ? `Pay online at ${portal}` : 'Please make payment'} to avoid disconnection.`,
+    test: (n) => /tangedco|tneb|tamil nadu.*electric|tnpdcl/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Your ${billerName} electricity bill for Service Connection No. ${identifier} for the period ${month} is Rs. ${amount}/-. Last date for payment: ${dueDate}. Pay online at www.tangedco.org or through BBPS / NeSL / Common Service Centre to avoid disconnection. Helpline: 04428520131. -TNEB`,
   },
   {
     test: (n) => /msedcl|mahadiscom|maharashtra state electricity distbn/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month, portal }) => {
+    buildSms: ({ billerName, identifier, amount, dueDate }) => {
       const dParts = dueDate.split('-');
       const dDate = new Date(`${dParts[2]}-${dParts[1]}-${dParts[0]}T00:00:00`);
       const earlyDateObj = new Date(dDate.getTime() - 5 * 24 * 3600 * 1000);
       const earlyDateStr = `${earlyDateObj.getDate().toString().padStart(2, '0')}-${(earlyDateObj.getMonth() + 1).toString().padStart(2, '0')}-${earlyDateObj.getFullYear()}`;
-      return `Rs. ${amount} is the electricity bill for Consumer No. ${identifier} for ${month}. If paid by ${earlyDateStr} Rs. ${amount - 10}. Due Date: ${dueDate}. ${portal ? `Pay online at ${portal}` : 'Please make payment'} or scan UPI QR on your physical bill. - ${billerName}`;
+      const earlyAmt = Math.round((amount - 10) * 100) / 100;
+      return `Rs. ${amount}/- is the electricity bill for Consumer No. ${identifier}. If paid by ${earlyDateStr} avail early payment discount of Rs. ${earlyAmt}. Due Date: ${dueDate}. Pay online at wss.mahadiscom.in or scan UPI QR on your physical bill. -${billerName}`;
     },
   },
   {
     test: (n) => /uppcl|uttar pradesh power/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}. Due date is ${dueDate}. Please pay on time via uppclonline.com. -${billerName}`,
+      `Dear Consumer, electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at uppclonline.com, BBPS, or nearest Jan Suvidha/Mitra centre. -${billerName}`,
+  },
+
+  // Karnataka boards — each uses RR No. with distinct board-specific portal
+  {
+    test: (n) => /hescom|hubli electricity/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Kindly pay on or before ${dueDate} at hescom.co.in or BBPS / nearest HESCOM payment counter. Thank you. -HESCOM`,
   },
   {
+    test: (n) => /cescom|chamundeshwari/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at cescom.co.in or nearest BBPS outlet. Disconnection will follow non-payment. -CESCOM`,
+  },
+  {
+    test: (n) => /mescom|mangalore electricity/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mescom.co.in or via BBPS. Avoid service interruption by paying on time. -MESCOM`,
+  },
+  {
+    test: (n) => /gescom|gulbarga electricity/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Last date: ${dueDate}. Pay at gescom.in or BBPS to avoid disconnection. -GESCOM`,
+  },
+
+  // Gujarat boards — 11-digit consumer no, fetch-and-pay phrasing
+  {
+    test: (n) => /dgvcl|dakshin gujarat vij/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dgvcl.com or nearest PGVCL Common Service Centre / BBPS. -DGVCL`,
+  },
+  {
+    test: (n) => /mgvcl|madhya gujarat vij/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at bil.mgvcl.com or nearest CSC / BBPS. -MGVCL`,
+  },
+  {
+    test: (n) => /pgvcl|paschim gujarat vij/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at pgvcl.com or nearest Common Service Centre / BBPS. -PGVCL`,
+  },
+  {
+    test: (n) => /ugvcl|uttar gujarat vij/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at ugvcl.com or BBPS / nearest CSC. -UGVCL`,
+  },
+
+  // Punjab — 12-digit account no
+  {
+    test: (n) => /pspcl|punjab state power/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Your ${billerName} electricity bill for A/C No. ${identifier} for ${month} is Rs. ${amount}/-. Last date of payment is ${dueDate}. Pay at pspcl.in or nearest PSPCL SDO office / BBPS to avoid disconnection. -PSPCL`,
+  },
+
+  // West Bengal — CESC 11-digit CA no
+  {
+    test: (n) => /cesc\b|cesc limited/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName} bill for CA No. ${identifier} for ${month} is Rs. ${amount}/-. Please pay by ${dueDate} at cesc.co.in, CESC app, or any designated Kolkata bank branch. -CESC`,
+  },
+
+  // Haryana — DHBVN / UHBVN, 12-digit account no
+  {
+    test: (n) => /dhbvn|dakshin haryana bijli/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for A/C No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at dhbvn.org.in or BBPS to avoid load reduction / disconnection. -DHBVN`,
+  },
+  {
+    test: (n) => /uhbvn|uttar haryana bijli/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for A/C No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at uhbvn.org.in or BBPS to avoid disconnection. -UHBVN`,
+  },
+
+  // Rajasthan — K. No. (K + 12 digits)
+  {
+    test: (n) => /jvvnl|jaipur vidyut/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for K.No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at jaipurdiscom.com or energy.rajasthan.gov.in / BBPS. -JVVNL`,
+  },
+  {
+    test: (n) => /avvnl|ajmer vidyut/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for K.No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at avvnl.com or energy.rajasthan.gov.in / BBPS. -AVVNL`,
+  },
+  {
+    test: (n) => /jdvvnl|jodhpur vidyut/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for K.No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at jdvvnl.com or energy.rajasthan.gov.in / BBPS. -JDVVNL`,
+  },
+
+  // Jharkhand — 12-digit consumer no
+  {
+    test: (n) => /jbvnl|jharkhand bijli/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Last payment date: ${dueDate}. Pay at jbvnl.co.in or BBPS / CSC. -JBVNL`,
+  },
+
+  // Telangana — 10-digit SC no
+  {
+    test: (n) => /southern power distribution.*telangana|tsspdcl/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Your ${billerName} bill for SC No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tssouthernpower.com or call 1912 / BBPS. -TSSPDCL`,
+  },
+  {
+    test: (n) => /northern power distribution.*telangana|tsnpdcl/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Your ${billerName} bill for SC No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tsnpdcl.in or call 1912 / BBPS. -TSNPDCL`,
+  },
+
+  // Andhra Pradesh — 10-digit IVRS no
+  {
+    test: (n) => /andhra pradesh central power|apcpdcl/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for IVRS No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apcpdcl.in or nearest MeeSeva / BBPS. -APCPDCL`,
+  },
+
+  // Bihar — 11-digit CA no
+  {
+    test: (n) => /north bihar power|nbpdcl/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for CA No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at nbpdcl.co.in or BBPS / CSC. -NBPDCL`,
+  },
+  {
+    test: (n) => /south bihar power|sbpdcl/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for CA No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at sbpdcl.co.in or BBPS / CSC. -SBPDCL`,
+  },
+
+  // Madhya Pradesh — 11-digit consumer no
+  {
+    test: (n) => /mp madhya kshetra/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mpcz.co.in or BBPS / nearest collection centre. -MPCZ`,
+  },
+  {
+    test: (n) => /mp poorv kshetra/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mpez.co.in or BBPS / nearest collection centre. -MPEZ`,
+  },
+  {
+    test: (n) => /mp paschim kshetra/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mppkvvcl.co.in or BBPS. -MPPKVVCL`,
+  },
+
+  // Torrent Power — prompt pay concession phrasing
+  {
     test: (n) => /torrent power/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month, portal, idSpec }) =>
-      `Rs. ${amount}/- is due for ${billerName} Consumer No. ${identifier} against ${month}. Due: ${dueDate}.${portal ? ` Pay at ${portal}` : ''} to ensure prompt pay concession.`,
+    buildSms: ({ billerName, identifier, amount, dueDate, month, portal }) =>
+      `Rs. ${amount}/- is due for ${billerName} Consumer No. ${identifier} against ${month}. Due: ${dueDate}.${portal ? ` Pay at ${portal}` : ' Pay at torrentpower.com'} to avail prompt payment concession. -Torrent Power`,
   },
   {
     test: (n) => /adani electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
-      `${billerName} bill for Acct No. ${identifier} is Rs. ${amount}. Due: ${dueDate}.${portal ? ` Pay via ${portal}` : ''} Avoid disconnection.`,
+    buildSms: ({ billerName, identifier, amount, dueDate, portal }) =>
+      `${billerName} bill for Acct No. ${identifier} is Rs. ${amount}/-. Due: ${dueDate}.${portal ? ` Pay via ${portal}` : ' Pay via adanielectricity.com'} to avoid disconnection. -Adani Electricity`,
   },
   {
     test: (n) => /tata power|tpddl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month, portal, idSpec }) =>
-      `Your ${billerName} bill for CA No ${identifier} for month ${month} is Rs ${amount}. Pls pay by Due Dt ${dueDate}${portal ? ` via ${portal}` : ''} to avoid DP Surcharge.`,
+    buildSms: ({ billerName, identifier, amount, dueDate, month, portal }) =>
+      `Your ${billerName} bill for CA No ${identifier} for ${month} is Rs. ${amount}/-. Pls pay by Due Dt ${dueDate}${portal ? ` via ${portal}` : ' via tatapower.com'} to avoid DP Surcharge. -Tata Power`,
   },
   {
     test: (n) => /bses/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month, portal }) =>
-      `Rs. ${amount} is due on ${dueDate} against CA No. ${identifier} for ${month} billing cycle. Pay promptly${portal ? ` via ${portal}` : ''} to evade late payment surcharge. - ${billerName}`,
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Rs. ${amount}/- is due against ${billerName} CA No. ${identifier} for ${month}. Due Date: ${dueDate}. Pay via bsesdelhi.com or BBPS. Late Payment Surcharge applicable post due date. -BSES`,
   },
   {
-    test: (n) => /ndmc|delhi|deb|deldisco/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month, portal, idSpec }) =>
-      portal
-        ? `${billerName} bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online via ${portal} or NDMC 311 App.`
-        : `${billerName} bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}.`,
+    test: (n) => /ndmc|new delhi municipal council.*electricity/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName} bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at ndmc.gov.in or via NDMC 311 App / BBPS. -NDMC`,
   },
 
-  // Water
+  // Water boards — board-specific identifiers and portals
+  {
+    test: (n) => /bangalore water supply|bwssb/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} water & sewerage charges for Property No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at bwssb.gov.in or nearest BBPS outlet. -BWSSB`,
+  },
+  {
+    test: (n) => /delhi jal board/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} water bill for K No. ${identifier} for ${month} is Rs. ${amount}/-. Last date: ${dueDate}. Pay at delhijalboard.nic.in, Jal Sahulat app, or nearest BBPS centre. -DJB`,
+  },
+  {
+    test: (n) => /cmwssb|chennai metro water/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} water charges for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at chennaimetrowater.tn.gov.in or BBPS. -CMWSSB`,
+  },
+  {
+    test: (n) => /hmwssb|hyderabad metro water/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} water charges for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at hmwssb.gov.in or BBPS. -HMWSSB`,
+  },
+  {
+    test: (n) => /kerala water authority|kwa\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} water bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kwa.kerala.gov.in or BBPS / K-SMART kiosks. -KWA`,
+  },
+  {
+    test: (n) => /mcgm water/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} water charges for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at mcgm.gov.in or portal.mcgm.gov.in / BBPS. -MCGM`,
+  },
   {
     test: (n) => /water|water supply|water board|jal/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
       portal
-        ? `${billerName}: Connection ${idSpec.label} ${identifier} water charges: Rs. ${amount}. Due date ${dueDate}. Pay at ${portal}`
-        : `${billerName}: Connection ${idSpec.label} ${identifier} water charges: Rs. ${amount}. Due date ${dueDate}.`,
+        ? `${billerName}: ${idSpec.label} ${identifier} water charges: Rs. ${amount}/-. Due date ${dueDate}. Pay at ${portal}`
+        : `${billerName}: ${idSpec.label} ${identifier} water charges: Rs. ${amount}/-. Due date ${dueDate}.`,
   },
 
-  // Gas & LPG
+  // Gas boards — board-specific identifiers and portals
   {
-    test: (n) => /igl|indraprastha gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
-      portal
-        ? `${billerName}: Gas bill generated. ${idSpec.label} ${identifier}, Amount Rs. ${amount}. Payment deadline ${dueDate}. Portal: ${portal}`
-        : `${billerName}: Gas bill generated. ${idSpec.label} ${identifier}, Amount Rs. ${amount}. Payment deadline ${dueDate}.`,
+    test: (n) => /indraprastha gas|igl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear IGL Customer, gas bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Pay by ${dueDate} at iglonline.net or IGL mobile app / BBPS. Auto-deduction scheduled if registered. -IGL`,
+  },
+  {
+    test: (n) => /mahanagar gas|mgl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} gas bill for CA No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mahanagargas.com or BBPS / MGL app. -MGL`,
+  },
+  {
+    test: (n) => /gujarat gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at gujaratgas.com or BBPS. -Gujarat Gas`,
+  },
+  {
+    test: (n) => /gail gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear GAIL Gas Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at gailgasltd.com or BBPS. -GAIL Gas`,
+  },
+  {
+    test: (n) => /adani total gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} gas bill for Customer ID ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at adanitotalgas.in or BBPS / ATG app. -Adani Total Gas`,
   },
   {
     test: (n) => /gas|lpg|fuel/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
       portal
-        ? `${billerName}: Invoice for ${idSpec.label} ${identifier} is ready. Amount Rs. ${amount}, due by ${dueDate}. Pay using ${portal}`
-        : `${billerName}: Invoice for ${idSpec.label} ${identifier} is ready. Amount Rs. ${amount}, due by ${dueDate}.`,
+        ? `${billerName}: Invoice for ${idSpec.label} ${identifier} is ready. Amount Rs. ${amount}/-, due by ${dueDate}. Pay using ${portal}`
+        : `${billerName}: Invoice for ${idSpec.label} ${identifier} is ready. Amount Rs. ${amount}/-, due by ${dueDate}.`,
   },
 
   // Telecom
