@@ -126,7 +126,7 @@ const paymentPortalRules: Array<{ test: RegExp; url: string }> = [
   { test: /gujarat gas/i, url: 'https://www.gujaratgas.com' },
   { test: /gail gas/i, url: 'https://www.gailgasltd.com' },
   { test: /adani total gas/i, url: 'https://www.adanitotalgas.in' },
-  { test: /maharashtra natural gas|mngl\b/i, url: 'https://www.mahanatutalgas.com' },
+  { test: /maharashtra natural gas|mngl\b/i, url: 'https://www.mngl.co.in' },
   { test: /sabarmati gas/i, url: 'https://www.sabarmatigas.com' },
   { test: /torrent gas/i, url: 'https://www.torrentgas.com' },
   { test: /gas|lpg/i, url: 'https://www.mylpg.in' },
@@ -298,7 +298,7 @@ const billerSpecificRules: BillerRule[] = [
       const earlyDateObj = new Date(dDate.getTime() - 5 * 24 * 3600 * 1000);
       const earlyDateStr = `${earlyDateObj.getDate().toString().padStart(2, '0')}-${(earlyDateObj.getMonth() + 1).toString().padStart(2, '0')}-${earlyDateObj.getFullYear()}`;
       const earlyAmt = Math.round((amount - 10) * 100) / 100;
-      return `Rs. ${amount}/- is the electricity bill for Consumer No. ${identifier}. If paid by ${earlyDateStr} avail early payment discount of Rs. ${earlyAmt}. Due Date: ${dueDate}. Pay online at wss.mahadiscom.in or scan UPI QR on your physical bill. -${billerName}`;
+      return `Rs. ${amount}/- is the electricity bill for Consumer No. ${identifier}. If paid by ${earlyDateStr} pay only Rs. ${earlyAmt}/- (early payment discount). Due Date: ${dueDate}. Pay online at wss.mahadiscom.in or scan UPI QR on your physical bill. -${billerName}`;
     },
   },
   {
