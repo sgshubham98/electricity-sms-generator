@@ -112,7 +112,7 @@ const paymentPortalRules: Array<{ test: RegExp; url: string }> = [
   { test: /tp.*renewables.*microgrid/i, url: 'https://www.tatapower.com' },
   { test: /tripura electricity|tsecl\b/i, url: 'https://www.tsecl.in' },
   { test: /manipur.*power|mspdcl\b/i, url: 'https://www.mspdcl.com' },
-  { test: /meghalaya.*power|mepdcl\b|mepd[cl]/i, url: 'https://www.mepdcl.com' },
+  { test: /meghalaya.*power|mepdcl\b/i, url: 'https://www.mepdcl.com' },
   { test: /mizoram.*power|power.*mizoram/i, url: 'https://powerdept.mizoram.gov.in' },
   { test: /nagaland.*power|department.*power.*nagaland/i, url: 'https://www.dpnagaland.nic.in' },
   { test: /arunachal.*power|department.*power.*arunachal/i, url: 'https://www.apseb.in' },
