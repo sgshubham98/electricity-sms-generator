@@ -94,6 +94,47 @@ const paymentPortalRules: Array<{ test: RegExp; url: string }> = [
   { test: /mp poorv kshetra/i, url: 'https://www.mpez.co.in' },
   { test: /mp paschim kshetra/i, url: 'https://www.mppkvvcl.co.in' },
   { test: /bharatpur electricity services|besl\b/i, url: 'https://www.bescl.co.in' },
+  // Additional Electricity Boards
+  { test: /best\b.*mumbai|brihanmumbai electric/i, url: 'https://www.bestundertaking.com' },
+  { test: /assam power|apdcl\b/i, url: 'https://www.apdcl.org' },
+  { test: /chhattisgarh.*power|cspdcl\b/i, url: 'https://www.cspdcl.co.in' },
+  { test: /electricity.*chandigarh|chandigarh.*electricity/i, url: 'https://www.chdpr.gov.in' },
+  { test: /himachal.*electricity|hpseb|hpsebl/i, url: 'https://www.hpseb.in' },
+  { test: /uttarakhand power|upcl\b/i, url: 'https://www.upcl.org' },
+  { test: /noida power/i, url: 'https://www.noidapower.com' },
+  { test: /goa.*electricity|electricity.*goa/i, url: 'https://www.goaelectricity.gov.in' },
+  { test: /puducherry.*electricity|electricity.*puducherry/i, url: 'https://electricity.py.gov.in' },
+  { test: /tp.*ajmer|tpadl\b/i, url: 'https://www.tatapower-ddl.com' },
+  { test: /tp.*central.*odisha|tpcodl\b/i, url: 'https://www.tpcodl.in' },
+  { test: /tp.*northern.*odisha|tpnodl\b/i, url: 'https://www.tpnodl.in' },
+  { test: /tp.*southern.*odisha|tpsodl\b/i, url: 'https://www.tpsodl.in' },
+  { test: /tp.*western.*odisha|tpwodl\b/i, url: 'https://www.tpwodl.in' },
+  { test: /tp.*renewables.*microgrid/i, url: 'https://www.tatapower.com' },
+  { test: /tripura electricity|tsecl\b/i, url: 'https://www.tsecl.in' },
+  { test: /manipur.*power|mspdcl\b/i, url: 'https://www.mspdcl.com' },
+  { test: /meghalaya.*power|mepdcl\b|mepd[cl]/i, url: 'https://www.mepdcl.com' },
+  { test: /mizoram.*power|power.*mizoram/i, url: 'https://powerdept.mizoram.gov.in' },
+  { test: /nagaland.*power|department.*power.*nagaland/i, url: 'https://www.dpnagaland.nic.in' },
+  { test: /arunachal.*power|department.*power.*arunachal/i, url: 'https://www.apseb.in' },
+  { test: /sikkim.*power/i, url: 'https://www.sikkimpower.org' },
+  { test: /jammu power|jpdcl\b/i, url: 'https://www.jpdcl.co.in' },
+  { test: /kashmir power|kpdcl\b/i, url: 'https://www.kpdcl.org.in' },
+  { test: /ladakh.*power|lpdd\b/i, url: 'https://www.ladakhpower.gov.in' },
+  { test: /lakshadweep.*electricity/i, url: 'https://lakshadweep.gov.in' },
+  { test: /dadra.*nagar.*haveli.*power|dnhpdcl\b/i, url: 'https://www.dnhpdcl.gov.in' },
+  { test: /bikaner electricity|bkesl\b/i, url: 'https://energy.rajasthan.gov.in' },
+  { test: /kota electricity|kedl\b/i, url: 'https://www.kedl.in' },
+  { test: /aeml\b.*seepz|aeml seepz/i, url: 'https://www.adanielectricity.com' },
+  { test: /india power.*corporation|ipcl\b/i, url: 'https://www.indiapower.com' },
+  { test: /ttd.*electricity|tirumala.*tirupati/i, url: 'https://www.tirumala.org' },
+  { test: /gift power/i, url: 'https://www.giftpower.in' },
+  { test: /vaghani energy/i, url: 'https://www.vaghanienergy.com' },
+  { test: /kinesco power/i, url: 'https://www.kinesco.co.in' },
+  { test: /tata steel.*uisl|uisl\b/i, url: 'https://www.tatasteel.com' },
+  { test: /thrissur.*electricity/i, url: 'https://www.thrissur.gov.in' },
+  { test: /co.?operative electric.*sircilla/i, url: 'https://sircillacoopelectric.in' },
+  { test: /kanan devan hills/i, url: 'https://www.kdhp.co.in' },
+  { test: /west bengal electricity/i, url: 'https://www.wbsedcl.in' },
 
   // Telecom
   { test: /airtel/i, url: 'https://www.airtel.in' },
@@ -120,15 +161,77 @@ const paymentPortalRules: Array<{ test: RegExp; url: string }> = [
   { test: /sbi|state bank|bank/i, url: 'https://www.onlinesbh.com' },
   { test: /hdfc|icici|axis|hdbank/i, url: 'https://www.bharatbillpay.com' },
   
+  // Credit Cards — bank-specific portals (before generic bank/finance rules)
+  { test: /sbi card/i, url: 'https://www.sbicard.com' },
+  { test: /hdfc.*credit card|hdfc.*pixel/i, url: 'https://www.hdfcbank.com' },
+  { test: /icici.*credit card/i, url: 'https://www.icicibank.com' },
+  { test: /axis.*credit card/i, url: 'https://www.axisbank.com' },
+  { test: /kotak.*credit card/i, url: 'https://www.kotak.com' },
+  { test: /idfc first.*credit card/i, url: 'https://www.idfcfirstbank.com' },
+  { test: /indusind.*credit card/i, url: 'https://www.indusind.com' },
+  { test: /yes bank.*credit card/i, url: 'https://www.yesbank.in' },
+  { test: /rbl.*credit card/i, url: 'https://www.rblbank.com' },
+  { test: /au bank.*credit card/i, url: 'https://www.aubank.in' },
+  { test: /bandhan.*credit card/i, url: 'https://www.bandhanbank.com' },
+  { test: /federal bank.*credit card/i, url: 'https://www.federalbank.co.in' },
+  { test: /hsbc.*credit card/i, url: 'https://www.hsbc.co.in' },
+  { test: /dbs.*credit card/i, url: 'https://www.dbs.com/in' },
+  { test: /canara.*credit card/i, url: 'https://www.canarabank.com' },
+  { test: /bank of india.*credit card/i, url: 'https://www.bankofindia.co.in' },
+  { test: /bob.*credit card|bobcard/i, url: 'https://www.bobcard.co.in' },
+  { test: /union bank.*credit card/i, url: 'https://www.unionbankofindia.co.in' },
+  { test: /punjab national bank.*credit card/i, url: 'https://www.pnbindia.in' },
+  { test: /idbi.*credit card/i, url: 'https://www.idbibank.in' },
+  { test: /iob.*credit card/i, url: 'https://www.iob.in' },
+  { test: /indian bank.*credit card/i, url: 'https://www.indianbank.in' },
+  { test: /cub.*credit card|city union.*credit card/i, url: 'https://www.cityunionbank.com' },
+  { test: /dcb.*credit card/i, url: 'https://www.dcbbank.com' },
+  { test: /esaf.*credit card/i, url: 'https://www.esafbank.com' },
+  { test: /edge csb|csb.*credit card/i, url: 'https://www.csb.co.in' },
+  { test: /dhanlaxmi.*credit card/i, url: 'https://www.dhanbank.com' },
+  { test: /south indian bank.*credit card/i, url: 'https://www.southindianbank.com' },
+  { test: /saraswat.*credit card/i, url: 'https://www.saraswatbank.com' },
+  { test: /tamilnad mercantile.*credit card/i, url: 'https://www.tmbank.in' },
+  { test: /suryoday.*credit card/i, url: 'https://www.suryodaybank.com' },
+  { test: /sbm.*credit card/i, url: 'https://www.sbmbank.co.in' },
+
   // Gas & LPG
   { test: /igl|indraprastha gas/i, url: 'https://www.iglonline.net' },
   { test: /mahanagar gas|mgl\b/i, url: 'https://www.mahanagargas.com' },
   { test: /gujarat gas/i, url: 'https://www.gujaratgas.com' },
   { test: /gail gas/i, url: 'https://www.gailgasltd.com' },
+  { test: /gail india|gail limited/i, url: 'https://www.gail.nic.in' },
   { test: /adani total gas/i, url: 'https://www.adanitotalgas.in' },
   { test: /maharashtra natural gas|mngl\b/i, url: 'https://www.mngl.co.in' },
   { test: /sabarmati gas/i, url: 'https://www.sabarmatigas.com' },
   { test: /torrent gas/i, url: 'https://www.torrentgas.com' },
+  { test: /aavantika gas/i, url: 'https://www.aavantikagas.com' },
+  { test: /assam gas/i, url: 'https://www.assamgas.org' },
+  { test: /bengal gas/i, url: 'https://www.bengalgas.co.in' },
+  { test: /bhagyanagar gas/i, url: 'https://www.bhagyanagargas.com' },
+  { test: /bharat petroleum.*png|bpcl.*png/i, url: 'https://www.bharatgas.com' },
+  { test: /central u\.?p\.? gas/i, url: 'https://www.cugasl.com' },
+  { test: /charotar gas/i, url: 'https://www.charotargas.co.in' },
+  { test: /goa natural gas/i, url: 'https://www.goanaturalgas.com' },
+  { test: /godavari gas/i, url: 'https://www.godavarigas.com' },
+  { test: /green gas/i, url: 'https://www.greengas.net.in' },
+  { test: /hp oil gas/i, url: 'https://www.hpoilgas.com' },
+  { test: /hpr falcon gas/i, url: 'https://www.hprfalcongas.com' },
+  { test: /haridwar natural gas/i, url: 'https://www.haridwarnaturalgas.com' },
+  { test: /haryana city gas/i, url: 'https://www.hcgdl.co.in' },
+  { test: /hindustan petroleum.*piped|hpcl.*piped/i, url: 'https://www.hindustanpetroleum.com' },
+  { test: /irm energy/i, url: 'https://www.irmenergy.com' },
+  { test: /indian oil.*piped|iocl.*piped/i, url: 'https://www.iocl.com' },
+  { test: /indian oil.?adani gas/i, url: 'https://www.ioagpl.com' },
+  { test: /agp cgd|agp city gas/i, url: 'https://www.agpcgd.com' },
+  { test: /megha gas/i, url: 'https://www.meghagas.com' },
+  { test: /naveriya gas/i, url: 'https://www.naveriyagas.com' },
+  { test: /purba bharati gas/i, url: 'https://www.purbabharatigas.co.in' },
+  { test: /rajasthan state gas/i, url: 'https://www.rsgl.co.in' },
+  { test: /think gas/i, url: 'https://www.thinkgas.in' },
+  { test: /tripura natural gas/i, url: 'https://www.tngl.in' },
+  { test: /unique central piped|ucpgpl\b/i, url: 'https://www.ucpgpl.com' },
+  { test: /vadodara gas/i, url: 'https://www.vgl.co.in' },
   { test: /gas|lpg/i, url: 'https://www.mylpg.in' },
 
   // Water & Utilities
@@ -198,6 +301,74 @@ const getElectricityIdentifier = (billerName: string, state: string) => {
   if (/mp paschim kshetra/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
   // BSES Delhi — 13-digit CA number
   if (/bses/.test(n)) return { label: 'CA No.', value: randDigits(13) };
+  // West Bengal — Consumer ID for both WBSEDCL entries
+  if (/wbsedcl|west bengal.*electricity/.test(n)) return { label: 'Consumer ID', value: `WB${randDigits(9)}` };
+  // BEST Mumbai — 6-digit Consumer No.
+  if (/best\b.*mumbai|brihanmumbai electric/.test(n)) return { label: 'Consumer No.', value: randDigits(6) };
+  // Assam — 11-digit Consumer No.
+  if (/assam power|apdcl\b/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
+  // Chhattisgarh — 12-digit Consumer No.
+  if (/chhattisgarh.*power|cspdcl\b/.test(n)) return { label: 'Consumer No.', value: randDigits(12) };
+  // Chandigarh — 10-digit Account No.
+  if (/electricity.*chandigarh|chandigarh.*electricity/.test(n)) return { label: 'Account No.', value: randDigits(10) };
+  // Himachal Pradesh
+  if (/himachal.*electricity|hpseb|hpsebl/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Uttarakhand
+  if (/uttarakhand power|upcl\b/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Noida Power
+  if (/noida power/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Goa
+  if (/goa.*electricity|electricity.*goa/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Puducherry
+  if (/puducherry.*electricity|electricity.*puducherry/.test(n)) return { label: 'Service No.', value: randDigits(10) };
+  // TP Odisha discoms — BP No. (Tata Power format, 11 digits)
+  if (/tp.*odisha|tpcodl|tpnodl|tpsodl|tpwodl/.test(n)) return { label: 'BP No.', value: randDigits(11) };
+  // TP Ajmer
+  if (/tp.*ajmer|tpadl\b/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Tripura
+  if (/tripura electricity|tsecl\b/.test(n)) return { label: 'Consumer No.', value: `TR${randDigits(8)}` };
+  // Manipur
+  if (/manipur.*power|mspdcl\b/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Meghalaya
+  if (/meghalaya.*power|mepdcl\b/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Mizoram
+  if (/mizoram.*power|power.*mizoram/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Nagaland
+  if (/nagaland.*power|department.*power.*nagaland/.test(n)) return { label: 'Consumer No.', value: randDigits(9) };
+  // Arunachal Pradesh
+  if (/arunachal.*power|department.*power.*arunachal/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Sikkim
+  if (/sikkim.*power/.test(n)) return { label: 'Consumer No.', value: randDigits(9) };
+  // Jammu
+  if (/jammu power|jpdcl\b/.test(n)) return { label: 'Consumer No.', value: `J${randDigits(9)}` };
+  // Kashmir
+  if (/kashmir power|kpdcl\b/.test(n)) return { label: 'Consumer No.', value: `K${randDigits(9)}` };
+  // Ladakh
+  if (/ladakh.*power|lpdd\b/.test(n)) return { label: 'Consumer No.', value: randDigits(8) };
+  // Lakshadweep
+  if (/lakshadweep.*electricity/.test(n)) return { label: 'Consumer No.', value: randDigits(7) };
+  // Dadra & Nagar Haveli
+  if (/dadra.*nagar.*haveli.*power|dnhpdcl\b/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Bikaner
+  if (/bikaner electricity|bkesl\b/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Kota Electricity Distribution
+  if (/kota electricity|kedl\b/.test(n)) return { label: 'Account No.', value: randDigits(10) };
+  // AEML SEEPZ (Adani)
+  if (/aeml\b.*seepz|aeml seepz/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // India Power Corporation
+  if (/india power.*corporation|ipcl\b/.test(n)) return { label: 'Consumer No.', value: `IP${randDigits(8)}` };
+  // TTD Electricity
+  if (/ttd.*electricity|tirumala.*tirupati/.test(n)) return { label: 'Consumer No.', value: randDigits(8) };
+  // Private/small utilities
+  if (/gift power/.test(n)) return { label: 'Consumer No.', value: randDigits(9) };
+  if (/vaghani energy/.test(n)) return { label: 'Consumer No.', value: randDigits(9) };
+  if (/kinesco power/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/tata steel.*uisl|uisl\b/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/thrissur.*electricity/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/co.?operative electric.*sircilla/.test(n)) return { label: 'Consumer No.', value: randDigits(9) };
+  if (/kanan devan hills/.test(n)) return { label: 'Consumer No.', value: randDigits(8) };
+  // TP Renewables
+  if (/tp.*renewables.*microgrid/.test(n)) return { label: 'Account No.', value: `TPR${randDigits(7)}` };
   // Generic fallbacks
   if (/prepaid/.test(n)) return { label: 'Meter No.', value: `${stateShort(state)}${randDigits(10)}` };
   if (/north|south|east|west/.test(n)) return { label: 'CA No.', value: `${stateShort(state)}${randDigits(10)}` };
@@ -222,10 +393,37 @@ const getGasIdentifier = (billerName: string, _state: string) => {
   if (/mahanagar gas|mgl\b/.test(n)) return { label: 'CA No.', value: randDigits(10) };
   if (/gujarat gas/.test(n)) return { label: 'Customer No.', value: randDigits(11) };
   if (/gail gas/.test(n)) return { label: 'Consumer No.', value: `GAIL${randDigits(7)}` };
+  if (/gail india|gail limited/.test(n)) return { label: 'Consumer No.', value: `GAIL${randDigits(7)}` };
   if (/adani total gas/.test(n)) return { label: 'Customer ID', value: randDigits(10) };
   if (/maharashtra natural gas|mngl/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
   if (/sabarmati gas/.test(n)) return { label: 'Customer No.', value: randDigits(11) };
   if (/torrent gas/.test(n)) return { label: 'Customer No.', value: randDigits(10) };
+  if (/aavantika gas/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/assam gas/.test(n)) return { label: 'Consumer No.', value: `AG${randDigits(8)}` };
+  if (/bengal gas/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/bhagyanagar gas/.test(n)) return { label: 'BP No.', value: randDigits(10) };
+  if (/central u\.?p\.? gas/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/charotar gas/.test(n)) return { label: 'Customer No.', value: randDigits(10) };
+  if (/goa natural gas/.test(n)) return { label: 'Consumer No.', value: randDigits(9) };
+  if (/godavari gas/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/green gas/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
+  if (/hp oil gas/.test(n)) return { label: 'Customer No.', value: randDigits(10) };
+  if (/hpr falcon gas/.test(n)) return { label: 'Consumer No.', value: randDigits(9) };
+  if (/haridwar natural gas/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/haryana city gas/.test(n)) return { label: 'BP No.', value: randDigits(10) };
+  if (/hindustan petroleum.*piped|hpcl.*piped/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/irm energy/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/indian oil.*piped|iocl.*piped/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/indian oil.?adani gas/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/agp cgd|agp city gas/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/megha gas/.test(n)) return { label: 'Consumer No.', value: randDigits(9) };
+  if (/naveriya gas/.test(n)) return { label: 'Consumer No.', value: randDigits(9) };
+  if (/purba bharati gas/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/rajasthan state gas/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/think gas/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/tripura natural gas/.test(n)) return { label: 'Consumer No.', value: `TNG${randDigits(7)}` };
+  if (/unique central piped|ucpgpl/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  if (/vadodara gas/.test(n)) return { label: 'Customer No.', value: randDigits(10) };
   if (/bharat gas|bpcl.*png|hp.*gas|indian oil.*gas|indane/.test(n)) return { label: 'LPG ID', value: `LPG${randDigits(8)}` };
   return { label: 'Consumer No.', value: `GAS${randDigits(9)}` };
 };
@@ -476,7 +674,275 @@ const billerSpecificRules: BillerRule[] = [
       `${billerName} bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at ndmc.gov.in or via NDMC 311 App / BBPS. -NDMC`,
   },
 
-  // Water boards — board-specific identifiers and portals
+  // West Bengal Electricity (WBSEDCL) — Consumer ID WB + 9 digits
+  {
+    test: (n) => /wbsedcl|west bengal.*electricity/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, your ${billerName} electricity bill for Consumer ID ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at wbsedcl.in, Jibika kiosks, or BBPS to avoid disconnection. -WBSEDCL`,
+  },
+
+  // BEST Mumbai — 6-digit Consumer No.
+  {
+    test: (n) => /best\b.*mumbai|brihanmumbai electric/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at bestundertaking.com or nearest BEST cash office / BBPS. -BEST`,
+  },
+
+  // Andhra Pradesh remaining boards — IVRS No.
+  {
+    test: (n) => /apepdcl/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for IVRS No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apepdcl.in or nearest AP Seva / BBPS. -APEPDCL`,
+  },
+  {
+    test: (n) => /apspdcl/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for IVRS No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apspdcl.in or nearest AP Seva / BBPS. -APSPDCL`,
+  },
+
+  // Assam Power Distribution
+  {
+    test: (n) => /assam power|apdcl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apdcl.org or BBPS / CSC to avoid disconnection. -APDCL`,
+  },
+
+  // Chhattisgarh State Power
+  {
+    test: (n) => /chhattisgarh.*power|cspdcl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at cspdcl.co.in or nearest BBPS / CSC outlet. -CSPDCL`,
+  },
+
+  // Chandigarh Electricity
+  {
+    test: (n) => /electricity.*chandigarh|chandigarh.*electricity/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at chdpr.gov.in or BBPS. -Chandigarh Electricity`,
+  },
+
+  // Himachal Pradesh State Electricity Board
+  {
+    test: (n) => /himachal.*electricity|hpseb|hpsebl/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at hpseb.in or nearest HPSEB collection centre / BBPS. -HPSEB`,
+  },
+
+  // Uttarakhand Power Corporation
+  {
+    test: (n) => /uttarakhand power|upcl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at upcl.org or BBPS / nearest collection centre. -UPCL`,
+  },
+
+  // Noida Power
+  {
+    test: (n) => /noida power/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at noidapower.com or via BBPS to avoid late payment surcharge. -NPCL`,
+  },
+
+  // Goa Electricity Department
+  {
+    test: (n) => /goa.*electricity|electricity.*goa/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at goaelectricity.gov.in or nearest BBPS outlet. -Goa Electricity`,
+  },
+
+  // Government of Puducherry Electricity Department
+  {
+    test: (n) => /puducherry.*electricity|electricity.*puducherry/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Service No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at electricity.py.gov.in or nearest BBPS centre. -Puducherry Electricity`,
+  },
+
+  // TP Ajmer Distribution Ltd
+  {
+    test: (n) => /tp.*ajmer|tpadl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tatapower-ddl.com or BBPS. -TPADL`,
+  },
+
+  // TP Odisha Distribution companies
+  {
+    test: (n) => /tp.*central.*odisha|tpcodl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpcodl.in or BBPS / CSC to avoid disconnection. -TPCODL`,
+  },
+  {
+    test: (n) => /tp.*northern.*odisha|tpnodl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpnodl.in or BBPS / CSC. -TPNODL`,
+  },
+  {
+    test: (n) => /tp.*southern.*odisha|tpsodl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpsodl.in or BBPS / CSC. -TPSODL`,
+  },
+  {
+    test: (n) => /tp.*western.*odisha|tpwodl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpwodl.in or BBPS. -TPWODL`,
+  },
+  {
+    test: (n) => /tp.*renewables.*microgrid/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Account No. ${identifier} energy bill for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay via tatapower.com or BBPS. -Tata Power`,
+  },
+
+  // Tripura Electricity
+  {
+    test: (n) => /tripura electricity|tsecl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tsecl.in or nearest BBPS / CSC outlet. -TSECL`,
+  },
+
+  // Manipur State Power Distribution
+  {
+    test: (n) => /manipur.*power|mspdcl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mspdcl.com or nearest BBPS outlet. -MSPDCL`,
+  },
+
+  // Meghalaya Power Distribution
+  {
+    test: (n) => /meghalaya.*power|mepdcl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mepdcl.com or BBPS. -MePDCL`,
+  },
+
+  // Mizoram Power
+  {
+    test: (n) => /mizoram.*power|power.*mizoram/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at powerdept.mizoram.gov.in or BBPS. -Mizoram Power`,
+  },
+
+  // Nagaland Power
+  {
+    test: (n) => /nagaland.*power|department.*power.*nagaland/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dpnagaland.nic.in or nearest BBPS centre. -Nagaland Power`,
+  },
+
+  // Arunachal Pradesh Power
+  {
+    test: (n) => /arunachal.*power|department.*power.*arunachal/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apseb.in or nearest BBPS outlet. -APSEB`,
+  },
+
+  // Sikkim Power
+  {
+    test: (n) => /sikkim.*power/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at sikkimpower.org or BBPS. -Sikkim Power`,
+  },
+
+  // Jammu Power Distribution Corporation
+  {
+    test: (n) => /jammu power|jpdcl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at jpdcl.co.in or nearest BBPS / J&K Bank counter. -JPDCL`,
+  },
+
+  // Kashmir Power Distribution Corporation
+  {
+    test: (n) => /kashmir power|kpdcl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kpdcl.org.in or nearest BBPS / J&K Bank counter. -KPDCL`,
+  },
+
+  // Ladakh Power
+  {
+    test: (n) => /ladakh.*power|lpdd\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at ladakhpower.gov.in or nearest BBPS outlet. -LPDD`,
+  },
+
+  // Lakshadweep Electricity
+  {
+    test: (n) => /lakshadweep.*electricity/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Please pay at the nearest Electricity Department office or BBPS. -Lakshadweep Electricity`,
+  },
+
+  // Dadra and Nagar Haveli Power
+  {
+    test: (n) => /dadra.*nagar.*haveli.*power|dnhpdcl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dnhpdcl.gov.in or BBPS. -DNHPDCL`,
+  },
+
+  // Rajasthan additional boards
+  {
+    test: (n) => /bikaner electricity|bkesl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at energy.rajasthan.gov.in or BBPS. -BkESL`,
+  },
+  {
+    test: (n) => /kota electricity|kedl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kedl.in or energy.rajasthan.gov.in / BBPS. -KEDL`,
+  },
+
+  // AEML SEEPZ (Adani, special zone)
+  {
+    test: (n) => /aeml\b.*seepz|aeml seepz/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at adanielectricity.com or BBPS. -AEML`,
+  },
+
+  // India Power Corporation
+  {
+    test: (n) => /india power.*corporation|ipcl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at indiapower.com or BBPS. -India Power`,
+  },
+
+  // TTD Electricity
+  {
+    test: (n) => /ttd.*electricity|tirumala.*tirupati/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tirumala.org or BBPS. -TTD`,
+  },
+
+  // Specialty / private utilities
+  {
+    test: (n) => /gift power/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at giftpower.in or BBPS. -Gift Power`,
+  },
+  {
+    test: (n) => /vaghani energy/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at vaghanienergy.com or BBPS. -Vaghani Energy`,
+  },
+  {
+    test: (n) => /kinesco power/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kinesco.co.in or BBPS. -Kinesco`,
+  },
+  {
+    test: (n) => /tata steel.*uisl|uisl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Contact your local collection centre for payment. -Tata Steel UISL`,
+  },
+  {
+    test: (n) => /thrissur.*electricity/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at thrissur.gov.in or KSEB-affiliated counters / BBPS. -Thrissur Corp`,
+  },
+  {
+    test: (n) => /co.?operative electric.*sircilla/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at the Society office or BBPS. -Sircilla CESS`,
+  },
+  {
+    test: (n) => /kanan devan hills/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Contact your estate office or nearest KSEB counter for payment. -KDHP`,
+  },
   {
     test: (n) => /bangalore water supply|bwssb/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
@@ -540,6 +1006,161 @@ const billerSpecificRules: BillerRule[] = [
     test: (n) => /adani total gas/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
       `Your ${billerName} gas bill for Customer ID ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at adanitotalgas.in or BBPS / ATG app. -Adani Total Gas`,
+  },
+  {
+    test: (n) => /maharashtra natural gas|mngl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mngl.co.in or BBPS / MNGL app. -MNGL`,
+  },
+  {
+    test: (n) => /sabarmati gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at sabarmatigas.com or BBPS. -Sabarmati Gas`,
+  },
+  {
+    test: (n) => /torrent gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at torrentgas.com or BBPS to avoid supply disruption. -Torrent Gas`,
+  },
+  {
+    test: (n) => /aavantika gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at aavantikagas.com or BBPS. -Aavantika Gas`,
+  },
+  {
+    test: (n) => /assam gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at assamgas.org or BBPS. -Assam Gas`,
+  },
+  {
+    test: (n) => /bengal gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at bengalgas.co.in or BBPS. -Bengal Gas`,
+  },
+  {
+    test: (n) => /bhagyanagar gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear ${billerName} Customer, gas bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at bhagyanagargas.com or BBPS / nearest outlet. -BGL`,
+  },
+  {
+    test: (n) => /bharat petroleum.*png|bpcl.*png/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Monthly gas invoice for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at bharatgas.com or BBPS. -BPCL PNG`,
+  },
+  {
+    test: (n) => /central u\.?p\.? gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at cugasl.com or BBPS. -CUGL`,
+  },
+  {
+    test: (n) => /charotar gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at charotargas.co.in or BBPS. -Charotar Gas`,
+  },
+  {
+    test: (n) => /gail india|gail limited/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at gail.nic.in or BBPS. -GAIL`,
+  },
+  {
+    test: (n) => /goa natural gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at goanaturalgas.com or BBPS. -Goa Natural Gas`,
+  },
+  {
+    test: (n) => /godavari gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at godavarigas.com or BBPS. -Godavari Gas`,
+  },
+  {
+    test: (n) => /green gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at greengas.net.in or BBPS. -Green Gas`,
+  },
+  {
+    test: (n) => /hp oil gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at hpoilgas.com or BBPS. -HP Oil Gas`,
+  },
+  {
+    test: (n) => /hpr falcon gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at hprfalcongas.com or BBPS. -HPR Falcon Gas`,
+  },
+  {
+    test: (n) => /haridwar natural gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at haridwarnaturalgas.com or BBPS. -HNGPL`,
+  },
+  {
+    test: (n) => /haryana city gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear ${billerName} Customer, gas bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at hcgdl.co.in or BBPS. -Haryana City Gas`,
+  },
+  {
+    test: (n) => /hindustan petroleum.*piped|hpcl.*piped/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Monthly gas invoice for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at hindustanpetroleum.com or BBPS. -HPCL PNG`,
+  },
+  {
+    test: (n) => /irm energy/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at irmenergy.com or BBPS. -IRM Energy`,
+  },
+  {
+    test: (n) => /indian oil.*piped|iocl.*piped/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Monthly gas invoice for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at iocl.com or BBPS. -IOCL PNG`,
+  },
+  {
+    test: (n) => /indian oil.?adani gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at ioagpl.com or BBPS. -IO-Adani Gas`,
+  },
+  {
+    test: (n) => /agp cgd|agp city gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at agpcgd.com or BBPS. -AGP Gas`,
+  },
+  {
+    test: (n) => /megha gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at meghagas.com or BBPS. -Megha Gas`,
+  },
+  {
+    test: (n) => /naveriya gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at naveriyagas.com or BBPS. -Naveriya Gas`,
+  },
+  {
+    test: (n) => /purba bharati gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at purbabharatigas.co.in or BBPS. -Purba Bharati Gas`,
+  },
+  {
+    test: (n) => /rajasthan state gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at rsgl.co.in or BBPS. -RSGL`,
+  },
+  {
+    test: (n) => /think gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at thinkgas.in or BBPS. -Think Gas`,
+  },
+  {
+    test: (n) => /tripura natural gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tngl.in or nearest BBPS outlet. -TNGL`,
+  },
+  {
+    test: (n) => /unique central piped|ucpgpl\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at ucpgpl.com or BBPS. -UCPGPL`,
+  },
+  {
+    test: (n) => /vadodara gas/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Your ${billerName} gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at vgl.co.in or BBPS. -VGL`,
   },
   {
     test: (n) => /gas|lpg|fuel/i.test(n),
@@ -623,6 +1244,166 @@ const billerSpecificRules: BillerRule[] = [
       portal
         ? `${billerName}: EMI/Loan payment reminder for ${idSpec.label} ${identifier}. Amount Rs. ${amount} due on ${dueDate}. Pay at ${portal}`
         : `${billerName}: EMI/Loan payment reminder for ${idSpec.label} ${identifier}. Amount Rs. ${amount} due on ${dueDate}.`,
+  },
+  {
+    test: (n) => /sbi card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Dear SBI Card holder, your statement is generated. Card ending ${identifier.slice(-4)} Total Amount Due: Rs. ${amount}/-. Please pay on or before ${dueDate} to avoid late payment charges. Pay at sbicard.com or YONO app. -SBI Card`,
+  },
+  {
+    test: (n) => /hdfc.*credit card|hdfc.*pixel/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Dear HDFC Bank Credit Card member, statement for Card ending ${identifier.slice(-4)}: Total Amount Due Rs. ${amount}/-. Pay before ${dueDate} via netbanking.hdfcbank.com or PhoneBanking to avoid late fee. -HDFC Bank`,
+  },
+  {
+    test: (n) => /icici.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Your ICICI Bank Credit Card (ending ${identifier.slice(-4)}) statement: Total Amount Due Rs. ${amount}/-. Payment Due Date: ${dueDate}. Pay via iMobile Pay, Net Banking or BBPS. -ICICI Bank`,
+  },
+  {
+    test: (n) => /axis.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Dear Axis Bank Credit Card holder, your Card ending ${identifier.slice(-4)} has Total Outstanding of Rs. ${amount}/-. Last date for payment: ${dueDate}. Pay via axisbank.com, Axis Mobile or BBPS. -Axis Bank`,
+  },
+  {
+    test: (n) => /kotak.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Kotak Credit Card (ending ${identifier.slice(-4)}) statement: Total Due Rs. ${amount}/-. Payment Due Date ${dueDate}. Pay at kotak.com, Kotak app or BBPS. -Kotak Bank`,
+  },
+  {
+    test: (n) => /idfc first.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `IDFC FIRST Bank Credit Card (ending ${identifier.slice(-4)}) — Statement Amount Due: Rs. ${amount}/-. Please pay by ${dueDate} via idfcfirstbank.com or BBPS. -IDFC FIRST`,
+  },
+  {
+    test: (n) => /indusind.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `IndusInd Bank Credit Card (ending ${identifier.slice(-4)}): Total Amount Due Rs. ${amount}/-. Pay by ${dueDate} at indusind.com or IndusMobile / BBPS. -IndusInd Bank`,
+  },
+  {
+    test: (n) => /yes bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `YES Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Due Date ${dueDate}. Pay at yesbank.in or YES PAY / BBPS to avoid interest charges. -YES Bank`,
+  },
+  {
+    test: (n) => /rbl.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `RBL Bank Credit Card (ending ${identifier.slice(-4)}): Total Amount Due Rs. ${amount}/-. Last date for payment: ${dueDate}. Pay at rblbank.com or BBPS. -RBL Bank`,
+  },
+  {
+    test: (n) => /au bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `AU Bank Credit Card (ending ${identifier.slice(-4)}): Statement Amount Due Rs. ${amount}/-. Pay by ${dueDate} at aubank.in or AU 0to1 app / BBPS. -AU Bank`,
+  },
+  {
+    test: (n) => /bandhan.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Bandhan Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at bandhanbank.com or BBPS. -Bandhan Bank`,
+  },
+  {
+    test: (n) => /federal bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Federal Bank Credit Card (ending ${identifier.slice(-4)}): Total Due Rs. ${amount}/-. Payment Due: ${dueDate}. Pay at federalbank.co.in, FedMobile or BBPS. -Federal Bank`,
+  },
+  {
+    test: (n) => /hsbc.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `HSBC Credit Card (ending ${identifier.slice(-4)}): Minimum Amount Due or Total Due Rs. ${amount}/-. Pay by ${dueDate} at hsbc.co.in or HSBC India app / BBPS. -HSBC`,
+  },
+  {
+    test: (n) => /dbs.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `DBS Bank Credit Card (ending ${identifier.slice(-4)}): Statement Amount Due Rs. ${amount}/-. Pay by ${dueDate} at dbs.com/in or digibank app / BBPS. -DBS Bank`,
+  },
+  {
+    test: (n) => /canara.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Canara Bank Credit Card (ending ${identifier.slice(-4)}): Total Amount Due Rs. ${amount}/-. Pay by ${dueDate} at canarabank.com or BBPS. -Canara Bank`,
+  },
+  {
+    test: (n) => /bank of india.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Bank of India Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Due Date ${dueDate}. Pay at bankofindia.co.in or BOI Mobile / BBPS. -Bank of India`,
+  },
+  {
+    test: (n) => /bob.*credit card|bobcard/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `BoB Credit Card (ending ${identifier.slice(-4)}): Total Due Rs. ${amount}/-. Pay by ${dueDate} at bobcard.co.in or BarodaPay app / BBPS. -Bank of Baroda`,
+  },
+  {
+    test: (n) => /union bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Union Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at unionbankofindia.co.in or BBPS. -Union Bank`,
+  },
+  {
+    test: (n) => /punjab national bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `PNB Credit Card (ending ${identifier.slice(-4)}): Total Amount Due Rs. ${amount}/-. Pay by ${dueDate} at pnbindia.in or PNB ONE app / BBPS. -Punjab National Bank`,
+  },
+  {
+    test: (n) => /idbi.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `IDBI Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at idbibank.in or Go Mobile+ / BBPS. -IDBI Bank`,
+  },
+  {
+    test: (n) => /iob.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `IOB Credit Card (ending ${identifier.slice(-4)}): Total Due Rs. ${amount}/-. Pay by ${dueDate} at iob.in or IOB Mobile / BBPS. -Indian Overseas Bank`,
+  },
+  {
+    test: (n) => /indian bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Indian Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at indianbank.in or IndOASIS app / BBPS. -Indian Bank`,
+  },
+  {
+    test: (n) => /cub.*credit card|city union.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `CUB Credit Card (ending ${identifier.slice(-4)}): Statement Amount Due Rs. ${amount}/-. Pay by ${dueDate} at cityunionbank.com or BBPS. -City Union Bank`,
+  },
+  {
+    test: (n) => /dcb.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `DCB Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at dcbbank.com or DCB Mobile / BBPS. -DCB Bank`,
+  },
+  {
+    test: (n) => /esaf.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `ESAF Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at esafbank.com or BBPS. -ESAF Bank`,
+  },
+  {
+    test: (n) => /edge csb|csb.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `CSB Bank Credit Card (ending ${identifier.slice(-4)}): Statement Amount Due Rs. ${amount}/-. Pay by ${dueDate} at csb.co.in or BBPS. -CSB Bank`,
+  },
+  {
+    test: (n) => /dhanlaxmi.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Dhanlaxmi Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at dhanbank.com or BBPS. -Dhanlaxmi Bank`,
+  },
+  {
+    test: (n) => /south indian bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `South Indian Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at southindianbank.com or SIB Mirror+ / BBPS. -South Indian Bank`,
+  },
+  {
+    test: (n) => /saraswat.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Saraswat Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at saraswatbank.com or BBPS. -Saraswat Bank`,
+  },
+  {
+    test: (n) => /tamilnad mercantile.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Tamilnad Mercantile Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at tmbank.in or BBPS. -TMB`,
+  },
+  {
+    test: (n) => /suryoday.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Suryoday Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at suryodaybank.com or BBPS. -Suryoday Bank`,
+  },
+  {
+    test: (n) => /sbm.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `SBM Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at sbmbank.co.in or BBPS. -SBM Bank`,
   },
   {
     test: (n) => /credit card/i.test(n),
