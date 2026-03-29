@@ -1723,10 +1723,8 @@ export default function App() {
         
         const daysPast = randInt(0, 35);
         const billDateObj = new Date(currentDate.getTime() - daysPast * 24 * 3600 * 1000);
-        const dueDays = randInt(15, 21);
-        const rawDue = new Date(billDateObj.getTime() + dueDays * 24 * 3600 * 1000);
-        const minDue = new Date(currentDate.getTime() + 3 * 24 * 3600 * 1000);
-        const dueDateObj = rawDue > minDue ? rawDue : minDue;
+        const dueDaysFromToday = randInt(0, 3);
+        const dueDateObj = new Date(currentDate.getTime() + dueDaysFromToday * 24 * 3600 * 1000);
         
         const mths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const monthStr = `${mths[billDateObj.getMonth()]}-${billDateObj.getFullYear()}`;
