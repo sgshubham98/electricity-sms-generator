@@ -13,6 +13,38 @@ const getBrand = (name: string) => {
   return letters.padEnd(6, 'X').substring(0, 6);
 };
 
+const getCreditCardSenderHeader = (billerName: string): string => {
+  const n = billerName.toLowerCase();
+  if (/sbi card/i.test(n)) return 'SBICRD';
+  if (/hdfc.*pixel|hdfc.*credit/i.test(n)) return 'HDFCBK';
+  if (/icici.*credit/i.test(n)) return 'ICCCRD';
+  if (/axis.*credit/i.test(n)) return 'AXISBK';
+  if (/kotak.*credit/i.test(n)) return 'KOTAKM';
+  if (/idfc first.*credit/i.test(n)) return 'IDFCFB';
+  if (/indusind.*credit/i.test(n)) return 'INDUSB';
+  if (/yes bank.*credit/i.test(n)) return 'YESBAK';
+  if (/rbl.*credit/i.test(n)) return 'RBLBNK';
+  if (/au bank.*credit/i.test(n)) return 'AUBANK';
+  if (/bandhan.*credit/i.test(n)) return 'BNDHNB';
+  if (/federal bank.*credit/i.test(n)) return 'FDRLBK';
+  if (/hsbc.*credit/i.test(n)) return 'HSBCIN';
+  if (/dbs.*credit/i.test(n)) return 'DBSBIN';
+  if (/canara.*credit/i.test(n)) return 'CANBKC';
+  if (/bank of india.*credit/i.test(n)) return 'BOIBNK';
+  if (/bob.*credit|bobcard/i.test(n)) return 'BOBCRD';
+  if (/union bank.*credit/i.test(n)) return 'UNBNKC';
+  if (/punjab national bank.*credit/i.test(n)) return 'PNBCRD';
+  if (/idbi.*credit/i.test(n)) return 'IDBIBK';
+  if (/iob.*credit/i.test(n)) return 'IOBBNK';
+  if (/south indian bank.*credit/i.test(n)) return 'SIBBNK';
+  if (/indian bank.*credit/i.test(n)) return 'INDBNK';
+  if (/saraswat/i.test(n)) return 'SRSWBK';
+  if (/tamilnad mercantile.*credit/i.test(n)) return 'TMBNKC';
+  if (/suryoday.*credit/i.test(n)) return 'SRYDAY';
+  if (/sbm bank/i.test(n)) return 'SBMBKC';
+  return getBrand(billerName);
+};
+
 const getLsa = (state: string) => {
   const map: Record<string, string> = {
     'DELHI': 'D', 'MAHARASHTRA': 'M', 'KARNATAKA': 'K', 'TAMIL NADU': 'T', 'ANDHRA PRADESH': 'A', 'TELANGANA': 'A', 'KERALA': 'L', 'PUNJAB': 'P', 'GUJARAT': 'G', 'WEST BENGAL': 'K',
@@ -50,6 +82,7 @@ type SmsContext = {
   month: string;
   identifier: string;
   portal?: string;
+  minAmtDue?: number;
 };
 
 const stateShort = (state: string) => (state || 'NA').replace(/[^A-Z]/gi, '').toUpperCase().slice(0, 2).padEnd(2, 'X');
@@ -1230,7 +1263,7 @@ const billerSpecificRules: BillerRule[] = [
         : `${billerName}: Your account ${idSpec.label} ${identifier} needs recharge of Rs. ${amount}. Pay by ${dueDate}.`,
   },
 
-  // Financial Services
+  // Financial Services - Insurance
   {
     test: (n) => /insurance|life insurance/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
@@ -1238,179 +1271,158 @@ const billerSpecificRules: BillerRule[] = [
         ? `${billerName}: Premium due for ${idSpec.label} ${identifier}. Amount Rs. ${amount}. Payment deadline ${dueDate}. Visit ${portal}`
         : `${billerName}: Premium due for ${idSpec.label} ${identifier}. Amount Rs. ${amount}. Payment deadline ${dueDate}.`,
   },
+
+  // Credit Card — brand-specific rules (MUST appear before the generic loan|finance|bank rule)
+  {
+    test: (n) => /sbi card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Dear Cardmember, your SBI Card statement for Card ending ${identifier.slice(-4)} is ready. Total Amt Due: Rs. ${amount}/-. Min Amt Due: Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Payment Due Date: ${dueDate}. Pay at sbicard.com or YONO SBI. -SBICRD`,
+  },
+  {
+    test: (n) => /hdfc.*credit card|hdfc.*pixel/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Dear HDFC Bank Credit Card Member, stmt for Card ending ${identifier.slice(-4)}: Total Amt Due INR ${amount}; Min Amt Due INR ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}. Pmt due by ${dueDate}. Pay via NetBanking at netbanking.hdfcbank.com or PhoneBanking 1800-202-6161. -HDFCBK`,
+  },
+  {
+    test: (n) => /icici.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Your ICICI Bank Credit Card (ending ${identifier.slice(-4)}): Total Amt Due: Rs. ${amount}/-; Min Amt Due: Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Payment Due: ${dueDate}. Pay via iMobile Pay, Net Banking or BBPS. -ICCCRD`,
+  },
+  {
+    test: (n) => /axis.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Dear Axis Bank Credit Cardholder, Outstanding on Card ending ${identifier.slice(-4)}: Rs. ${amount}/-. Min Payment Due: Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Due Date: ${dueDate}. Pay via axisbank.com, Axis Mobile or 1860-419-5555. -AXISBK`,
+  },
+  {
+    test: (n) => /kotak.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Kotak Credit Card (ending ${identifier.slice(-4)}): Total Amt Due Rs. ${amount}/-. Min Amt Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at kotak.com/creditcard or Kotak app. Call: 1860-266-2666. -KOTAKM`,
+  },
+  {
+    test: (n) => /idfc first.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Dear IDFC FIRST Bank Customer, your Credit Card (ending ${identifier.slice(-4)}) statement is ready. Total Due: Rs. ${amount}/-. Min Due: Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Due Date: ${dueDate}. Pay at idfcfirstbank.com or FIRST app / BBPS. -IDFCFB`,
+  },
+  {
+    test: (n) => /indusind.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Dear IndusInd Bank Credit Card Holder, Total Outstanding on Card ending ${identifier.slice(-4)}: Rs. ${amount}/-. Min Amt Due: Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Due Date: ${dueDate}. Pay at indusind.com or IndusMobile / BBPS. -INDUSB`,
+  },
+  {
+    test: (n) => /yes bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Your YES Bank Credit Card (ending ${identifier.slice(-4)}) statement: Total Amt Due Rs. ${amount}/-. Min Amt Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Due Date: ${dueDate}. Pay at yesbank.in or YES PAY / BBPS to avoid interest charges. -YESBAK`,
+  },
+  {
+    test: (n) => /rbl.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Dear RBL Bank Credit Card Holder, Total Amount Due on Card ending ${identifier.slice(-4)}: Rs. ${amount}/-. Minimum Amount Due: Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at rblbank.com or Mogo app / BBPS. -RBLBNK`,
+  },
+  {
+    test: (n) => /au bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `AU Bank Credit Card (ending ${identifier.slice(-4)}): Statement Amount Due Rs. ${amount}/-. Minimum Amount Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at aubank.in or AU 0to1 app / BBPS. -AUBANK`,
+  },
+  {
+    test: (n) => /bandhan.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Bandhan Bank Credit Card (ending ${identifier.slice(-4)}): Total Due Rs. ${amount}/-. Min Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at bandhanbank.com or Bandhan mBanking / BBPS. -BNDHNB`,
+  },
+  {
+    test: (n) => /federal bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Federal Bank Credit Card (ending ${identifier.slice(-4)}): Total Due Rs. ${amount}/-. Min Amt Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} via FedMobile or federalbank.co.in / BBPS. -FDRLBK`,
+  },
+  {
+    test: (n) => /hsbc.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `HSBC Credit Card (ending ${identifier.slice(-4)}): Total Amount Due Rs. ${amount}/-. Minimum Amount Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Payment Due Date: ${dueDate}. Pay at hsbc.co.in or HSBC India app / BBPS. -HSBCIN`,
+  },
+  {
+    test: (n) => /dbs.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `DBS Bank Credit Card (ending ${identifier.slice(-4)}): Statement Amount Due Rs. ${amount}/-. Min Amt Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at dbs.com/in or digibank app / BBPS. -DBSBIN`,
+  },
+  {
+    test: (n) => /canara.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Canara Bank Credit Card (ending ${identifier.slice(-4)}): Total Amount Due Rs. ${amount}/-. Minimum Amount Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at canarabank.com or CanMobile / BBPS. -CANBKC`,
+  },
+  {
+    test: (n) => /bank of india.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Bank of India Credit Card (ending ${identifier.slice(-4)}): Total Amt Due Rs. ${amount}/-. Min Amt Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Due Date: ${dueDate}. Pay at bankofindia.co.in or BOI Mobile / BBPS. -BOIBNK`,
+  },
+  {
+    test: (n) => /bob.*credit card|bobcard/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `BOBCARD Credit Card (ending ${identifier.slice(-4)}): Total Outstanding Rs. ${amount}/-. Min Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Due Date: ${dueDate}. Pay at bobcard.co.in or BarodaPay app / BBPS. -BOBCRD`,
+  },
+  {
+    test: (n) => /union bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Union Bank of India Credit Card (ending ${identifier.slice(-4)}): Total Amt Due Rs. ${amount}/-. Min Amt Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Due Date: ${dueDate}. Pay at unionbankofindia.co.in or Union Bank app / BBPS. -UNBNKC`,
+  },
+  {
+    test: (n) => /punjab national bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `PNB Credit Card (ending ${identifier.slice(-4)}): Total Amount Due Rs. ${amount}/-. Minimum Amount Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at pnbindia.in or PNB ONE app / BBPS. -PNBCRD`,
+  },
+  {
+    test: (n) => /idbi.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `IDBI Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Minimum Payment Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at idbibank.in or Go Mobile+ / BBPS. -IDBIBK`,
+  },
+  {
+    test: (n) => /iob.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Indian Overseas Bank Credit Card (ending ${identifier.slice(-4)}): Total Due Rs. ${amount}/-. Min Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at iob.in or IOB Mobile / BBPS. -IOBBNK`,
+  },
+  {
+    test: (n) => /south indian bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `South Indian Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Minimum Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at southindianbank.com or SIB Mirror+ / BBPS. -SIBBNK`,
+  },
+  {
+    test: (n) => /indian bank.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Indian Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Minimum Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at indianbank.in or IndOASIS app / BBPS. -INDBNK`,
+  },
+  {
+    test: (n) => /saraswat/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Saraswat Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Min Amt Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at saraswatbank.com or BBPS. -SRSWBK`,
+  },
+  {
+    test: (n) => /tamilnad mercantile.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Tamilnad Mercantile Bank (TMB) Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Min Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at tmbank.in or TMB ONE app / BBPS. -TMBNKC`,
+  },
+  {
+    test: (n) => /suryoday.*credit card/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `Suryoday Small Finance Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Min Amt Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at suryodaybank.com or BBPS. -SRYDAY`,
+  },
+  {
+    test: (n) => /sbm bank/i.test(n),
+    buildSms: ({ identifier, amount, dueDate, minAmtDue }) =>
+      `SBM Bank India Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Min Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}/-. Pay by ${dueDate} at sbmbank.co.in or BBPS. -SBMBKC`,
+  },
+  {
+    test: (n) => /credit card/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec, minAmtDue }) =>
+      portal
+        ? `${billerName}: Credit Card ${idSpec.label} ${identifier} statement generated. Total Amt Due Rs. ${amount}. Min Amt Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}. Pay by ${dueDate} at ${portal}`
+        : `${billerName}: Credit Card ${idSpec.label} ${identifier} statement generated. Total Amt Due Rs. ${amount}. Min Amt Due Rs. ${minAmtDue ?? Math.max(200, Math.round(amount * 0.05 / 50) * 50)}. Pay by ${dueDate}.`,
+  },
+
+  // Financial Services — Loan/Bank (kept after credit card rules to avoid false matches on bank names)
   {
     test: (n) => /loan|finance|bank/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
       portal
         ? `${billerName}: EMI/Loan payment reminder for ${idSpec.label} ${identifier}. Amount Rs. ${amount} due on ${dueDate}. Pay at ${portal}`
         : `${billerName}: EMI/Loan payment reminder for ${idSpec.label} ${identifier}. Amount Rs. ${amount} due on ${dueDate}.`,
-  },
-  {
-    test: (n) => /sbi card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Dear SBI Card holder, your statement is generated. Card ending ${identifier.slice(-4)} Total Amount Due: Rs. ${amount}/-. Please pay on or before ${dueDate} to avoid late payment charges. Pay at sbicard.com or YONO app. -SBI Card`,
-  },
-  {
-    test: (n) => /hdfc.*credit card|hdfc.*pixel/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Dear HDFC Bank Credit Card member, statement for Card ending ${identifier.slice(-4)}: Total Amount Due Rs. ${amount}/-. Pay before ${dueDate} via netbanking.hdfcbank.com or PhoneBanking to avoid late fee. -HDFC Bank`,
-  },
-  {
-    test: (n) => /icici.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Your ICICI Bank Credit Card (ending ${identifier.slice(-4)}) statement: Total Amount Due Rs. ${amount}/-. Payment Due Date: ${dueDate}. Pay via iMobile Pay, Net Banking or BBPS. -ICICI Bank`,
-  },
-  {
-    test: (n) => /axis.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Dear Axis Bank Credit Card holder, your Card ending ${identifier.slice(-4)} has Total Outstanding of Rs. ${amount}/-. Last date for payment: ${dueDate}. Pay via axisbank.com, Axis Mobile or BBPS. -Axis Bank`,
-  },
-  {
-    test: (n) => /kotak.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Kotak Credit Card (ending ${identifier.slice(-4)}) statement: Total Due Rs. ${amount}/-. Payment Due Date ${dueDate}. Pay at kotak.com, Kotak app or BBPS. -Kotak Bank`,
-  },
-  {
-    test: (n) => /idfc first.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `IDFC FIRST Bank Credit Card (ending ${identifier.slice(-4)}) — Statement Amount Due: Rs. ${amount}/-. Please pay by ${dueDate} via idfcfirstbank.com or BBPS. -IDFC FIRST`,
-  },
-  {
-    test: (n) => /indusind.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `IndusInd Bank Credit Card (ending ${identifier.slice(-4)}): Total Amount Due Rs. ${amount}/-. Pay by ${dueDate} at indusind.com or IndusMobile / BBPS. -IndusInd Bank`,
-  },
-  {
-    test: (n) => /yes bank.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `YES Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Due Date ${dueDate}. Pay at yesbank.in or YES PAY / BBPS to avoid interest charges. -YES Bank`,
-  },
-  {
-    test: (n) => /rbl.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `RBL Bank Credit Card (ending ${identifier.slice(-4)}): Total Amount Due Rs. ${amount}/-. Last date for payment: ${dueDate}. Pay at rblbank.com or BBPS. -RBL Bank`,
-  },
-  {
-    test: (n) => /au bank.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `AU Bank Credit Card (ending ${identifier.slice(-4)}): Statement Amount Due Rs. ${amount}/-. Pay by ${dueDate} at aubank.in or AU 0to1 app / BBPS. -AU Bank`,
-  },
-  {
-    test: (n) => /bandhan.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Bandhan Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at bandhanbank.com or BBPS. -Bandhan Bank`,
-  },
-  {
-    test: (n) => /federal bank.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Federal Bank Credit Card (ending ${identifier.slice(-4)}): Total Due Rs. ${amount}/-. Payment Due: ${dueDate}. Pay at federalbank.co.in, FedMobile or BBPS. -Federal Bank`,
-  },
-  {
-    test: (n) => /hsbc.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `HSBC Credit Card (ending ${identifier.slice(-4)}): Minimum Amount Due or Total Due Rs. ${amount}/-. Pay by ${dueDate} at hsbc.co.in or HSBC India app / BBPS. -HSBC`,
-  },
-  {
-    test: (n) => /dbs.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `DBS Bank Credit Card (ending ${identifier.slice(-4)}): Statement Amount Due Rs. ${amount}/-. Pay by ${dueDate} at dbs.com/in or digibank app / BBPS. -DBS Bank`,
-  },
-  {
-    test: (n) => /canara.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Canara Bank Credit Card (ending ${identifier.slice(-4)}): Total Amount Due Rs. ${amount}/-. Pay by ${dueDate} at canarabank.com or BBPS. -Canara Bank`,
-  },
-  {
-    test: (n) => /bank of india.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Bank of India Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Due Date ${dueDate}. Pay at bankofindia.co.in or BOI Mobile / BBPS. -Bank of India`,
-  },
-  {
-    test: (n) => /bob.*credit card|bobcard/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `BoB Credit Card (ending ${identifier.slice(-4)}): Total Due Rs. ${amount}/-. Pay by ${dueDate} at bobcard.co.in or BarodaPay app / BBPS. -Bank of Baroda`,
-  },
-  {
-    test: (n) => /union bank.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Union Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at unionbankofindia.co.in or BBPS. -Union Bank`,
-  },
-  {
-    test: (n) => /punjab national bank.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `PNB Credit Card (ending ${identifier.slice(-4)}): Total Amount Due Rs. ${amount}/-. Pay by ${dueDate} at pnbindia.in or PNB ONE app / BBPS. -Punjab National Bank`,
-  },
-  {
-    test: (n) => /idbi.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `IDBI Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at idbibank.in or Go Mobile+ / BBPS. -IDBI Bank`,
-  },
-  {
-    test: (n) => /iob.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `IOB Credit Card (ending ${identifier.slice(-4)}): Total Due Rs. ${amount}/-. Pay by ${dueDate} at iob.in or IOB Mobile / BBPS. -Indian Overseas Bank`,
-  },
-  {
-    test: (n) => /indian bank.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Indian Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at indianbank.in or IndOASIS app / BBPS. -Indian Bank`,
-  },
-  {
-    test: (n) => /cub.*credit card|city union.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `CUB Credit Card (ending ${identifier.slice(-4)}): Statement Amount Due Rs. ${amount}/-. Pay by ${dueDate} at cityunionbank.com or BBPS. -City Union Bank`,
-  },
-  {
-    test: (n) => /dcb.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `DCB Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at dcbbank.com or DCB Mobile / BBPS. -DCB Bank`,
-  },
-  {
-    test: (n) => /esaf.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `ESAF Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at esafbank.com or BBPS. -ESAF Bank`,
-  },
-  {
-    test: (n) => /edge csb|csb.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `CSB Bank Credit Card (ending ${identifier.slice(-4)}): Statement Amount Due Rs. ${amount}/-. Pay by ${dueDate} at csb.co.in or BBPS. -CSB Bank`,
-  },
-  {
-    test: (n) => /dhanlaxmi.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Dhanlaxmi Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at dhanbank.com or BBPS. -Dhanlaxmi Bank`,
-  },
-  {
-    test: (n) => /south indian bank.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `South Indian Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at southindianbank.com or SIB Mirror+ / BBPS. -South Indian Bank`,
-  },
-  {
-    test: (n) => /saraswat.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Saraswat Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at saraswatbank.com or BBPS. -Saraswat Bank`,
-  },
-  {
-    test: (n) => /tamilnad mercantile.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Tamilnad Mercantile Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at tmbank.in or BBPS. -TMB`,
-  },
-  {
-    test: (n) => /suryoday.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `Suryoday Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at suryodaybank.com or BBPS. -Suryoday Bank`,
-  },
-  {
-    test: (n) => /sbm.*credit card/i.test(n),
-    buildSms: ({ identifier, amount, dueDate }) =>
-      `SBM Bank Credit Card (ending ${identifier.slice(-4)}): Amount Due Rs. ${amount}/-. Pay by ${dueDate} at sbmbank.co.in or BBPS. -SBM Bank`,
-  },
-  {
-    test: (n) => /credit card/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
-      portal
-        ? `${billerName}: Credit Card ${idSpec.label} ${identifier} statement generated. Amount due Rs. ${amount}. Pay by ${dueDate} at ${portal}`
-        : `${billerName}: Credit Card ${idSpec.label} ${identifier} statement generated. Amount due Rs. ${amount}. Pay by ${dueDate}.`,
   },
 
   // Transportation & Mobility
@@ -1510,14 +1522,14 @@ const billerSpecificRules: BillerRule[] = [
   },
 ];
 
-const buildBillerSpecificSms = ({ category, billerName, state, amount, dueDate, month, identifier }: SmsContext) => {
+const buildBillerSpecificSms = ({ category, billerName, state, amount, dueDate, month, identifier, minAmtDue }: SmsContext) => {
   const portalOrNull = getBillerSpecificPortal(billerName, category);
   const portal = portalOrNull || undefined;
   const idSpec = getIdentifierForBiller(category, billerName, state);
 
   const rule = billerSpecificRules.find((r) => r.test(billerName));
   if (rule) {
-    return rule.buildSms({ category, billerName, state, amount, dueDate, month, identifier, portal, idSpec });
+    return rule.buildSms({ category, billerName, state, amount, dueDate, month, identifier, portal, idSpec, minAmtDue });
   }
 
   // Unreachable fallback (handles optional portal)
@@ -1547,7 +1559,7 @@ export default function App() {
     return Array.from(cats).sort();
   }, []);
 
-  const [tab, setTab] = useState(uniqueCategories.includes('Electricity') ? 'Electricity' : uniqueCategories[0] || 'generator');
+  const [tab, setTab] = useState('Credit Card');
   const [filterType, setFilterType] = useState('state');
   const [activeState, setActiveState] = useState<string | null>(null);
   const [activeBoards, setActiveBoards] = useState<string[]>([]);
@@ -1632,6 +1644,7 @@ export default function App() {
         const dueDateStr = fmt(dueDateObj);
         const limits = getAmtLimits(tab);
         const numAmt = randFloat(limits.min, limits.max);
+        const minAmtDue = tab === 'Credit Card' ? Math.max(200, Math.round(numAmt * 0.05 / 50) * 50) : undefined;
         
         const outName = getDisplayBillerName(billerName, nameFormat);
         const idSpec = getIdentifierForBiller(tab, billerName, discom.State || 'Unknown');
@@ -1644,11 +1657,16 @@ export default function App() {
           dueDate: dueDateStr,
           month: monthStr,
           identifier: cno,
+          minAmtDue,
         });
+
+        const senderId = tab === 'Credit Card'
+          ? `${tsp}${lsa}-${getCreditCardSenderHeader(billerName)}`
+          : `${tsp}${lsa}-${brand}-${suffix}`;
         
         result.push({
           id: i + 1,
-          senderId: `${tsp}${lsa}-${brand}-${suffix}`,
+          senderId,
           board: billerName,
           state: discom.State || 'Unknown',
           category: tab,
