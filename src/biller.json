@@ -113093,5 +113093,15 @@
     "Biller Name": "Andaman and Nicobar Islands Integrated Development Corporation (ANIIDCO)",
     "State": "ANDAMAN AND NICOBAR ISLANDS",
     "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "UPPCL - Rural",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "UPPCL - Urban",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
   }
 ]
