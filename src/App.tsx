@@ -135,6 +135,20 @@ const paymentPortalRules: Array<{ test: RegExp; url: string }> = [
   { test: /co.?operative electric.*sircilla/i, url: 'https://sircillacoopelectric.in' },
   { test: /kanan devan hills/i, url: 'https://www.kdhp.co.in' },
   { test: /west bengal electricity/i, url: 'https://www.wbsedcl.in' },
+  { test: /durgapur projects/i, url: 'https://www.dpl.org.in' },
+  { test: /aniidco|andaman.*nicobar.*integrated/i, url: 'https://www.aniidco.nic.in' },
+  { test: /torrent power surat/i, url: 'https://www.torrentpower.com' },
+  { test: /torrent power bhiwandi/i, url: 'https://www.torrentpower.com' },
+  { test: /jamshedpur utilities|jusco\b/i, url: 'https://www.juscoservices.com' },
+  { test: /pvvnl|paschimanchal vidyut/i, url: 'https://www.pvvnl.org' },
+  { test: /dvvnl|dakshinanchal vidyut/i, url: 'https://www.dvvnl.org' },
+  { test: /mvvnl|madhyanchal vidyut/i, url: 'https://www.mvvnl.org' },
+  { test: /puvvnl|purvanchal vidyut/i, url: 'https://www.puvvnl.gov.in' },
+  { test: /kesco|kanpur electricity supply/i, url: 'https://www.kesco.co.in' },
+  // EV Recharge
+  { test: /charge mod/i, url: 'https://www.chargemod.com' },
+  { test: /tata power ev charging/i, url: 'https://www.tatapower-ev.com' },
+  { test: /zeon electric/i, url: 'https://www.zeon.in' },
 
   // Telecom
   { test: /airtel/i, url: 'https://www.airtel.in' },
@@ -369,6 +383,21 @@ const getElectricityIdentifier = (billerName: string, state: string) => {
   if (/kanan devan hills/.test(n)) return { label: 'Consumer No.', value: randDigits(8) };
   // TP Renewables
   if (/tp.*renewables.*microgrid/.test(n)) return { label: 'Account No.', value: `TPR${randDigits(7)}` };
+  // Uttar Pradesh DISCOMs — 10-digit Account No.
+  if (/pvvnl|paschimanchal vidyut/.test(n)) return { label: 'Account No.', value: randDigits(10) };
+  if (/dvvnl|dakshinanchal vidyut/.test(n)) return { label: 'Account No.', value: randDigits(10) };
+  if (/mvvnl|madhyanchal vidyut/.test(n)) return { label: 'Account No.', value: randDigits(10) };
+  if (/puvvnl|purvanchal vidyut/.test(n)) return { label: 'Account No.', value: randDigits(10) };
+  if (/kesco|kanpur electricity supply/.test(n)) return { label: 'Account No.', value: randDigits(10) };
+  // Durgapur Projects Limited — 11-digit Consumer No.
+  if (/durgapur projects/.test(n)) return { label: 'Consumer No.', value: randDigits(11) };
+  // ANIIDCO — Andaman & Nicobar
+  if (/aniidco|andaman.*nicobar.*integrated/.test(n)) return { label: 'Consumer No.', value: randDigits(10) };
+  // Torrent Power Surat and Bhiwandi — 9-digit Consumer No.
+  if (/torrent power surat/.test(n)) return { label: 'Consumer No.', value: randDigits(9) };
+  if (/torrent power bhiwandi/.test(n)) return { label: 'Consumer No.', value: randDigits(9) };
+  // JUSCO — 12-digit BP No.
+  if (/jamshedpur utilities|jusco\b/.test(n)) return { label: 'BP No.', value: randDigits(12) };
   // Generic fallbacks
   if (/prepaid/.test(n)) return { label: 'Meter No.', value: `${stateShort(state)}${randDigits(10)}` };
   if (/north|south|east|west/.test(n)) return { label: 'CA No.', value: `${stateShort(state)}${randDigits(10)}` };
@@ -442,7 +471,7 @@ const getCategoryIdentifier = (category: string, billerName: string) => {
   if (c === 'mobile postpaid' || c === 'mobile prepaid') return { label: 'Mobile No.', value: `9${randDigits(9)}` };
   if (c === 'landline postpaid') return { label: 'Landline No.', value: `0${randDigits(10)}` };
   if (c === 'ncmc recharge') return { label: 'NCMC Card ID', value: `NCMC${randDigits(8)}` };
-  if (c === 'ev recharge') return { label: 'Charger Account', value: `EV${randDigits(10)}` };
+  if (c === 'ev recharge') return { label: 'Account No.', value: `EV${randDigits(10)}` };
   if (c === 'fleet card recharge') return { label: 'Fleet Card No.', value: `FC${randDigits(10)}` };
   if (c === 'municipal taxes' || c === 'municipal services') return { label: 'Property ID', value: `PROP${randDigits(8)}` };
   if (c === 'rental') return { label: 'Tenancy Ref', value: `TEN${randDigits(9)}` };
@@ -505,7 +534,32 @@ const billerSpecificRules: BillerRule[] = [
       `Dear Consumer, electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at uppclonline.com, BBPS, or nearest Jan Suvidha/Mitra centre. -${billerName}`,
   },
 
-  // Karnataka boards — each uses RR No. with distinct board-specific portal
+  // UP Distribution Companies — Account No., uppclonline.com payment portal
+  {
+    test: (n) => /pvvnl|paschimanchal vidyut/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at pvvnl.org or uppclonline.com / BBPS to avoid disconnection. -PVVNL`,
+  },
+  {
+    test: (n) => /dvvnl|dakshinanchal vidyut/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at dvvnl.org or uppclonline.com / BBPS to avoid disconnection. -DVVNL`,
+  },
+  {
+    test: (n) => /mvvnl|madhyanchal vidyut/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at mvvnl.org or uppclonline.com / BBPS to avoid disconnection. -MVVNL`,
+  },
+  {
+    test: (n) => /puvvnl|purvanchal vidyut/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at puvvnl.gov.in or uppclonline.com / BBPS to avoid disconnection. -PuVVNL`,
+  },
+  {
+    test: (n) => /kesco|kanpur electricity supply/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at kesco.co.in or BBPS to avoid disconnection. -KESCO`,
+  },
   {
     test: (n) => /hescom|hubli electricity/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
@@ -598,6 +652,11 @@ const billerSpecificRules: BillerRule[] = [
     buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
       `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Last payment date: ${dueDate}. Pay at jbvnl.co.in or BBPS / CSC. -JBVNL`,
   },
+  {
+    test: (n) => /jamshedpur utilities|jusco\b/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName} bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay via juscoservices.com or BBPS. -JUSCO`,
+  },
 
   // Telangana — 10-digit SC no
   {
@@ -647,7 +706,17 @@ const billerSpecificRules: BillerRule[] = [
       `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mppkvvcl.co.in or BBPS. -MPPKVVCL`,
   },
 
-  // Torrent Power — prompt pay concession phrasing
+  // Torrent Power — prompt pay concession phrasing (specific regions before generic)
+  {
+    test: (n) => /torrent power surat/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Rs. ${amount}/- is due for ${billerName} Consumer No. ${identifier} against ${month}. Due: ${dueDate}. Pay at torrentpower.com to avail prompt payment concession. -Torrent Power Surat`,
+  },
+  {
+    test: (n) => /torrent power bhiwandi/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Rs. ${amount}/- is due for ${billerName} Consumer No. ${identifier} against ${month}. Due: ${dueDate}. Pay at torrentpower.com to avail prompt payment concession. -Torrent Power Bhiwandi`,
+  },
   {
     test: (n) => /torrent power/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, month, portal }) =>
@@ -679,6 +748,11 @@ const billerSpecificRules: BillerRule[] = [
     test: (n) => /wbsedcl|west bengal.*electricity/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
       `Dear Consumer, your ${billerName} electricity bill for Consumer ID ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at wbsedcl.in, Jibika kiosks, or BBPS to avoid disconnection. -WBSEDCL`,
+  },
+  {
+    test: (n) => /durgapur projects/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dpl.org.in or BBPS. -DPL`,
   },
 
   // BEST Mumbai — 6-digit Consumer No.
@@ -867,6 +941,13 @@ const billerSpecificRules: BillerRule[] = [
       `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Please pay at the nearest Electricity Department office or BBPS. -Lakshadweep Electricity`,
   },
 
+  // Andaman & Nicobar Islands (ANIIDCO)
+  {
+    test: (n) => /aniidco|andaman.*nicobar.*integrated/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at aniidco.nic.in or nearest BBPS outlet. -ANIIDCO`,
+  },
+
   // Dadra and Nagar Haveli Power
   {
     test: (n) => /dadra.*nagar.*haveli.*power|dnhpdcl\b/i.test(n),
@@ -982,6 +1063,29 @@ const billerSpecificRules: BillerRule[] = [
   },
 
   // Gas boards — board-specific identifiers and portals
+  {
+    test: (n) => /charge mod/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, portal }) =>
+      portal
+        ? `${billerName}: EV charging wallet recharge of Rs. ${amount} due for Account No. ${identifier} by ${dueDate}. Recharge at ${portal} or BBPS. -Charge MOD`
+        : `${billerName}: EV charging wallet recharge of Rs. ${amount} due for Account No. ${identifier} by ${dueDate}. Use the Charge MOD app or BBPS to recharge. -Charge MOD`,
+  },
+  {
+    test: (n) => /tata power ev charging/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, portal }) =>
+      portal
+        ? `${billerName}: EV charging account No. ${identifier} requires recharge of Rs. ${amount} by ${dueDate}. Recharge at ${portal} or BBPS. -Tata Power EV`
+        : `${billerName}: EV charging account No. ${identifier} requires recharge of Rs. ${amount} by ${dueDate}. Visit tatapower-ev.com or BBPS to recharge. -Tata Power EV`,
+  },
+  {
+    test: (n) => /zeon electric/i.test(n),
+    buildSms: ({ billerName, identifier, amount, dueDate, portal }) =>
+      portal
+        ? `${billerName}: EV charging account No. ${identifier} needs recharge of Rs. ${amount} by ${dueDate}. Recharge at ${portal} or BBPS. -Zeon Electric`
+        : `${billerName}: EV charging account No. ${identifier} needs recharge of Rs. ${amount} by ${dueDate}. Visit zeon.in or BBPS to recharge. -Zeon Electric`,
+  },
+
+  // Gas boards
   {
     test: (n) => /indraprastha gas|igl\b/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
@@ -1489,8 +1593,8 @@ const billerSpecificRules: BillerRule[] = [
       }
       if (/ev|electric|charging/i.test(catLower)) {
         return portal
-          ? `${billerName}: EV charging account ${idSpec.label} ${identifier} requires balance of Rs. ${amount}. Top-up by ${dueDate} at ${portal}`
-          : `${billerName}: EV charging account ${idSpec.label} ${identifier} requires balance of Rs. ${amount}. Top-up by ${dueDate}.`;
+          ? `${billerName}: EV charging wallet ${idSpec.label} ${identifier} requires balance of Rs. ${amount}. Recharge by ${dueDate} at ${portal}`
+          : `${billerName}: EV charging wallet ${idSpec.label} ${identifier} requires balance of Rs. ${amount}. Recharge by ${dueDate}.`;
       }
       if (/fleet|vehicle/i.test(catLower)) {
         return portal
