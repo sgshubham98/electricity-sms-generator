@@ -39,7 +39,7 @@ function buildGeneratedRows(
     const billerName = discom['Biller Name'] || 'Unknown';
 
     const lsa = getLsa(state);
-    const brand = getBrand(billerName);
+    const brand = getBrand(tab, billerName);
     const isGovt = billerName.toLowerCase().includes('municipal') || state.toLowerCase() === 'pan india govt';
     const suffix = isGovt ? 'G' : 'S';
 
@@ -59,12 +59,14 @@ function buildGeneratedRows(
 
     const outName = getDisplayBillerName(billerName, nameFormat);
     const identifier = getIdentifierForBiller(tab, billerName, state).value;
+    const smsBillerName = tab === 'Credit Card' ? billerName : outName;
     const sms = buildBillerSpecificSms({
       category: tab,
-      billerName: outName,
+      billerName: smsBillerName,
       state,
       amount: numAmt,
       dueDate: dueDateStr,
+      billDate: billDateStr,
       month: monthStr,
       identifier,
     });
@@ -72,7 +74,7 @@ function buildGeneratedRows(
     result.push({
       id: i + 1,
       senderId: `${tsp}${lsa}-${brand}-${suffix}`,
-      board: billerName,
+      board: outName,
       state,
       category: tab,
       consumerNo: identifier,
@@ -128,7 +130,7 @@ export function useSmsGeneratorPage() {
   const [filterType, setFilterType] = useState<FilterType>('state');
   const [activeState, setActiveState] = useState<string | null>(null);
   const [activeBoards, setActiveBoards] = useState<string[]>([]);
-  const [nameFormat, setNameFormat] = useState<NameFormat>('full_name_with_abbrv');
+  const [nameFormat, setNameFormat] = useState<NameFormat>('none');
   const [count, setCount] = useState(1);
   const [view, setView] = useState<ViewMode>('card');
   const [data, setData] = useState<GeneratedRow[]>([]);

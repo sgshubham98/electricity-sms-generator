@@ -6,6 +6,7 @@ type SmsContext = {
   state: string;
   amount: number;
   dueDate: string;
+  billDate?: string;
   month: string;
   identifier: string;
   portal?: string;
@@ -130,42 +131,44 @@ const paymentPortalRules: Array<{ test: RegExp; url: string }> = [
   
   // Finance & Insurance
   { test: /insurance|life insurance|policy/i, url: 'https://www.irdai.gov.in' },
-  { test: /sbi|state bank|bank/i, url: 'https://www.onlinesbh.com' },
-  { test: /hdfc|icici|axis|hdbank/i, url: 'https://www.bharatbillpay.com' },
   
   // Credit Cards — bank-specific portals (before generic bank/finance rules)
-  { test: /sbi card/i, url: 'https://www.sbicard.com' },
-  { test: /hdfc.*credit card|hdfc.*pixel/i, url: 'https://www.hdfcbank.com' },
-  { test: /icici.*credit card/i, url: 'https://www.icicibank.com' },
-  { test: /axis.*credit card/i, url: 'https://www.axisbank.com' },
-  { test: /kotak.*credit card/i, url: 'https://www.kotak.com' },
-  { test: /idfc first.*credit card/i, url: 'https://www.idfcfirstbank.com' },
-  { test: /indusind.*credit card/i, url: 'https://www.indusind.com' },
-  { test: /yes bank.*credit card/i, url: 'https://www.yesbank.in' },
-  { test: /rbl.*credit card/i, url: 'https://www.rblbank.com' },
-  { test: /au bank.*credit card/i, url: 'https://www.aubank.in' },
-  { test: /bandhan.*credit card/i, url: 'https://www.bandhanbank.com' },
-  { test: /federal bank.*credit card/i, url: 'https://www.federalbank.co.in' },
-  { test: /hsbc.*credit card/i, url: 'https://www.hsbc.co.in' },
-  { test: /dbs.*credit card/i, url: 'https://www.dbs.com/in' },
-  { test: /canara.*credit card/i, url: 'https://www.canarabank.com' },
-  { test: /bank of india.*credit card/i, url: 'https://www.bankofindia.co.in' },
-  { test: /bob.*credit card|bobcard/i, url: 'https://www.bobcard.co.in' },
-  { test: /union bank.*credit card/i, url: 'https://www.unionbankofindia.co.in' },
-  { test: /punjab national bank.*credit card/i, url: 'https://www.pnbindia.in' },
-  { test: /idbi.*credit card/i, url: 'https://www.idbibank.in' },
-  { test: /iob.*credit card/i, url: 'https://www.iob.in' },
-  { test: /indian bank.*credit card/i, url: 'https://www.indianbank.in' },
-  { test: /cub.*credit card|city union.*credit card/i, url: 'https://www.cityunionbank.com' },
-  { test: /dcb.*credit card/i, url: 'https://www.dcbbank.com' },
-  { test: /esaf.*credit card/i, url: 'https://www.esafbank.com' },
-  { test: /edge csb|csb.*credit card/i, url: 'https://www.csb.co.in' },
-  { test: /dhanlaxmi.*credit card/i, url: 'https://www.dhanbank.com' },
-  { test: /south indian bank.*credit card/i, url: 'https://www.southindianbank.com' },
-  { test: /saraswat.*credit card/i, url: 'https://www.saraswatbank.com' },
-  { test: /tamilnad mercantile.*credit card/i, url: 'https://www.tmbank.in' },
-  { test: /suryoday.*credit card/i, url: 'https://www.suryodaybank.com' },
-  { test: /sbm.*credit card/i, url: 'https://www.sbmbank.co.in' },
+  { test: /sbi card/i, url: 'https://www.sbicard.com/online/portal' },
+  { test: /hdfc.*credit card|hdfc.*pixel/i, url: 'https://www.hdfcbank.com/credit-cards/payment' },
+  { test: /icici.*credit card/i, url: 'https://www.icicibank.com/credit-card/payment' },
+  { test: /axis.*credit card/i, url: 'https://www.axisbank.com/credit-cards/payments' },
+  { test: /kotak.*credit card/i, url: 'https://www.kotak.com/credit-card-bill-payments' },
+  { test: /idfc first.*credit card/i, url: 'https://www.idfcfirstbank.com/credit-card-payment' },
+  { test: /indusind.*credit card/i, url: 'https://www.indusind.com/credit-card-bill-payment' },
+  { test: /yes bank.*credit card/i, url: 'https://www.yesbank.in/credit-card-services' },
+  { test: /rbl.*credit card/i, url: 'https://www.rblbank.com/credit-cards' },
+  { test: /au bank.*credit card/i, url: 'https://www.aubank.in/credit-cards' },
+  { test: /bandhan.*credit card/i, url: 'https://www.bandhanbank.com/credit-card-payment' },
+  { test: /federal bank.*credit card/i, url: 'https://www.federalbank.co.in/credit-cards' },
+  { test: /hsbc.*credit card/i, url: 'https://www.hsbc.co.in/credit-cards' },
+  { test: /dbs.*credit card/i, url: 'https://www.dbs.com/in/credit-cards' },
+  { test: /canara.*credit card/i, url: 'https://www.canarabank.com/credit-card-payments' },
+  { test: /bank of india.*credit card/i, url: 'https://www.bankofindia.co.in/credit-card-payment' },
+  { test: /bob.*credit card|bobcard/i, url: 'https://www.bobcard.co.in/payment' },
+  { test: /union bank.*credit card/i, url: 'https://www.unionbankofindia.co.in/credit-card-payment' },
+  { test: /punjab national bank.*credit card/i, url: 'https://www.pnbindia.in/credit-card-payment' },
+  { test: /idbi.*credit card/i, url: 'https://www.idbibank.in/credit-card-payment' },
+  { test: /iob.*credit card/i, url: 'https://www.iob.in/credit-cards' },
+  { test: /indian bank.*credit card/i, url: 'https://www.indianbank.in/credit-card-payment' },
+  { test: /cub.*credit card|city union.*credit card/i, url: 'https://www.cityunionbank.com/credit-card-payment' },
+  { test: /dcb.*credit card/i, url: 'https://www.dcbbank.com/credit-cards' },
+  { test: /esaf.*credit card/i, url: 'https://www.esafbank.com/credit-cards' },
+  { test: /edge csb|csb.*credit card/i, url: 'https://www.csb.co.in/credit-card-payment' },
+  { test: /dhanlaxmi.*credit card/i, url: 'https://www.dhanbank.com/credit-cards' },
+  { test: /south indian bank.*credit card/i, url: 'https://www.southindianbank.com/credit-card-payment' },
+  { test: /saraswat.*credit card/i, url: 'https://www.saraswatbank.com/credit-card-payment' },
+  { test: /tamilnad mercantile.*credit card/i, url: 'https://www.tmbank.in/credit-cards' },
+  { test: /suryoday.*credit card/i, url: 'https://www.suryodaybank.com/credit-card-payment' },
+  { test: /sbm.*credit card/i, url: 'https://www.sbmbank.co.in/credit-cards' },
+
+  // Generic bank rules kept last so they do not override credit-card-specific links
+  { test: /sbi|state bank|bank/i, url: 'https://www.sbi.co.in' },
+  { test: /hdfc|icici|axis|hdbank/i, url: 'https://www.bharatbillpay.com' },
 
   // Gas & LPG
   { test: /igl|indraprastha gas/i, url: 'https://www.iglonline.net' },
@@ -1342,10 +1345,122 @@ const billerSpecificRules: BillerRule[] = [
   },
 ];
 
-export const buildBillerSpecificSms = ({ category, billerName, state, amount, dueDate, month, identifier }: SmsContext) => {
+const formatMoney = (value: number) => new Intl.NumberFormat('en-IN', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+}).format(value);
+
+const normalizePortal = (portal?: string) => portal ? portal.replace(/^https?:\/\//i, '').replace(/\/+$/, '') : '';
+
+const getCreditCardIssuerLabel = (billerName: string) => {
+  if (/sbi\s*card/i.test(billerName)) return 'SBI Card';
+  if (/hdfc/i.test(billerName)) return 'HDFC Bank';
+  if (/icici/i.test(billerName)) return 'ICICI Bank';
+  if (/axis/i.test(billerName)) return 'Axis Bank';
+  if (/kotak/i.test(billerName)) return 'Kotak Bank';
+  if (/yes\s*bank/i.test(billerName)) return 'YES Bank';
+  if (/idfc\s*first/i.test(billerName)) return 'IDFC First Bank';
+  if (/indusind/i.test(billerName)) return 'IndusInd Bank';
+  if (/rbl/i.test(billerName)) return 'RBL Bank';
+  if (/federal/i.test(billerName)) return 'Federal Bank';
+  if (/au\s*bank/i.test(billerName)) return 'AU Bank';
+  if (/bandhan/i.test(billerName)) return 'Bandhan Bank';
+  if (/bank of baroda|bobcard|\bbob\b/i.test(billerName)) return 'BOB Card';
+  if (/bank of india/i.test(billerName)) return 'Bank of India';
+  if (/canara/i.test(billerName)) return 'Canara Bank';
+  if (/city\s*union|\bcub\b/i.test(billerName)) return 'City Union Bank';
+  if (/dbs/i.test(billerName)) return 'DBS Bank';
+  if (/dcb/i.test(billerName)) return 'DCB Bank';
+  if (/dhanlaxmi/i.test(billerName)) return 'Dhanlaxmi Bank';
+  if (/edge\s*csb|\bcsb\b/i.test(billerName)) return 'CSB Bank';
+  if (/esaf/i.test(billerName)) return 'ESAF Bank';
+  if (/hsbc/i.test(billerName)) return 'HSBC Bank';
+  if (/idbi/i.test(billerName)) return 'IDBI Bank';
+  if (/\biob\b|indian\s*overseas/i.test(billerName)) return 'Indian Overseas Bank';
+  if (/indian\s*bank/i.test(billerName)) return 'Indian Bank';
+  if (/punjab\s*national|\bpnb\b/i.test(billerName)) return 'PNB Card';
+  if (/saraswat/i.test(billerName)) return 'Saraswat Bank';
+  if (/sbm\s*bank/i.test(billerName)) return 'SBM Bank';
+  if (/south\s*indian|\bsib\b/i.test(billerName)) return 'South Indian Bank';
+  if (/suryoday/i.test(billerName)) return 'Suryoday Bank';
+  if (/tamilnad\s*mercantile|\btmb\b/i.test(billerName)) return 'Tamilnad Mercantile Bank';
+  if (/union\s*bank/i.test(billerName)) return 'Union Bank';
+  return 'Credit Card';
+};
+
+const buildCreditCardStatementSms = ({ billerName, amount, dueDate, billDate, identifier, portal }: SmsContext) => {
+  const minDue = Math.max(200, Math.round(amount * 0.05));
+  const cardLast4 = identifier.slice(-4);
+  const stmtDate = billDate || new Date().toLocaleDateString('en-IN');
+  const portalText = normalizePortal(portal);
+  const payLine = portalText ? `Pay at ${portalText}.` : 'Pay via BBPS or your bank app.';
+  const amountDue = `Rs. ${formatMoney(amount)}`;
+  const minimumDue = `Rs. ${formatMoney(minDue)}`;
+  const issuerLabel = getCreditCardIssuerLabel(billerName);
+
+  if (/sbi\s*card/i.test(billerName)) {
+    return `Statement generated on ${stmtDate}. Card ending ${cardLast4}. Total Amt Due ${amountDue}. Min Amt Due ${minimumDue}. Due by ${dueDate}. ${payLine}`;
+  }
+
+  if (/hdfc/i.test(billerName)) {
+    return `HDFC Bank: Credit Card statement for card ending ${cardLast4} is ready. Amt Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+  }
+
+  if (/icici/i.test(billerName)) {
+    return `ICICI Bank: Credit card statement generated for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Payment due by ${dueDate}. ${payLine}`;
+  }
+
+  if (/axis/i.test(billerName)) {
+    return `Axis Bank: Credit card statement for card ending ${cardLast4} has been generated. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+  }
+
+  if (/kotak/i.test(billerName)) {
+    return `Kotak Bank: Statement generated for card ending ${cardLast4}. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+  }
+
+  if (/yes\s*bank|yes bank/i.test(billerName)) {
+    return `YES Bank: Credit card bill ready for card ending ${cardLast4}. Total Due ${amountDue}. Min Due ${minimumDue}. Pay by ${dueDate}. ${payLine}`;
+  }
+
+  if (/idfc\s*first|idfc first bank/i.test(billerName)) {
+    return `IDFC First Bank: Statement generated for card ending ${cardLast4} on ${stmtDate}. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+  }
+
+  if (/bank of baroda|bobcard|\bbob\b/i.test(billerName)) {
+    return `BOB Card: Credit card statement for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+  }
+
+  if (/union bank/i.test(billerName)) {
+    return `Union Bank: Credit card statement for card ending ${cardLast4} is ready. Total Due ${amountDue}. Min Due ${minimumDue}. Payment Due ${dueDate}. ${payLine}`;
+  }
+
+  if (/canara/i.test(billerName)) {
+    return `Canara Bank: Credit card bill for card ending ${cardLast4} is ready. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+  }
+
+  if (/indian bank/i.test(billerName)) {
+    return `Indian Bank: Credit card statement for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Pay by ${dueDate}. ${payLine}`;
+  }
+
+  if (/punjab national/i.test(billerName)) {
+    return `PNB Card: Statement generated for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+  }
+
+  if (/au bank/i.test(billerName)) {
+    return `AU Bank: Credit card statement for card ending ${cardLast4} is ready. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+  }
+
+  return `Credit card statement for card ending ${cardLast4} is ready. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+};
+
+export const buildBillerSpecificSms = ({ category, billerName, state, amount, dueDate, billDate, month, identifier }: SmsContext) => {
   const portalOrNull = getBillerSpecificPortal(billerName, category);
   const portal = portalOrNull || undefined;
   const idSpec = getIdentifierForBiller(category, billerName, state);
+
+  if ((category || '').toLowerCase() === 'credit card') {
+    return buildCreditCardStatementSms({ category, billerName, state, amount, dueDate, billDate, month, identifier, portal });
+  }
 
   const rule = billerSpecificRules.find((r) => r.test(billerName));
   if (rule) {
