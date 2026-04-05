@@ -1,0 +1,147 @@
+[
+  {
+    "category": "Agent Collection",
+    "count": 4,
+    "file": "src/biller_categories/agent_collection.json"
+  },
+  {
+    "category": "Broadband Postpaid",
+    "count": 394,
+    "file": "src/biller_categories/broadband_postpaid.json"
+  },
+  {
+    "category": "Cable TV",
+    "count": 69,
+    "file": "src/biller_categories/cable_tv.json"
+  },
+  {
+    "category": "Clubs and Associations",
+    "count": 34,
+    "file": "src/biller_categories/clubs_and_associations.json"
+  },
+  {
+    "category": "Credit Card",
+    "count": 35,
+    "file": "src/biller_categories/credit_card.json"
+  },
+  {
+    "category": "Donation",
+    "count": 83,
+    "file": "src/biller_categories/donation.json"
+  },
+  {
+    "category": "DTH",
+    "count": 6,
+    "file": "src/biller_categories/dth.json"
+  },
+  {
+    "category": "eChallan",
+    "count": 4,
+    "file": "src/biller_categories/echallan.json"
+  },
+  {
+    "category": "Education Fees",
+    "count": 20590,
+    "file": "src/biller_categories/education_fees.json"
+  },
+  {
+    "category": "Electricity",
+    "count": 107,
+    "file": "src/biller_categories/electricity.json"
+  },
+  {
+    "category": "EV Recharge",
+    "count": 3,
+    "file": "src/biller_categories/ev_recharge.json"
+  },
+  {
+    "category": "Fastag",
+    "count": 30,
+    "file": "src/biller_categories/fastag.json"
+  },
+  {
+    "category": "Fleet Card Recharge",
+    "count": 2,
+    "file": "src/biller_categories/fleet_card_recharge.json"
+  },
+  {
+    "category": "Gas",
+    "count": 39,
+    "file": "src/biller_categories/gas.json"
+  },
+  {
+    "category": "Housing Society",
+    "count": 365,
+    "file": "src/biller_categories/housing_society.json"
+  },
+  {
+    "category": "Insurance",
+    "count": 63,
+    "file": "src/biller_categories/insurance.json"
+  },
+  {
+    "category": "Landline Postpaid",
+    "count": 9,
+    "file": "src/biller_categories/landline_postpaid.json"
+  },
+  {
+    "category": "Loan Repayment",
+    "count": 507,
+    "file": "src/biller_categories/loan_repayment.json"
+  },
+  {
+    "category": "LPG Gas",
+    "count": 4,
+    "file": "src/biller_categories/lpg_gas.json"
+  },
+  {
+    "category": "Mobile Postpaid",
+    "count": 11,
+    "file": "src/biller_categories/mobile_postpaid.json"
+  },
+  {
+    "category": "Mobile Prepaid",
+    "count": 2,
+    "file": "src/biller_categories/mobile_prepaid.json"
+  },
+  {
+    "category": "Municipal Services",
+    "count": 14,
+    "file": "src/biller_categories/municipal_services.json"
+  },
+  {
+    "category": "Municipal Taxes",
+    "count": 93,
+    "file": "src/biller_categories/municipal_taxes.json"
+  },
+  {
+    "category": "National Pension System",
+    "count": 1,
+    "file": "src/biller_categories/national_pension_system.json"
+  },
+  {
+    "category": "NCMC Recharge",
+    "count": 7,
+    "file": "src/biller_categories/ncmc_recharge.json"
+  },
+  {
+    "category": "Prepaid Meter",
+    "count": 10,
+    "file": "src/biller_categories/prepaid_meter.json"
+  },
+  {
+    "category": "Rental",
+    "count": 20,
+    "file": "src/biller_categories/rental.json"
+  },
+  {
+    "category": "Subscription",
+    "count": 46,
+    "file": "src/biller_categories/subscription.json"
+  },
+  {
+    "category": "Water",
+    "count": 69,
+    "file": "src/biller_categories/water.json"
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "Biller Name": "Airtel Postpaid",
+    "State": "DELHI",
+    "Billers": "Mobile Postpaid"
+  },
+  {
+    "Biller Name": "Airtel Postpaid (Fetch and Pay)",
+    "State": "DELHI",
+    "Billers": "Mobile Postpaid"
+  },
+  {
+    "Biller Name": "BSNL Mobile Postpaid",
+    "State": "DELHI",
+    "Billers": "Mobile Postpaid"
+  },
+  {
+    "Biller Name": "Jio Postpaid",
+    "State": "MAHARASHTRA",
+    "Billers": "Mobile Postpaid"
+  },
+  {
+    "Biller Name": "Jio Postpaid (Fetch and Pay)",
+    "State": "MAHARASHTRA",
+    "Billers": "Mobile Postpaid"
+  },
+  {
+    "Biller Name": "MTNL Delhi Dolphin",
+    "State": "DELHI",
+    "Billers": "Mobile Postpaid"
+  },
+  {
+    "Biller Name": "MTNL Mumbai Dolphin",
+    "State": "MAHARASHTRA",
+    "Billers": "Mobile Postpaid"
+  },
+  {
+    "Biller Name": "Tata Teleservices",
+    "State": "DELHI",
+    "Billers": "Mobile Postpaid"
+  },
+  {
+    "Biller Name": "Vi Postpaid (Fetch and Pay)",
+    "State": "MAHARASHTRA",
+    "Billers": "Mobile Postpaid"
+  },
+  {
+    "Biller Name": "Vi Postpaid",
+    "State": "MAHARASHTRA",
+    "Billers": "Mobile Postpaid"
+  },
+  {
+    "Biller Name": "Wiwanet Solution Pvt Ltd",
+    "State": "KERALA",
+    "Billers": "Mobile Postpaid"
+  }
+]

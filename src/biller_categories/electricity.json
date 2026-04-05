@@ -1,0 +1,537 @@
+[
+  {
+    "Biller Name": "AEML SEEPZ Limited",
+    "State": "GUJARAT",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Andhra Pradesh Central Power Distribution Corporation Limited",
+    "State": "ANDHRA PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Assam Power Distribution Company Ltd (NON-RAPDR)",
+    "State": "ASSAM",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Assam Power Distribution Company Ltd- Smart Prepaid Recharge",
+    "State": "ASSAM",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Ajmer Vidyut Vitran Nigam Limited (AVVNL)",
+    "State": "RAJASTHAN",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Bangalore Electricity Supply Co. Ltd (BESCOM)",
+    "State": "KARNATAKA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Bharatpur Electricity Services Ltd. (BESL)",
+    "State": "RAJASTHAN",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "B.E.S.T Mumbai",
+    "State": "MAHARASHTRA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Bikaner Electricity Supply Limited (BkESL)",
+    "State": "WEST BENGAL",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "BSES Rajdhani Prepaid Meter Recharge",
+    "State": "DELHI",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "BSES Yamuna Prepaid Meter Recharge",
+    "State": "DELHI",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "BSES Rajdhani Power Limited",
+    "State": "DELHI",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "BSES Yamuna Power Limited",
+    "State": "DELHI",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "CESC Limited",
+    "State": "WEST BENGAL",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Chamundeshwari Electricity Supply Corp Ltd (CESCOM)",
+    "State": "KARNATAKA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "TP Central Odisha Distribution Ltd.",
+    "State": "ODISHA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Chhattisgarh State Power Distribution Co. Ltd",
+    "State": "CHHATTISGARH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Dadra and Nagar Haveli and Daman and Diu Power Distribution Corporation Limited",
+    "State": "DADRA AND NAGAR HAVELI",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Dakshin Gujarat Vij Company Limited (DGVCL)-Fetch and pay",
+    "State": "GUJARAT",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Department of Power, Government of Arunachal Pradesh - Prepaid",
+    "State": "ARUNACHAL PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Department of Power, Government of Arunachal Pradesh",
+    "State": "ARUNACHAL PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Dakshin Haryana Bijli Vitran Nigam (DHBVN)",
+    "State": "HARYANA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Department of Power, Nagaland",
+    "State": "NAGALAND",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Electricity Department Chandigarh",
+    "State": "CHANDIGARH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Goa Electricity Department",
+    "State": "GOA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Gulbarga Electricity Supply Company Limited",
+    "State": "KARNATAKA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Gift Power Company Limited",
+    "State": "GUJARAT",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Government of Puducherry Electricity Department",
+    "State": "PUDUCHERRY",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Hubli Electricity Supply Company Ltd (HESCOM)",
+    "State": "KARNATAKA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Himachal Pradesh State Electricity Board",
+    "State": "HIMACHAL PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Hukkeri Rural Electric CoOperative Society Ltd",
+    "State": "KARNATAKA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "India Power Corporation Limited (IPCL)",
+    "State": "WEST BENGAL",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "India Power Prepaid Meter",
+    "State": "WEST BENGAL",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Jammu Power Distribution Corporation (JPDCL)",
+    "State": "JAMMU AND KASHMIR",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Kashmir Power Distribution Corporation Ltd (KPDCL)",
+    "State": "JAMMU AND KASHMIR",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Jharkhand Bijli Vitran Nigam Limited (JBVNL)",
+    "State": "JHARKHAND",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Jodhpur Vidyut Vitran Nigam Limited (JDVVNL)",
+    "State": "RAJASTHAN",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Jharkhand Bijli Vitran Nigam Limited - Prepaid Meter Recharge",
+    "State": "JHARKHAND",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Tata Steel UISL",
+    "State": "JHARKHAND",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Jaipur Vidyut Vitran Nigam (JVVNL)",
+    "State": "RAJASTHAN",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Kanan Devan Hills Plantations Company Private Limited",
+    "State": "KERALA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Kota Electricity Distribution Limited (KEDL)",
+    "State": "WEST BENGAL",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Kinesco Power and Utilities Pvt Ltd",
+    "State": "KERALA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Kerala State Electricity Board Ltd. (KSEBL)",
+    "State": "KERALA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Ladakh Power Development Department (LPDD)",
+    "State": "JAMMU AND KASHMIR",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Lakshadweep Electricity Department",
+    "State": "LAKSHADWEEP",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Madhya Gujarat Vij Company Limited (MGVCL)-Fetch and pay",
+    "State": "GUJARAT",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Maharashtra State Electricity Distbn Co Ltd",
+    "State": "MAHARASHTRA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Mangalore Electricity Supply Company LTD (Non RAPDR)",
+    "State": "KARNATAKA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Manipur State Power Distribution Company Limited",
+    "State": "MANIPUR",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "MePDCL Smart Prepaid Meter Recharge",
+    "State": "MEGHALAYA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Mangalore Electricity Supply Co. Ltd (MESCOM) - RAPDR",
+    "State": "KARNATAKA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "M.P. Madhya Kshetra Vidyut Vitaran - URBAN",
+    "State": "MADHYA PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "M.P. Madhya Kshetra Vidyut Vitaran - RURAL",
+    "State": "MADHYA PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Meghalaya Power Dist Corp Ltd",
+    "State": "MEGHALAYA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "M.P. Poorv Kshetra Vidyut Vitaran Jabalpur",
+    "State": "MADHYA PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "M.P. Paschim Kshetra Vidyut Vitaran",
+    "State": "MADHYA PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "North Bihar Power Distribution Company Ltd.",
+    "State": "BIHAR",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "New Delhi Municipal Council (NDMC) - Electricity",
+    "State": "DELHI",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "TP Northern Odisha Distribution Limited",
+    "State": "ODISHA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Noida Power",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Paschim Gujarat Vij Company Limited (PGVCL)-Fetch and pay",
+    "State": "GUJARAT",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Power and Electricity Department - Mizoram - 10 Digit Consumer Number",
+    "State": "MIZORAM",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Punjab State Power Corporation Ltd (PSPCL)",
+    "State": "PUNJAB",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Adani Electricity Mumbai Limited",
+    "State": "MAHARASHTRA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "South Bihar Power Distribution Company Ltd.",
+    "State": "BIHAR",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Sikkim Power - RURAL",
+    "State": "SIKKIM",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Sikkim Power - URBAN",
+    "State": "SIKKIM",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "TP Southern Odisha Distribution Limited",
+    "State": "ODISHA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Tata Power - Delhi",
+    "State": "DELHI",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Tata Power - Mumbai",
+    "State": "MAHARASHTRA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "The Co operative Electric Supply Society Ltd Sircilla",
+    "State": "TELANGANA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Northern Power Distribution Company of Telangana Limited",
+    "State": "TELANGANA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Southern Power Distribution Company of Telangana Limited",
+    "State": "TELANGANA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Thrissur Corporation Electricity Department",
+    "State": "KERALA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Tamil Nadu Power Distribution Corporation Limited (TNPDCL)",
+    "State": "TAMIL NADU",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Torrent Power",
+    "State": "GUJARAT",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "TP Ajmer Distribution Ltd (TPADL)",
+    "State": "MAHARASHTRA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "TP Renewables Microgrid Ltd.",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "TP Southen Odisha Distribution Ltd-Smart Prepaid Meter Recharge",
+    "State": "ODISHA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "TP Western Odisha Distribution Ltd-Smart Prepaid Meter Recharge",
+    "State": "ODISHA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Tripura Electricity Corp Ltd",
+    "State": "TRIPURA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "TTD Electricity",
+    "State": "ANDHRA PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Uttar Haryana Bijli Vitran Nigam (UHBVN)",
+    "State": "HARYANA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "UPPCL-Postpaid and Smart Prepaid Meter Recharge",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Uttar Gujarat Vij Company Limited (UGVCL)-Fetch and pay",
+    "State": "GUJARAT",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Uttarakhand Power Corporation Limited",
+    "State": "UTTARAKHAND",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Uttarakhand Power Corporation Limited - Smart Prepaid Recharge",
+    "State": "UTTARAKHAND",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "UPPCL CTS Prepaid Meter (GENUS)",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Vaghani Energy Limited",
+    "State": "GUJARAT",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "TP Western Odisha Distribution Limited",
+    "State": "ODISHA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "West Bengal Electricity",
+    "State": "WEST BENGAL",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "West Bengal Electricity Prepaid",
+    "State": "WEST BENGAL",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Eastern Power Distribution Company of Andhra Pradesh (APEPDCL)",
+    "State": "ANDHRA PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Southern Power Distribution Company of Andhra Pradesh (APSPDCL)",
+    "State": "ANDHRA PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Torrent Power Surat",
+    "State": "GUJARAT",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Jamshedpur Utilities and Services Company Limited (JUSCO)",
+    "State": "JHARKHAND",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Torrent Power Bhiwandi",
+    "State": "MAHARASHTRA",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Paschimanchal Vidyut Vitaran Nigam Limited (PVVNL)",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Dakshinanchal Vidyut Vitaran Nigam Limited (DVVNL)",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Madhyanchal Vidyut Vitaran Nigam Limited (MVVNL)",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Purvanchal Vidyut Vitaran Nigam Limited (PuVVNL)",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Kanpur Electricity Supply Company (KESCO)",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Durgapur Projects Limited",
+    "State": "WEST BENGAL",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "Andaman and Nicobar Islands Integrated Development Corporation (ANIIDCO)",
+    "State": "ANDAMAN AND NICOBAR ISLANDS",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "UPPCL - Rural",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  },
+  {
+    "Biller Name": "UPPCL - Urban",
+    "State": "UTTAR PRADESH",
+    "Billers": "Electricity"
+  }
+]
