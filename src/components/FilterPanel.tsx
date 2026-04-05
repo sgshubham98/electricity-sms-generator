@@ -51,16 +51,16 @@ export function FilterPanel({
   onGenerateAllSelected,
 }: FilterPanelProps) {
   return (
-    <div style={{ background: '#1e293b', border: '1px solid #334155', padding: '20px', borderRadius: '12px' }}>
-      <h2 style={{ color: '#fff', marginTop: 0, marginBottom: '20px', fontSize: '20px' }}>Configure {tab} Set</h2>
+    <div style={{ background: 'var(--bg-elev)', border: '1px solid var(--border)', padding: '20px', borderRadius: '12px', boxShadow: 'var(--shadow)' }}>
+      <h2 style={{ color: 'var(--text)', marginTop: 0, marginBottom: '20px', fontSize: '20px', fontWeight: 600 }}>Configure {tab} Set</h2>
       <div style={{ display: 'flex', gap: '20px', marginBottom: '16px', alignItems: 'center' }}>
-        <div style={{ display: 'flex', gap: '8px', background: '#0f172a', padding: '4px', borderRadius: '8px' }}>
+        <div style={{ display: 'flex', gap: '8px', background: 'var(--bg-muted)', border: '1px solid var(--border)', padding: '4px', borderRadius: '8px' }}>
           {canFilterByState && (
             <button
               onClick={() => setFilterType('state')}
               style={{
-                background: filterType === 'state' ? '#475569' : 'transparent',
-                color: '#f8fafc',
+                background: filterType === 'state' ? 'var(--bg-soft)' : 'transparent',
+                color: 'var(--text)',
                 border: 'none',
                 padding: '8px 16px',
                 borderRadius: '4px',
@@ -73,8 +73,8 @@ export function FilterPanel({
           <button
             onClick={() => setFilterType('board')}
             style={{
-              background: filterType === 'board' ? '#475569' : 'transparent',
-              color: '#f8fafc',
+              background: filterType === 'board' ? 'var(--bg-soft)' : 'transparent',
+              color: 'var(--text)',
               border: 'none',
               padding: '8px 16px',
               borderRadius: '4px',
@@ -86,14 +86,14 @@ export function FilterPanel({
         </div>
         <button
           onClick={() => setShowInfo(!showInfo)}
-          style={{ marginLeft: 'auto', background: 'transparent', border: '1px solid #8b5cf6', color: '#8b5cf6', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer' }}
+          style={{ marginLeft: 'auto', background: 'transparent', border: '1px solid var(--border-strong)', color: 'var(--text)', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer' }}
         >
           TRAI Info
         </button>
       </div>
 
       {showInfo && (
-        <div style={{ background: '#312e81', color: '#e0e7ff', padding: '16px', borderRadius: '8px', marginBottom: '20px', fontSize: '14px', lineHeight: '1.5' }}>
+        <div style={{ background: 'var(--bg-muted)', color: 'var(--text-muted)', border: '1px solid var(--border)', padding: '16px', borderRadius: '8px', marginBottom: '20px', fontSize: '14px', lineHeight: '1.5' }}>
           <strong>TRAI DLT Sender ID Rules:</strong> XY-ZZZZZZ-G/S
           <br />
           X: TSP Code | Y: LSA Code
@@ -109,7 +109,7 @@ export function FilterPanel({
           <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
             <button
               onClick={() => setActiveState(null)}
-              style={{ background: '#334155', border: 'none', color: '#fff', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px' }}
+              style={{ background: 'var(--bg-soft)', border: '1px solid var(--border)', color: 'var(--text)', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px' }}
             >
               All States ({activeDataList.length} Billers)
             </button>
@@ -117,14 +117,16 @@ export function FilterPanel({
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {states.map((s) => (
               <div
+                className="ui-chip"
                 key={s.state}
                 onClick={() => setActiveState(activeState === s.state ? null : s.state)}
                 style={{
-                  background: activeState === s.state ? '#3b82f6' : '#1e293b',
-                  border: `1px solid ${activeState === s.state ? '#60a5fa' : '#475569'}`,
+                  background: activeState === s.state ? 'var(--primary-weak)' : 'var(--bg-elev)',
+                  border: `1px solid ${activeState === s.state ? 'var(--primary)' : 'var(--border)'}`,
                   padding: '8px 16px',
                   borderRadius: '20px',
                   cursor: 'pointer',
+                  color: 'var(--text)',
                   fontSize: '14px',
                   display: 'flex',
                   alignItems: 'center',
@@ -133,7 +135,7 @@ export function FilterPanel({
                 }}
               >
                 {s.state}
-                <span style={{ background: '#0f172a', color: '#cbd5e1', padding: '2px 8px', borderRadius: '10px', fontSize: '12px' }}>{s.num}</span>
+                <span style={{ background: 'var(--bg-soft)', color: 'var(--text-muted)', padding: '2px 8px', borderRadius: '10px', fontSize: '12px' }}>{s.num}</span>
               </div>
             ))}
           </div>
@@ -146,11 +148,11 @@ export function FilterPanel({
               placeholder={`Search among ${activeDataList.length} billers...`}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ background: '#0f172a', border: '1px solid #475569', color: '#f8fafc', padding: '8px 12px', borderRadius: '6px', outline: 'none', minWidth: '250px' }}
+              style={{ background: 'var(--bg-muted)', border: '1px solid var(--border)', color: 'var(--text)', padding: '8px 12px', borderRadius: '6px', outline: 'none', minWidth: '250px' }}
             />
             <button
               onClick={() => setActiveBoards([])}
-              style={{ background: '#334155', border: 'none', color: '#fff', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px' }}
+              style={{ background: 'var(--bg-soft)', border: '1px solid var(--border)', color: 'var(--text)', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '13px' }}
             >
               Clear Selection
             </button>
@@ -162,16 +164,20 @@ export function FilterPanel({
               const color = '#3b82f6';
               return (
                 <div
+                  className="ui-chip"
                   key={nameStr}
                   onClick={() => toggleBoard(nameStr)}
                   style={{
-                    background: active ? color : '#1e293b',
-                    border: `1px solid ${color}`,
-                    color: '#fff',
-                    padding: '6px 12px',
-                    borderRadius: '6px',
+                    background: active ? 'var(--primary-weak)' : 'var(--bg-elev)',
+                    border: `1px solid ${active ? 'var(--primary)' : 'var(--border)'}`,
+                    color: 'var(--text)',
+                    padding: '8px 16px',
+                    borderRadius: '20px',
                     cursor: 'pointer',
-                    fontSize: '13px',
+                    fontSize: '14px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
                     transition: 'all 0.2s',
                   }}
                 >
@@ -179,7 +185,7 @@ export function FilterPanel({
                 </div>
               );
             })}
-            {filteredBoards.length > 100 && <div style={{ padding: '6px 12px', color: '#94a3b8', fontSize: '13px' }}>+ {filteredBoards.length - 100} more</div>}
+            {filteredBoards.length > 100 && <div style={{ padding: '6px 12px', color: 'var(--text-muted)', fontSize: '13px' }}>+ {filteredBoards.length - 100} more</div>}
           </div>
         </div>
       )}
@@ -193,30 +199,30 @@ export function FilterPanel({
             max="1000"
             value={count}
             onChange={(e) => setCount(Number(e.target.value))}
-            style={{ width: '80px', background: '#0f172a', border: '1px solid #475569', color: '#fff', padding: '8px', borderRadius: '6px', textAlign: 'center' }}
+            style={{ width: '80px', background: 'var(--bg-muted)', border: '1px solid var(--border)', color: 'var(--text)', padding: '8px', borderRadius: '6px', textAlign: 'center' }}
           />
           <span>records</span>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '16px', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '14px', color: '#cbd5e1' }}>Biller Name Format:</span>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '14px', color: '#cbd5e1' }}>
+          <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Biller Name Format:</span>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '14px', color: 'var(--text-muted)' }}>
             <input
               type="radio"
               name="nameFormat"
               checked={nameFormat === 'full_name'}
               onChange={() => setNameFormat('full_name')}
-              style={{ cursor: 'pointer', accentColor: '#ec4899' }}
+              style={{ cursor: 'pointer', accentColor: 'var(--primary)' }}
             />
             Full Name
           </label>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '14px', color: '#cbd5e1' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '14px', color: 'var(--text-muted)' }}>
             <input
               type="radio"
               name="nameFormat"
               checked={nameFormat === 'full_name_with_abbrv'}
               onChange={() => setNameFormat('full_name_with_abbrv')}
-              style={{ cursor: 'pointer', accentColor: '#ec4899' }}
+              style={{ cursor: 'pointer', accentColor: 'var(--primary)' }}
             />
             Full Name with Abbrv (from JSON)
           </label>
@@ -224,13 +230,13 @@ export function FilterPanel({
 
         <button
           onClick={onGenerateRandom}
-          style={{ background: 'linear-gradient(90deg, #ec4899, #8b5cf6)', border: 'none', color: '#fff', padding: '10px 24px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', minWidth: '150px' }}
+          style={{ background: 'var(--primary)', border: 'none', color: '#fff', padding: '10px 24px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', minWidth: '150px' }}
         >
           Generate Random
         </button>
         <button
           onClick={onGenerateAllSelected}
-          style={{ background: 'linear-gradient(90deg, #10b981, #3b82f6)', border: 'none', color: '#fff', padding: '10px 24px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', minWidth: '150px' }}
+          style={{ background: 'var(--success)', border: 'none', color: '#fff', padding: '10px 24px', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', minWidth: '150px' }}
         >
           Generate All Selected
         </button>

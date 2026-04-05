@@ -21,24 +21,26 @@ export function CategoryDropdown({
 }: CategoryDropdownProps) {
   return (
     <div
-      style={{ display: 'flex', gap: '8px', marginBottom: '20px', alignItems: 'center', position: 'relative' }}
+      style={{ display: 'flex', gap: '8px', marginBottom: '0', alignItems: 'center', position: 'relative' }}
       onClick={(e) => e.stopPropagation()}
     >
       <div style={{ position: 'relative', minWidth: '250px' }}>
         <div
+          className="ui-chip"
           onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
           style={{
-            background: '#3b82f6',
-            color: '#fff',
-            border: '1px solid #60a5fa',
+            background: 'var(--bg-elev)',
+            color: 'var(--text)',
+            border: '1px solid var(--border-strong)',
             padding: '10px 16px',
             borderRadius: '8px',
             cursor: 'pointer',
-            fontWeight: 'bold',
+            fontWeight: 600,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             userSelect: 'none',
+            boxShadow: 'var(--shadow)',
           }}
         >
           <span>{tab}</span>
@@ -52,11 +54,11 @@ export function CategoryDropdown({
               top: 'calc(100% + 4px)',
               left: 0,
               right: 0,
-              background: '#1e293b',
-              border: '1px solid #475569',
+              background: 'var(--bg-elev)',
+              border: '1px solid var(--border)',
               borderRadius: '8px',
               zIndex: 1000,
-              boxShadow: '0 10px 15px rgba(0,0,0,0.3)',
+              boxShadow: 'var(--shadow)',
             }}
           >
             <input
@@ -67,10 +69,10 @@ export function CategoryDropdown({
               onClick={(e) => e.stopPropagation()}
               style={{
                 width: '100%',
-                background: '#0f172a',
+                background: 'var(--bg-muted)',
                 border: 'none',
-                borderBottom: '1px solid #475569',
-                color: '#f8fafc',
+                borderBottom: '1px solid var(--border)',
+                color: 'var(--text)',
                 padding: '10px 12px',
                 borderRadius: '7px 7px 0 0',
                 outline: 'none',
@@ -83,6 +85,7 @@ export function CategoryDropdown({
                 .filter((cat) => cat.toLowerCase().includes(categorySearch.toLowerCase()))
                 .map((cat, idx) => (
                   <div
+                    className="ui-chip"
                     key={cat}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -91,20 +94,20 @@ export function CategoryDropdown({
                       setCategorySearch('');
                     }}
                     style={{
-                      background: tab === cat ? '#3b82f6' : idx % 2 === 0 ? '#0f172a' : '#1e293b',
-                      color: '#f8fafc',
+                      background: tab === cat ? 'var(--primary-weak)' : idx % 2 === 0 ? 'var(--bg-muted)' : 'var(--bg-elev)',
+                      color: 'var(--text)',
                       padding: '10px 12px',
                       cursor: 'pointer',
-                      borderBottom: '1px solid #334155',
+                      borderBottom: '1px solid var(--border)',
                       transition: 'all 0.1s',
                       fontSize: '14px',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#334155';
+                      e.currentTarget.style.background = 'var(--bg-soft)';
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background =
-                        tab === cat ? '#3b82f6' : idx % 2 === 0 ? '#0f172a' : '#1e293b';
+                        tab === cat ? 'var(--primary-weak)' : idx % 2 === 0 ? 'var(--bg-muted)' : 'var(--bg-elev)';
                     }}
                   >
                     {cat}
