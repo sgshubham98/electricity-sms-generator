@@ -45,6 +45,19 @@ const getCreditCardSenderHeader = (billerName: string): string => {
   return getBrand(billerName);
 };
 
+const getMobilePostpaidSenderHeader = (billerName: string): string => {
+  const n = billerName.toLowerCase();
+  if (/airtel.*postpaid/i.test(n)) return 'AIRTEL';
+  if (/jio.*postpaid/i.test(n)) return 'JIOPOS';
+  if (/vi.*postpaid/i.test(n)) return 'VILIND';
+  if (/bsnl.*postpaid/i.test(n)) return 'BSNLIN';
+  if (/mtnl.*delhi.*dolphin/i.test(n)) return 'MTNLDL';
+  if (/mtnl.*mumbai.*dolphin/i.test(n)) return 'MTNLMB';
+  if (/tata teleservices/i.test(n)) return 'TTSLTD';
+  if (/wiwanet/i.test(n)) return 'WIWNET';
+  return getBrand(billerName);
+};
+
 const getLsa = (state: string) => {
   const map: Record<string, string> = {
     'DELHI': 'D', 'MAHARASHTRA': 'M', 'KARNATAKA': 'K', 'TAMIL NADU': 'T', 'ANDHRA PRADESH': 'A', 'TELANGANA': 'A', 'KERALA': 'L', 'PUNJAB': 'P', 'GUJARAT': 'G', 'WEST BENGAL': 'K',
@@ -1203,7 +1216,49 @@ const billerSpecificRules: BillerRule[] = [
         : `${billerName}: Invoice for ${idSpec.label} ${identifier} is ready. Amount Rs. ${amount}/-, due by ${dueDate}.`,
   },
 
-  // Telecom
+  // Telecom - Mobile Postpaid (provider-specific)
+  {
+    test: (n) => /airtel postpaid/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Airtel Reminder: Bill for Mobile No. ${identifier} is generated. Total due Rs.${amount}/-. Please pay by ${dueDate} via Airtel Thanks App or airtel.in/postpaid-bill-pay. Late fee applies after due date. -AIRTEL`,
+  },
+  {
+    test: (n) => /jio postpaid/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Jio Postpaid Alert: Bill for Jio number ${identifier} is Rs.${amount}/-. Due date: ${dueDate}. Pay via MyJio App or jio.com to avoid service restriction and late charges. -JIOPOS`,
+  },
+  {
+    test: (n) => /vi postpaid/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Vi Bill Reminder: Mobile No. ${identifier} has outstanding Rs.${amount}/-. Pay by ${dueDate} on Vi App or myvi.in. Delay may attract late payment charges. -VILIND`,
+  },
+  {
+    test: (n) => /bsnl.*mobile.*postpaid/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `BSNL Postpaid: Bill for Mobile No. ${identifier} is Rs.${amount}/-. Due on ${dueDate}. Pay at portal.bsnl.in, BSNL Selfcare app, or nearest CSC/BSNL counter. -BSNLIN`,
+  },
+  {
+    test: (n) => /mtnl delhi dolphin/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `MTNL Delhi Dolphin bill for No. ${identifier}: Rs.${amount}/-. Due Date ${dueDate}. Pay via mtnl.net.in or authorized MTNL payment center. -MTNLDL`,
+  },
+  {
+    test: (n) => /mtnl mumbai dolphin/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `MTNL Mumbai Dolphin bill for No. ${identifier}: Rs.${amount}/-. Due Date ${dueDate}. Pay via mtnlmumbai.in or authorized MTNL payment center. -MTNLMB`,
+  },
+  {
+    test: (n) => /tata teleservices/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Tata Teleservices payment alert: Account ${identifier} bill amount Rs.${amount}/-. Please pay by ${dueDate} through billpay.tatatel.co.in or authorized channels. -TTSLTD`,
+  },
+  {
+    test: (n) => /wiwanet solution/i.test(n),
+    buildSms: ({ identifier, amount, dueDate }) =>
+      `Wiwanet Postpaid bill for ${identifier} is Rs.${amount}/-. Payment due on ${dueDate}. Pay via official Wiwanet billing portal or support desk to avoid suspension. -WIWNET`,
+  },
+
+  // Telecom (generic fallback)
   {
     test: (n) => /airtel/i.test(n),
     buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
@@ -1559,7 +1614,7 @@ export default function App() {
     return Array.from(cats).sort();
   }, []);
 
-  const [tab, setTab] = useState('Credit Card');
+  const [tab, setTab] = useState('Mobile Postpaid');
   const [filterType, setFilterType] = useState('state');
   const [activeState, setActiveState] = useState<string | null>(null);
   const [activeBoards, setActiveBoards] = useState<string[]>([]);
@@ -1662,7 +1717,9 @@ export default function App() {
 
         const senderId = tab === 'Credit Card'
           ? `${tsp}${lsa}-${getCreditCardSenderHeader(billerName)}`
-          : `${tsp}${lsa}-${brand}-${suffix}`;
+          : tab === 'Mobile Postpaid'
+            ? `${tsp}${lsa}-${getMobilePostpaidSenderHeader(billerName)}`
+            : `${tsp}${lsa}-${brand}-${suffix}`;
         
         result.push({
           id: i + 1,
