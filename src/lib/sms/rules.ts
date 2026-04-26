@@ -1,11 +1,34 @@
 import { getIdentifierForBiller } from './identifiers';
 
+const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// DD Mon YYYY  →  15 Jan 2026
+const fmtDDMonYYYY = (d: Date) =>
+  `${d.getDate().toString().padStart(2, '0')} ${MONTHS_SHORT[d.getMonth()]} ${d.getFullYear()}`;
+
+// DD-Mon-YYYY  →  15-Jan-2026
+const fmtDDHypMonYYYY = (d: Date) =>
+  `${d.getDate().toString().padStart(2, '0')}-${MONTHS_SHORT[d.getMonth()]}-${d.getFullYear()}`;
+
+// DD-MM-YYYY  →  15-01-2026
+const fmtDDMMYYYY = (d: Date) =>
+  `${d.getDate().toString().padStart(2, '0')}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getFullYear()}`;
+
+// DD/MM/YYYY  →  15/01/2026
+const fmtDDMMYYYYSlash = (d: Date) =>
+  `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
+
+// DDMONYY  →  15JAN26  (HDFC compact format)
+const fmtCompact = (d: Date) =>
+  `${d.getDate().toString().padStart(2, '0')}${MONTHS_SHORT[d.getMonth()].toUpperCase()}${d.getFullYear().toString().slice(-2)}`;
+
 type SmsContext = {
   category: string;
   billerName: string;
   state: string;
   amount: number;
   dueDate: string;
+  dueDateRaw: Date;
   billDate?: string;
   month: string;
   identifier: string;
@@ -250,11 +273,9 @@ const billerSpecificRules: BillerRule[] = [
   },
   {
     test: (n) => /msedcl|mahadiscom|maharashtra state electricity distbn/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate }) => {
-      const dParts = dueDate.split('-');
-      const dDate = new Date(`${dParts[2]}-${dParts[1]}-${dParts[0]}T00:00:00`);
-      const earlyDateObj = new Date(dDate.getTime() - 5 * 24 * 3600 * 1000);
-      const earlyDateStr = `${earlyDateObj.getDate().toString().padStart(2, '0')}-${(earlyDateObj.getMonth() + 1).toString().padStart(2, '0')}-${earlyDateObj.getFullYear()}`;
+    buildSms: ({ billerName, identifier, amount, dueDate, dueDateRaw }) => {
+      const earlyDateObj = new Date(dueDateRaw.getTime() - 5 * 24 * 3600 * 1000);
+      const earlyDateStr = fmtDDMMYYYY(earlyDateObj);
       const earlyAmt = Math.round((amount - 10) * 100) / 100;
       return `Rs. ${amount}/- is the electricity bill for Consumer No. ${identifier}. If paid by ${earlyDateStr} pay only Rs. ${earlyAmt}/- (early payment discount). Due Date: ${dueDate}. Pay online at wss.mahadiscom.in or scan UPI QR on your physical bill. -${billerName}`;
     },
@@ -1005,34 +1026,88 @@ const billerSpecificRules: BillerRule[] = [
         : `${billerName}: Invoice for ${idSpec.label} ${identifier} is ready. Amount Rs. ${amount}/-, due by ${dueDate}.`,
   },
 
-  // Telecom
+  // Broadband Postpaid — named providers with hardcoded brand names and correct date formats
+  {
+    test: (n) => /act fibernet/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Dear ACT Customer, your broadband bill for Account No. ${identifier} is Rs. ${amount}/-. Due Date: ${fmtDDHypMonYYYY(dueDateRaw)}. Pay at actcorp.in or ACT Mobile App. -ACT Fibernet`,
+  },
+  {
+    test: (n) => /airtel.*broadband|airtel.*wi.?fi|airtel.*fiber/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Dear Customer, your Airtel broadband bill for Account No. ${identifier} is Rs. ${amount}. Pay by ${fmtDDMonYYYY(dueDateRaw)} at airtel.in or My Airtel App. -AIRTEL`,
+  },
+  {
+    test: (n) => /hathway/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Hathway: Bill for Account No. ${identifier} is Rs. ${amount}/-. Due Date: ${fmtDDHypMonYYYY(dueDateRaw)}. Pay at hathway.com or BBPS. -Hathway`,
+  },
+  {
+    test: (n) => /den.*broadband|den.*network/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `DEN Networks: Broadband bill for Account ${identifier} is Rs. ${amount}/-. Due: ${fmtDDMMYYYY(dueDateRaw)}. Pay at den.in or BBPS. -DEN Networks`,
+  },
+  {
+    test: (n) => /excitel/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Dear Customer, Excitel broadband bill for Account No. ${identifier} is Rs. ${amount}/-. Due: ${fmtDDMMYYYY(dueDateRaw)}. Pay at excitel.in or BBPS. -Excitel`,
+  },
+  {
+    test: (n) => /tikona/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Tikona: Broadband bill for Account No. ${identifier} is Rs. ${amount}/-. Due Date: ${fmtDDMMYYYY(dueDateRaw)}. Pay at tikona.in or BBPS. -Tikona`,
+  },
+  {
+    test: (n) => /you broadband/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `YOU Broadband: Bill for Account ${identifier} is Rs. ${amount}/-. Due: ${fmtDDMMYYYY(dueDateRaw)}. Pay at youbroadband.in or BBPS. -YOU Broadband`,
+  },
+  {
+    test: (n) => /tata.*play.*fiber|tata.*fiber|tata.*sky.*broadband/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Dear Customer, your Tata Play Fiber bill for Account No. ${identifier} is Rs. ${amount}/-. Due Date: ${fmtDDHypMonYYYY(dueDateRaw)}. Pay at tataplay.com or BBPS. -Tata Play Fiber`,
+  },
+  {
+    test: (n) => /bsnl.*broadband|bsnl.*fiber/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Dear BSNL Customer, your broadband bill for Account No. ${identifier} is Rs. ${amount}/-. Due Date: ${fmtDDMMYYYY(dueDateRaw)}. Pay at portal.bsnl.in or nearest Franchise/CSC. -BSNL`,
+  },
+
+  // Mobile Postpaid — hardcoded brand names (not raw JSON biller name), per-carrier date formats
+  {
+    test: (n) => /mtnl.*delhi|delhi.*dolphin/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `MTNL Delhi: Mobile bill for Account No. ${identifier} is Rs. ${amount}/-. Due Date: ${fmtDDMMYYYY(dueDateRaw)}. Pay at mtnlonline.com or nearest MTNL office. -MTNL Delhi`,
+  },
+  {
+    test: (n) => /mtnl.*mumbai|mumbai.*dolphin/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `MTNL Mumbai: Mobile bill for Account No. ${identifier} is Rs. ${amount}/-. Due Date: ${fmtDDMMYYYY(dueDateRaw)}. Pay at mtnlonline.com or nearest MTNL office. -MTNL Mumbai`,
+  },
+  {
+    test: (n) => /tata teleservices/i.test(n),
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Tata Teleservices: Postpaid bill for Mobile No. ${identifier} is Rs. ${amount}/-. Due: ${fmtDDMMYYYY(dueDateRaw)}. Pay at myaccount.tatatel.co.in or BBPS. -Tata Teleservices`,
+  },
   {
     test: (n) => /airtel/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
-      portal
-        ? `${billerName} Billing: ${idSpec.label} ${identifier} has a due amount of Rs. ${amount}. Please pay by ${dueDate} at ${portal}`
-        : `${billerName} Billing: ${idSpec.label} ${identifier} has a due amount of Rs. ${amount}. Please pay by ${dueDate}.`,
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Dear Customer, your Airtel postpaid bill for mobile no. ${identifier} is Rs. ${amount}. Pay by ${fmtDDMonYYYY(dueDateRaw)} to avoid service disruption. Pay on My Airtel App or airtel.in -AIRTEL`,
   },
   {
     test: (n) => /jio/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
-      portal
-        ? `${billerName}: Your bill for ${idSpec.label} ${identifier} is Rs. ${amount}. Pay before ${dueDate} at ${portal}`
-        : `${billerName}: Your bill for ${idSpec.label} ${identifier} is Rs. ${amount}. Pay before ${dueDate}.`,
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Dear Jio Customer, your Jio postpaid bill for mobile no. ${identifier} is Rs. ${amount}/-. Pay by ${fmtDDMMYYYY(dueDateRaw)} to enjoy uninterrupted services. Visit jio.com or use MyJio App. -JioCare`,
   },
   {
     test: (n) => /vi\b|vodafone|idea/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
-      portal
-        ? `${billerName}: Bill payment reminder. ${idSpec.label} ${identifier} amount due Rs. ${amount} by ${dueDate}. Portal: ${portal}`
-        : `${billerName}: Bill payment reminder. ${idSpec.label} ${identifier} amount due Rs. ${amount} by ${dueDate}.`,
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Hi, your Vi postpaid bill for ${identifier} is Rs. ${amount}. Pay by ${fmtDDMonYYYY(dueDateRaw)} to avoid service interruption. Pay on Vi App or myvi.in -Vi`,
   },
   {
     test: (n) => /bsnl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec }) =>
-      portal
-        ? `${billerName}: Account ${idSpec.label} ${identifier}, amount payable Rs. ${amount}, due on ${dueDate}. Pay at ${portal}`
-        : `${billerName}: Account ${idSpec.label} ${identifier}, amount payable Rs. ${amount}, due on ${dueDate}.`,
+    buildSms: ({ identifier, amount, dueDateRaw }) =>
+      `Dear BSNL Customer, your mobile bill for Account No. ${identifier} is Rs. ${amount}/-. Due Date: ${fmtDDMMYYYY(dueDateRaw)}. Pay at portal.bsnl.in or nearest Franchise/CSC. -BSNL`,
   },
 
   // Broadcasting & Streaming
@@ -1310,7 +1385,7 @@ const billerSpecificRules: BillerRule[] = [
   // Miscellaneous/Unknown Biller - Intelligent inference
   {
     test: () => true,
-    buildSms: ({ billerName, identifier, amount, dueDate, portal, idSpec, category, month }) => {
+    buildSms: ({ billerName, identifier, amount, dueDate, dueDateRaw, portal, idSpec, category, month }) => {
       const catLower = category.toLowerCase();
       if (/rental|rent/.test(catLower)) {
         return portal
@@ -1336,6 +1411,10 @@ const billerSpecificRules: BillerRule[] = [
         return portal
           ? `${billerName}: NCMC card ${idSpec.label} ${identifier} recharge amount Rs. ${amount}. Top-up by ${dueDate} at ${portal}`
           : `${billerName}: NCMC card ${idSpec.label} ${identifier} recharge amount Rs. ${amount}. Top-up by ${dueDate}.`;
+      }
+      if (/broadband/.test(catLower)) {
+        const ispName = billerName.replace(/\s*\(fetch and pay\)/i, '').trim();
+        return `${ispName}: Your broadband bill for Account No. ${identifier} is Rs. ${amount}/-. Due Date: ${fmtDDMMYYYY(dueDateRaw)}. Pay at bbps.in or your ISP portal. -${ispName}`;
       }
       // Ultimate fallback with graceful portal handling
       return portal
@@ -1388,7 +1467,7 @@ const getCreditCardIssuerLabel = (billerName: string) => {
   return 'Credit Card';
 };
 
-const buildCreditCardStatementSms = ({ billerName, amount, dueDate, billDate, identifier, portal }: SmsContext) => {
+const buildCreditCardStatementSms = ({ billerName, amount, dueDate, dueDateRaw, billDate, identifier, portal }: SmsContext) => {
   const minDue = Math.max(200, Math.round(amount * 0.05));
   const cardLast4 = identifier.slice(-4);
   const stmtDate = billDate || new Date().toLocaleDateString('en-IN');
@@ -1396,81 +1475,132 @@ const buildCreditCardStatementSms = ({ billerName, amount, dueDate, billDate, id
   const payLine = portalText ? `Pay at ${portalText}.` : 'Pay via BBPS or your bank app.';
   const amountDue = `Rs. ${formatMoney(amount)}`;
   const minimumDue = `Rs. ${formatMoney(minDue)}`;
-  const issuerLabel = getCreditCardIssuerLabel(billerName);
 
   if (/sbi\s*card/i.test(billerName)) {
-    return `Statement generated on ${stmtDate}. Card ending ${cardLast4}. Total Amt Due ${amountDue}. Min Amt Due ${minimumDue}. Due by ${dueDate}. ${payLine}`;
+    // SBI Card: DD-MM-YYYY
+    return `Statement generated on ${stmtDate}. Card ending ${cardLast4}. Total Amt Due ${amountDue}. Min Amt Due ${minimumDue}. Due by ${fmtDDMMYYYY(dueDateRaw)}. ${payLine}`;
   }
 
   if (/hdfc/i.test(billerName)) {
-    return `HDFC Bank: Credit Card statement for card ending ${cardLast4} is ready. Amt Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+    // HDFC: compact DDMONYY (e.g. 02JAN26)
+    return `HDFC Bank: Credit Card statement for card ending ${cardLast4} is ready. Amt Due ${amountDue}. Min Due ${minimumDue}. Due Date ${fmtCompact(dueDateRaw)}. ${payLine}`;
   }
 
   if (/icici/i.test(billerName)) {
-    return `ICICI Bank: Credit card statement generated for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Payment due by ${dueDate}. ${payLine}`;
+    // ICICI: DD-Mon-YYYY (e.g. 02-Jan-2026)
+    return `ICICI Bank: Credit card statement generated for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Payment due by ${fmtDDHypMonYYYY(dueDateRaw)}. ${payLine}`;
   }
 
   if (/axis/i.test(billerName)) {
-    return `Axis Bank: Credit card statement for card ending ${cardLast4} has been generated. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+    // Axis: DD-MM-YYYY
+    return `Axis Bank: Credit card statement for card ending ${cardLast4} has been generated. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${fmtDDMMYYYY(dueDateRaw)}. ${payLine}`;
   }
 
   if (/kotak/i.test(billerName)) {
-    return `Kotak Bank: Statement generated for card ending ${cardLast4}. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+    // Kotak: DD-Mon-YYYY
+    return `Kotak Bank: Statement generated for card ending ${cardLast4}. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${fmtDDHypMonYYYY(dueDateRaw)}. ${payLine}`;
   }
 
   if (/yes\s*bank|yes bank/i.test(billerName)) {
-    return `YES Bank: Credit card bill ready for card ending ${cardLast4}. Total Due ${amountDue}. Min Due ${minimumDue}. Pay by ${dueDate}. ${payLine}`;
+    // YES Bank: DD-MM-YYYY
+    return `YES Bank: Credit card bill ready for card ending ${cardLast4}. Total Due ${amountDue}. Min Due ${minimumDue}. Pay by ${fmtDDMMYYYY(dueDateRaw)}. ${payLine}`;
   }
 
   if (/idfc\s*first|idfc first bank/i.test(billerName)) {
-    return `IDFC First Bank: Statement generated for card ending ${cardLast4} on ${stmtDate}. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+    // IDFC First: DD-Mon-YYYY
+    return `IDFC First Bank: Statement generated for card ending ${cardLast4} on ${stmtDate}. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${fmtDDHypMonYYYY(dueDateRaw)}. ${payLine}`;
+  }
+
+  if (/indusind/i.test(billerName)) {
+    // IndusInd: DD/MM/YYYY
+    return `IndusInd Bank Credit Card (ending ${cardLast4}): Total Amount Due ${amountDue}. Min Due ${minimumDue}. Pay by ${fmtDDMMYYYYSlash(dueDateRaw)}. ${payLine}`;
+  }
+
+  if (/rbl/i.test(billerName)) {
+    // RBL: DD-MM-YYYY
+    return `RBL Bank Credit Card (ending ${cardLast4}): Total Amount Due ${amountDue}. Min Due ${minimumDue}. Last date for payment: ${fmtDDMMYYYY(dueDateRaw)}. ${payLine}`;
+  }
+
+  if (/au\s*bank/i.test(billerName)) {
+    // AU Bank: DD-Mon-YYYY
+    return `AU Bank: Credit card statement for card ending ${cardLast4} is ready. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${fmtDDHypMonYYYY(dueDateRaw)}. ${payLine}`;
   }
 
   if (/bank of baroda|bobcard|\bbob\b/i.test(billerName)) {
-    return `BOB Card: Credit card statement for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+    return `BOB Card: Credit card statement for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${fmtDDMMYYYY(dueDateRaw)}. ${payLine}`;
   }
 
   if (/union bank/i.test(billerName)) {
-    return `Union Bank: Credit card statement for card ending ${cardLast4} is ready. Total Due ${amountDue}. Min Due ${minimumDue}. Payment Due ${dueDate}. ${payLine}`;
+    return `Union Bank: Credit card statement for card ending ${cardLast4} is ready. Total Due ${amountDue}. Min Due ${minimumDue}. Payment Due ${fmtDDMMYYYY(dueDateRaw)}. ${payLine}`;
   }
 
   if (/canara/i.test(billerName)) {
-    return `Canara Bank: Credit card bill for card ending ${cardLast4} is ready. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+    return `Canara Bank: Credit card bill for card ending ${cardLast4} is ready. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${fmtDDMMYYYY(dueDateRaw)}. ${payLine}`;
   }
 
   if (/indian bank/i.test(billerName)) {
-    return `Indian Bank: Credit card statement for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Pay by ${dueDate}. ${payLine}`;
+    return `Indian Bank: Credit card statement for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Pay by ${fmtDDMMYYYY(dueDateRaw)}. ${payLine}`;
   }
 
   if (/punjab national/i.test(billerName)) {
-    return `PNB Card: Statement generated for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+    return `PNB Card: Statement generated for card ending ${cardLast4}. Amount Due ${amountDue}. Min Due ${minimumDue}. Due Date ${fmtDDMMYYYY(dueDateRaw)}. ${payLine}`;
   }
 
-  if (/au bank/i.test(billerName)) {
-    return `AU Bank: Credit card statement for card ending ${cardLast4} is ready. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
-  }
-
-  return `Credit card statement for card ending ${cardLast4} is ready. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${dueDate}. ${payLine}`;
+  return `Credit card statement for card ending ${cardLast4} is ready. Total Due ${amountDue}. Min Due ${minimumDue}. Due Date ${fmtDDMMYYYY(dueDateRaw)}. ${payLine}`;
 };
 
-export const buildBillerSpecificSms = ({ category, billerName, state, amount, dueDate, billDate, month, identifier }: SmsContext) => {
+export const buildBillerSpecificSms = ({ category, billerName, state, amount, dueDate, dueDateRaw, billDate, month, identifier }: SmsContext) => {
   const portalOrNull = getBillerSpecificPortal(billerName, category);
   const portal = portalOrNull || undefined;
   const idSpec = getIdentifierForBiller(category, billerName, state);
 
   if ((category || '').toLowerCase() === 'credit card') {
-    return buildCreditCardStatementSms({ category, billerName, state, amount, dueDate, billDate, month, identifier, portal });
+    return buildCreditCardStatementSms({ category, billerName, state, amount, dueDate, dueDateRaw, billDate, month, identifier, portal });
   }
 
   const rule = billerSpecificRules.find((r) => r.test(billerName));
   if (rule) {
-    return rule.buildSms({ category, billerName, state, amount, dueDate, month, identifier, portal, idSpec });
+    return rule.buildSms({ category, billerName, state, amount, dueDate, dueDateRaw, month, identifier, portal, idSpec });
   }
 
   // Unreachable fallback (handles optional portal)
   return portal
     ? `${billerName}: Payment alert for ${idSpec.label} ${identifier}. Amount Rs. ${amount}, due ${dueDate}. Portal: ${portal}`
     : `${billerName}: Payment alert for ${idSpec.label} ${identifier}. Amount Rs. ${amount}, due ${dueDate}.`;
+};
+
+export const buildBillerPaidSms = ({ category, billerName, amount, dueDateRaw, identifier }: SmsContext): string => {
+  const payDate = fmtDDMMYYYY(dueDateRaw);
+  const n = billerName;
+
+  if (/airtel.*broadband|airtel.*wi.?fi|airtel.*fiber/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount} for Account No. ${identifier} received on ${payDate}. Your Airtel broadband service continues. -AIRTEL`;
+  }
+  if (/airtel/i.test(n)) {
+    return `Payment of Rs. ${amount} for mobile no. ${identifier} received on ${payDate}. Thank you for paying your Airtel bill. -AIRTEL`;
+  }
+  if (/jio/i.test(n)) {
+    return `Dear Jio Customer, payment of Rs. ${amount}/- received for ${identifier} on ${payDate}. Your services will continue uninterrupted. Thank you. -JioCare`;
+  }
+  if (/vi\b|vodafone|idea/i.test(n)) {
+    return `Hi, Rs. ${amount} payment received for ${identifier} on ${payDate}. Thank you for paying your Vi bill. -Vi`;
+  }
+  if (/bsnl/i.test(n)) {
+    return `Dear BSNL Customer, payment of Rs. ${amount}/- received for Account No. ${identifier} on ${payDate}. Thank you. -BSNL`;
+  }
+  if ((category || '').toLowerCase() === 'credit card') {
+    const cardLast4 = identifier.slice(-4);
+    const issuerLabel = getCreditCardIssuerLabel(billerName);
+    return `${issuerLabel}: Payment of Rs. ${amount} received for card ending ${cardLast4} on ${payDate}. Updated outstanding will reflect within 2 working days. -${issuerLabel}`;
+  }
+  if ((category || '').toLowerCase() === 'broadband postpaid') {
+    const ispName = n.replace(/\s*\(fetch and pay\)/i, '').trim();
+    return `Payment of Rs. ${amount}/- received for Account No. ${identifier} on ${payDate}. Your broadband service continues. -${ispName}`;
+  }
+  if ((category || '').toLowerCase() === 'electricity') {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for your prompt payment. -${billerName}`;
+  }
+  return `Payment of Rs. ${amount}/- received for ${identifier} on ${payDate}. Thank you. -${billerName}`;
 };
 
 export const getAmtLimits = (category: string) => {

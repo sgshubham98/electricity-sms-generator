@@ -67,10 +67,12 @@ export default function App() {
     setActiveState,
     activeBoards,
     setActiveBoards,
-    nameFormat,
-    setNameFormat,
     count,
     setCount,
+    dueDate,
+    setDueDate,
+    includePaidSms,
+    setIncludePaidSms,
     view,
     setView,
     data,
@@ -216,8 +218,10 @@ export default function App() {
           toggleBoard={toggleBoard}
           count={count}
           setCount={setCount}
-          nameFormat={nameFormat}
-          setNameFormat={setNameFormat}
+          dueDate={dueDate}
+          setDueDate={setDueDate}
+          includePaidSms={includePaidSms}
+          setIncludePaidSms={setIncludePaidSms}
           onGenerateRandom={() => handleGenerateData(false)}
           onGenerateAllSelected={() => handleGenerateData(true)}
         />
