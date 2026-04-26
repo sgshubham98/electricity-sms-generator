@@ -1,8 +1,188 @@
 import { randChoice, randDigits } from '../utils/random';
 
-export type NameFormat = 'full_name' | 'full_name_with_abbrv';
+export type NameFormat = 'full_name' | 'full_name_with_abbrv' | 'none';
 
-export const getBrand = (name: string) => {
+// Curated from commonly observed Indian banking headers in real SMS threads/datasets.
+// This is deterministic (no randomness) so sender brand stays stable for a biller.
+const CREDIT_CARD_SENDER_BRAND_RULES: Array<{ test: RegExp; brand: string }> = [
+  { test: /sbi\s*card/i, brand: 'SBICRD' },
+  { test: /hdfc/i, brand: 'HDFCBK' },
+  { test: /icici/i, brand: 'ICICIB' },
+  { test: /axis/i, brand: 'AXISBK' },
+  { test: /kotak/i, brand: 'KOTAKB' },
+  { test: /yes\s*bank/i, brand: 'YESBNK' },
+  { test: /idfc\s*first/i, brand: 'IDFCFB' },
+  { test: /indusind/i, brand: 'INDUSB' },
+  { test: /rbl/i, brand: 'RBLBNK' },
+  { test: /federal/i, brand: 'FEDBNK' },
+  { test: /au\s*bank/i, brand: 'AUBANK' },
+  { test: /bandhan/i, brand: 'BANDBK' },
+  { test: /bob|bank\s*of\s*baroda/i, brand: 'BOBCRD' },
+  { test: /bank\s*of\s*india/i, brand: 'BOIIND' },
+  { test: /canara/i, brand: 'CANBNK' },
+  { test: /city\s*union|\bcub\b/i, brand: 'CUBBNK' },
+  { test: /dbs/i, brand: 'DBSBNK' },
+  { test: /dcb/i, brand: 'DCBBNK' },
+  { test: /dhanlaxmi/i, brand: 'DHANBK' },
+  { test: /edge\s*csb|\bcsb\b/i, brand: 'CSBBNK' },
+  { test: /esaf/i, brand: 'ESAFBK' },
+  { test: /hsbc/i, brand: 'HSBCBK' },
+  { test: /idbi/i, brand: 'IDBIBK' },
+  { test: /one\s*-?\s*indian\s*bank|indian\s*bank/i, brand: 'INDIBK' },
+  { test: /\biob\b|indian\s*overseas/i, brand: 'IOBBNK' },
+  { test: /punjab\s*national|\bpnb\b/i, brand: 'PNBCRD' },
+  { test: /saraswat/i, brand: 'SARBNK' },
+  { test: /sbm\s*bank/i, brand: 'SBMBNK' },
+  { test: /south\s*indian|\bsib\b/i, brand: 'SIBBNK' },
+  { test: /suryoday/i, brand: 'SURYBK' },
+  { test: /tamilnad\s*mercantile|\btmb\b/i, brand: 'TMBBNK' },
+  { test: /union\s*bank/i, brand: 'UNIONB' },
+];
+
+// Curated from observed DISCOM/utility abbreviations used in India electricity billing.
+// Keeps sender brand deterministic and realistic for electricity boards.
+const ELECTRICITY_SENDER_BRAND_RULES: Array<{ test: RegExp; brand: string }> = [
+  { test: /bescom|bangalore electricity supply/i, brand: 'BESCOM' },
+  { test: /bharatpur electricity services|\bbesl\b/i, brand: 'BESLXX' },
+  { test: /b\.e\.s\.t mumbai|best\b.*mumbai/i, brand: 'BESTXX' },
+  { test: /bses\s*rajdhani|brpl\b/i, brand: 'BRPLXX' },
+  { test: /bses\s*yamuna|bypl\b/i, brand: 'BYPLXX' },
+  { test: /kseb|ksebl|kerala state electricity/i, brand: 'KSEBLX' },
+  { test: /tangedco|tneb|tnpdcl|tamil nadu.*electric/i, brand: 'TANGED' },
+  { test: /msedcl|mahadiscom|maharashtra state electricity distbn/i, brand: 'MSEDCL' },
+  { test: /uppcl|uttar pradesh power/i, brand: 'UPPCLX' },
+  { test: /pspcl|punjab state power/i, brand: 'PSPCLX' },
+  { test: /cesc\b|cesc limited/i, brand: 'CESCXX' },
+  { test: /wbsedcl|west bengal state electricity/i, brand: 'WBSEDC' },
+  { test: /dgvcl|dakshin gujarat vij/i, brand: 'DGVCLX' },
+  { test: /mgvcl|madhya gujarat vij/i, brand: 'MGVCLX' },
+  { test: /pgvcl|paschim gujarat vij/i, brand: 'PGVCLX' },
+  { test: /ugvcl|uttar gujarat vij/i, brand: 'UGVCLX' },
+  { test: /dhbvn|dakshin haryana bijli/i, brand: 'DHBVNX' },
+  { test: /uhbvn|uttar haryana bijli/i, brand: 'UHBVNX' },
+  { test: /jvvnl|jaipur vidyut/i, brand: 'JVVNLX' },
+  { test: /avvnl|ajmer vidyut/i, brand: 'AVVNLX' },
+  { test: /jdvvnl|jodhpur vidyut/i, brand: 'JDVVNL' },
+  { test: /jbvnl|jharkhand bijli/i, brand: 'JBVNLX' },
+  { test: /tsspdcl|southern power distribution.*telangana/i, brand: 'TSSPDC' },
+  { test: /tsnpdcl|northern power distribution.*telangana/i, brand: 'TSNPDC' },
+  { test: /apcpdcl|andhra pradesh central power/i, brand: 'APCPDC' },
+  { test: /apepdcl/i, brand: 'APEPDC' },
+  { test: /apspdcl/i, brand: 'APSPDC' },
+  { test: /hescom|hubli electricity/i, brand: 'HESCOM' },
+  { test: /gescom|gulbarga electricity/i, brand: 'GESCOM' },
+  { test: /cescom|chamundeshwari/i, brand: 'CESCOM' },
+  { test: /mescom|mangalore electricity/i, brand: 'MESCOM' },
+  { test: /nbpdcl|north bihar power/i, brand: 'NBPDCL' },
+  { test: /sbpdcl|south bihar power/i, brand: 'SBPDCL' },
+  { test: /mpcz|mp madhya kshetra/i, brand: 'MPCZXX' },
+  { test: /mpez|mp poorv kshetra/i, brand: 'MPEZXX' },
+  { test: /mppkvvcl|mp paschim kshetra/i, brand: 'MPPKVV' },
+  { test: /best\b.*mumbai|brihanmumbai electric/i, brand: 'BESTXX' },
+  { test: /gift power/i, brand: 'GIFTPW' },
+  { test: /hukkeri rural electric/i, brand: 'HUKRUR' },
+  { test: /india power prepaid meter/i, brand: 'IPCLPP' },
+  { test: /kanan devan hills/i, brand: 'KDHPLT' },
+  { test: /kinesco power/i, brand: 'KINESC' },
+  { test: /m\.p\.\s*madhya kshetra vidyut vitaran/i, brand: 'MPCZXX' },
+  { test: /m\.p\.\s*poorv kshetra vidyut vitaran/i, brand: 'MPEZXX' },
+  { test: /m\.p\.\s*paschim kshetra vidyut vitaran/i, brand: 'MPPKVV' },
+  { test: /adani electricity mumbai/i, brand: 'AEMLXX' },
+  { test: /tata power\s*-\s*delhi/i, brand: 'TPDDLX' },
+  { test: /tata power\s*-\s*mumbai/i, brand: 'TPMUMX' },
+  { test: /co\s*operative electric supply society.*sircilla/i, brand: 'CESSLT' },
+  { test: /thrissur corporation electricity department/i, brand: 'THRSED' },
+  { test: /torrent power/i, brand: 'TORPWR' },
+  { test: /tp renewables microgrid/i, brand: 'TPRENW' },
+  { test: /tp southen odisha distribution|tp southern odisha distribution/i, brand: 'TPSODL' },
+  { test: /ttd electricity/i, brand: 'TTDXXX' },
+  { test: /vaghani energy/i, brand: 'VAGHEN' },
+  { test: /west bengal electricity prepaid|west bengal electricity/i, brand: 'WBSEDC' },
+  { test: /jamshedpur utilities and services company|\bjusco\b/i, brand: 'JUSCOX' },
+  { test: /noida power|npcl\b/i, brand: 'NPCLXX' },
+  { test: /goa electricity department/i, brand: 'GOAEDX' },
+  { test: /electricity department chandigarh/i, brand: 'CHDEDX' },
+  { test: /puducherry electricity department|electricity.py.gov.in/i, brand: 'PUDEDX' },
+  { test: /mizoram.*power|power.*mizoram/i, brand: 'MIZPWR' },
+  { test: /nagaland.*power|department.*power.*nagaland/i, brand: 'NAGPWR' },
+  { test: /arunachal.*power|department.*power.*arunachal/i, brand: 'ARPWRX' },
+  { test: /sikkim.*power/i, brand: 'SKMPWR' },
+  { test: /lakshadweep electricity department/i, brand: 'LAKEDX' },
+  { test: /apdcl|assam power/i, brand: 'APDCLX' },
+  { test: /cspdcl|chhattisgarh.*power/i, brand: 'CSPDCL' },
+  { test: /hpseb|hpsebl|himachal.*electricity/i, brand: 'HPSEBL' },
+  { test: /upcl\b|uttarakhand power/i, brand: 'UPCLXX' },
+  { test: /tpadl|tp.*ajmer/i, brand: 'TPADLX' },
+  { test: /tpcodl|tp.*central.*odisha/i, brand: 'TPCODL' },
+  { test: /tpnodl|tp.*northern.*odisha/i, brand: 'TPNODL' },
+  { test: /tpsodl|tp.*southern.*odisha/i, brand: 'TPSODL' },
+  { test: /tpwodl|tp.*western.*odisha/i, brand: 'TPWODL' },
+  { test: /tsecl|tripura electricity/i, brand: 'TSECLX' },
+  { test: /mspdcl|manipur.*power/i, brand: 'MSPDCL' },
+  { test: /mepdcl|meghalaya.*power/i, brand: 'MEPDCL' },
+  { test: /jpdcl|jammu power/i, brand: 'JPDCLX' },
+  { test: /kpdcl|kashmir power/i, brand: 'KPDCLX' },
+  { test: /lpdd|ladakh.*power/i, brand: 'LPDDXX' },
+  { test: /dnhpdcl|dadra.*nagar.*haveli.*power/i, brand: 'DNHPDC' },
+  { test: /bkesl|bikaner electricity/i, brand: 'BKESLX' },
+  { test: /kedl|kota electricity/i, brand: 'KEDLXX' },
+  { test: /aeml\b.*seepz|aeml seepz/i, brand: 'AEMLXX' },
+  { test: /ipcl|india power.*corporation/i, brand: 'IPCLXX' },
+  { test: /pvvnl|paschimanchal vidyut/i, brand: 'PVVNLX' },
+  { test: /dvvnl|dakshinanchal vidyut/i, brand: 'DVVNLX' },
+  { test: /mvvnl|madhyanchal vidyut/i, brand: 'MVVNLX' },
+  { test: /puvvnl|purvanchal vidyut/i, brand: 'PUVVNL' },
+  { test: /kesco|kanpur electricity supply/i, brand: 'KESCOX' },
+  { test: /dpl|durgapur projects/i, brand: 'DPLXXX' },
+  { test: /aniidco|andaman.*nicobar.*integrated/i, brand: 'ANIIDC' },
+  { test: /uisl|tata steel.*uisl/i, brand: 'UISLXX' },
+  { test: /ndmc|new delhi municipal council.*electricity/i, brand: 'NDMCXX' },
+];
+
+const getCreditCardBrand = (billerName: string) => {
+  const mapped = CREDIT_CARD_SENDER_BRAND_RULES.find((entry) => entry.test.test(billerName));
+  if (mapped) return mapped.brand;
+
+  // Non-random deterministic fallback: derive from issuer words, excluding generic terms.
+  const issuerOnly = billerName
+    .replace(/\b(credit|card|bank|limited|india|one|rupay|co\-?operative|small|finance|ltd|pvt|pixel)\b/gi, ' ')
+    .replace(/[^A-Z]/gi, '')
+    .toUpperCase();
+
+  return issuerOnly.padEnd(6, 'X').substring(0, 6);
+};
+
+const getElectricityBrand = (billerName: string) => {
+  const mapped = ELECTRICITY_SENDER_BRAND_RULES.find((entry) => entry.test.test(billerName));
+  if (mapped) return mapped.brand;
+
+  const acronymMatch = billerName.match(/\(([A-Za-z]{3,10})\)/);
+  if (acronymMatch) {
+    return acronymMatch[1].toUpperCase().replace(/[^A-Z]/g, '').padEnd(6, 'X').substring(0, 6);
+  }
+
+  const compact = billerName
+    .toUpperCase()
+    .replace(/\b(ELECTRICITY|POWER|DISTRIBUTION|CORPORATION|COMPANY|LIMITED|DEPARTMENT|STATE|GOVERNMENT|LTD|CO|AND|OF|FOR|THE|NIGAM|VITRAN|SUPPLY|BOARD|PREPAID|METER|RECHARGE|NON|RAPDR|FETCH|PAY)\b/g, ' ')
+    .replace(/[^A-Z ]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const words = compact.split(' ').filter(Boolean);
+  const initials = words.map((w) => w[0]).join('');
+  const merged = (initials.length >= 4 ? initials : words.join('')).replace(/[^A-Z]/g, '');
+  return merged.padEnd(6, 'X').substring(0, 6);
+};
+
+export const getBrand = (category: string, name: string) => {
+  if ((category || '').toLowerCase() === 'credit card') {
+    return getCreditCardBrand(name);
+  }
+
+  if ((category || '').toLowerCase() === 'electricity') {
+    return getElectricityBrand(name);
+  }
+
   const letters = name.toUpperCase().replace(/[^A-Z]/g, '');
   return letters.padEnd(6, 'X').substring(0, 6);
 };
@@ -28,11 +208,10 @@ const expandBillerAbbreviations = (name: string) => {
 };
 
 export const getDisplayBillerName = (billerNameFromJson: string, format: NameFormat) => {
-  if (format === 'full_name_with_abbrv') {
-    // As requested: this option uses the exact JSON biller name.
-    return billerNameFromJson;
+  if (format === 'full_name') {
+    return expandBillerAbbreviations(billerNameFromJson);
   }
-  return expandBillerAbbreviations(billerNameFromJson);
+  return billerNameFromJson;
 };
 
 

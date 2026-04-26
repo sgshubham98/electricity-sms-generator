@@ -205,27 +205,34 @@ export function FilterPanel({
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '16px', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Biller Name Format:</span>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '14px', color: 'var(--text-muted)' }}>
-            <input
-              type="radio"
-              name="nameFormat"
-              checked={nameFormat === 'full_name'}
-              onChange={() => setNameFormat('full_name')}
-              style={{ cursor: 'pointer', accentColor: 'var(--primary)' }}
-            />
-            Full Name
-          </label>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '14px', color: 'var(--text-muted)' }}>
-            <input
-              type="radio"
-              name="nameFormat"
-              checked={nameFormat === 'full_name_with_abbrv'}
-              onChange={() => setNameFormat('full_name_with_abbrv')}
-              style={{ cursor: 'pointer', accentColor: 'var(--primary)' }}
-            />
-            Full Name with Abbrv (from JSON)
-          </label>
+          <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Display Name Format:</span>
+          {([
+            { value: 'full_name', label: 'Full Name' },
+            { value: 'full_name_with_abbrv', label: 'Full Name with Abbrv' },
+            { value: 'none', label: 'None / Deselect' },
+          ] as const).map((option) => {
+            const isActive = nameFormat === option.value;
+            return (
+              <button
+                key={option.value}
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => setNameFormat(isActive ? 'none' : option.value)}
+                style={{
+                  background: isActive ? 'var(--primary-weak)' : 'var(--bg-muted)',
+                  color: 'var(--text)',
+                  border: `1px solid ${isActive ? 'var(--primary)' : 'var(--border)'}`,
+                  padding: '8px 14px',
+                  borderRadius: '999px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  transition: 'all 0.2s ease',
+                }}
+              >
+                {option.label}
+              </button>
+            );
+          })}
         </div>
 
         <button
