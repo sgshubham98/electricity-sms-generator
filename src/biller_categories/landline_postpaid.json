@@ -1,0 +1,47 @@
+[
+  {
+    "Biller Name": "Airtel Landline",
+    "State": "DELHI",
+    "Billers": "Landline Postpaid"
+  },
+  {
+    "Biller Name": "Airtel Landline (Fetch and Pay)",
+    "State": "DELHI",
+    "Billers": "Landline Postpaid"
+  },
+  {
+    "Biller Name": "BSNL Landline - Individual",
+    "State": "DELHI",
+    "Billers": "Landline Postpaid"
+  },
+  {
+    "Biller Name": "BSNL Landline - Corporate",
+    "State": "DELHI",
+    "Billers": "Landline Postpaid"
+  },
+  {
+    "Biller Name": "MTNL Delhi",
+    "State": "DELHI",
+    "Billers": "Landline Postpaid"
+  },
+  {
+    "Biller Name": "MTNL Mumbai",
+    "State": "DELHI",
+    "Billers": "Landline Postpaid"
+  },
+  {
+    "Biller Name": "MTNL Mumbai (Multiple Bills)",
+    "State": "MAHARASHTRA",
+    "Billers": "Landline Postpaid"
+  },
+  {
+    "Biller Name": "MTNL Mumbai Lease Circuit",
+    "State": "MAHARASHTRA",
+    "Billers": "Landline Postpaid"
+  },
+  {
+    "Biller Name": "Tata Teleservices",
+    "State": "DELHI",
+    "Billers": "Landline Postpaid"
+  }
+]

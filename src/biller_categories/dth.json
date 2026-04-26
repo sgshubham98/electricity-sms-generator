@@ -1,0 +1,32 @@
+[
+  {
+    "Biller Name": "Airtel DTH",
+    "State": "DELHI",
+    "Billers": "DTH"
+  },
+  {
+    "Biller Name": "Dish TV",
+    "State": "MAHARASHTRA",
+    "Billers": "DTH"
+  },
+  {
+    "Biller Name": "Sun Direct TV",
+    "State": "TAMIL NADU",
+    "Billers": "DTH"
+  },
+  {
+    "Biller Name": "Sun Direct TV (Flexi Plans)",
+    "State": "TAMIL NADU",
+    "Billers": "DTH"
+  },
+  {
+    "Biller Name": "TATA Play",
+    "State": "MAHARASHTRA",
+    "Billers": "DTH"
+  },
+  {
+    "Biller Name": "DTH",
+    "State": "DELHI",
+    "Billers": "DTH"
+  }
+]
