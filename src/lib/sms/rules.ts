@@ -1600,6 +1600,117 @@ export const buildBillerPaidSms = ({ category, billerName, amount, dueDateRaw, i
   if ((category || '').toLowerCase() === 'electricity') {
     return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for your prompt payment. -${billerName}`;
   }
+
+  // Gas billers — biller-specific payment confirmation SMS
+  if (/indraprastha gas|igl\b/i.test(n)) {
+    return `Dear IGL Customer, we have received Rs. ${amount}/- towards your gas bill for BP No. ${identifier} on ${payDate}. Thank you for your prompt payment. For queries call 1800-2101-551 (Toll Free). -IGL`;
+  }
+  if (/mahanagar gas|mgl\b/i.test(n)) {
+    return `Dear MGL Customer, payment of Rs. ${amount}/- for CA No. ${identifier} has been received on ${payDate}. Your account is updated. Thank you for choosing MGL. -MGL`;
+  }
+  if (/gujarat gas/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Customer No. ${identifier} received on ${payDate}. Thank you for choosing Gujarat Gas Limited. -Gujarat Gas`;
+  }
+  if (/gail gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Your GAIL Gas account is updated. Thank you. -GAIL Gas`;
+  }
+  if (/gail india|gail limited/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} has been received on ${payDate}. Thank you for using GAIL India services. -GAIL`;
+  }
+  if (/adani total gas/i.test(n)) {
+    return `Dear ATG Customer, Rs. ${amount}/- received for Customer ID ${identifier} on ${payDate}. Your gas account is updated. Visit adanitotalgas.in for details. -Adani Total Gas`;
+  }
+  if (/maharashtra natural gas|mngl\b/i.test(n)) {
+    return `Dear MNGL Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for using MNGL services. -MNGL`;
+  }
+  if (/sabarmati gas/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Customer No. ${identifier} received on ${payDate}. Thank you for paying your Sabarmati Gas bill. -SGL`;
+  }
+  if (/torrent gas/i.test(n)) {
+    return `Dear Torrent Gas Customer, Rs. ${amount}/- received for Customer No. ${identifier} on ${payDate}. Thank you for your prompt payment. -Torrent Gas`;
+  }
+  if (/aavantika gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Aavantika Gas. -Aavantika Gas`;
+  }
+  if (/assam gas/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for using Assam Gas Company services. -Assam Gas`;
+  }
+  if (/bengal gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for choosing Bengal Gas Company. -Bengal Gas`;
+  }
+  if (/bhagyanagar gas/i.test(n)) {
+    return `Dear BGL Customer, Rs. ${amount}/- received for BP No. ${identifier} on ${payDate}. Your account is updated. Thank you. -BGL`;
+  }
+  if (/bharat petroleum.*png|bpcl.*png/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for paying your BPCL Piped Gas bill. -BPCL PNG`;
+  }
+  if (/central u\.?p\.? gas/i.test(n)) {
+    return `Dear CUGL Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Your account is updated. Thank you. -CUGL`;
+  }
+  if (/charotar gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Customer No. ${identifier} on ${payDate}. Thank you for using Charotar Gas. -Charotar Gas`;
+  }
+  if (/goa natural gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Goa Natural Gas. -GNG`;
+  }
+  if (/godavari gas/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for using Godavari Gas services. -Godavari Gas`;
+  }
+  if (/green gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Your Green Gas account is updated. Thank you. -Green Gas`;
+  }
+  if (/hp oil gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Customer No. ${identifier} on ${payDate}. Thank you for using HP Oil Gas services. -HP Oil Gas`;
+  }
+  if (/hpr falcon gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using HPR Falcon Gas. -HPR Falcon Gas`;
+  }
+  if (/haridwar natural gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Haridwar Natural Gas services. -HNGPL`;
+  }
+  if (/haryana city gas/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for BP No. ${identifier} received on ${payDate}. Thank you for using Haryana City Gas. -HCGDL`;
+  }
+  if (/hindustan petroleum.*piped|hpcl.*piped/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for paying your HPCL Piped Gas bill. -HPCL PNG`;
+  }
+  if (/irm energy/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using IRM Energy. -IRM Energy`;
+  }
+  if (/indian oil.*piped|iocl.*piped/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for paying your IndianOil Piped Gas bill. -IOCL PNG`;
+  }
+  if (/indian oil.?adani gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Indian Oil-Adani Gas. -IO-Adani Gas`;
+  }
+  if (/agp cgd|agp city gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using AGP Gas services. -AGP Gas`;
+  }
+  if (/megha gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Megha Gas. -Megha Gas`;
+  }
+  if (/naveriya gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Naveriya Gas. -Naveriya Gas`;
+  }
+  if (/purba bharati gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Purba Bharati Gas. -Purba Bharati Gas`;
+  }
+  if (/rajasthan state gas/i.test(n)) {
+    return `Dear RSGL Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Your account is updated. Thank you. -RSGL`;
+  }
+  if (/think gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for choosing Think Gas. -Think Gas`;
+  }
+  if (/tripura natural gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Tripura Natural Gas services. -TNGL`;
+  }
+  if (/unique central piped|ucpgpl\b/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using UCPGPL services. -UCPGPL`;
+  }
+  if (/vadodara gas/i.test(n)) {
+    return `Dear VGL Customer, Rs. ${amount}/- received for Customer No. ${identifier} on ${payDate}. Your account is updated. Thank you. -VGL`;
+  }
+
   return `Payment of Rs. ${amount}/- received for ${identifier} on ${payDate}. Thank you. -${billerName}`;
 };
 
