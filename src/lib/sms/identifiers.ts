@@ -1,7 +1,5 @@
 import { randChoice, randDigits } from '../utils/random';
 
-export type NameFormat = 'full_name' | 'full_name_with_abbrv' | 'none';
-
 // Curated from commonly observed Indian banking headers in real SMS threads/datasets.
 // This is deterministic (no randomness) so sender brand stays stable for a biller.
 const CREDIT_CARD_SENDER_BRAND_RULES: Array<{ test: RegExp; brand: string }> = [
@@ -139,6 +137,31 @@ const ELECTRICITY_SENDER_BRAND_RULES: Array<{ test: RegExp; brand: string }> = [
   { test: /ndmc|new delhi municipal council.*electricity/i, brand: 'NDMCXX' },
 ];
 
+// Curated from observed DLT-registered sender brands for Mobile Postpaid carriers.
+const MOBILE_POSTPAID_SENDER_BRAND_RULES: Array<{ test: RegExp; brand: string }> = [
+  { test: /airtel/i, brand: 'AIRTEL' },
+  { test: /jio/i, brand: 'JIOBIL' },
+  { test: /vi\b|vodafone|idea/i, brand: 'VIPAYS' },
+  { test: /bsnl/i, brand: 'BSNLMO' },
+  { test: /mtnl.*delhi|delhi.*dolphin/i, brand: 'MTNLDL' },
+  { test: /mtnl.*mumbai|mumbai.*dolphin/i, brand: 'MTNLMB' },
+  { test: /tata teleservices/i, brand: 'TATMOB' },
+];
+
+// Curated from observed DLT-registered sender brands for Broadband Postpaid ISPs.
+const BROADBAND_SENDER_BRAND_RULES: Array<{ test: RegExp; brand: string }> = [
+  { test: /act fibernet/i, brand: 'ACTFIB' },
+  { test: /airtel/i, brand: 'AIRTEL' },
+  { test: /djio|jio.*fiber/i, brand: 'JIOFBR' },
+  { test: /bsnl/i, brand: 'BSNLBB' },
+  { test: /hathway/i, brand: 'HTHWAY' },
+  { test: /den.*broadband|den.*network/i, brand: 'DENNWK' },
+  { test: /tikona/i, brand: 'TIKONA' },
+  { test: /excitel/i, brand: 'EXCITL' },
+  { test: /you broadband/i, brand: 'YOUBRD' },
+  { test: /tata.*play.*fiber|tata.*fiber|tata.*sky.*broadband/i, brand: 'TATAPL' },
+];
+
 const getCreditCardBrand = (billerName: string) => {
   const mapped = CREDIT_CARD_SENDER_BRAND_RULES.find((entry) => entry.test.test(billerName));
   if (mapped) return mapped.brand;
@@ -183,6 +206,16 @@ export const getBrand = (category: string, name: string) => {
     return getElectricityBrand(name);
   }
 
+  if ((category || '').toLowerCase() === 'mobile postpaid') {
+    const mapped = MOBILE_POSTPAID_SENDER_BRAND_RULES.find((entry) => entry.test.test(name));
+    if (mapped) return mapped.brand;
+  }
+
+  if ((category || '').toLowerCase() === 'broadband postpaid') {
+    const mapped = BROADBAND_SENDER_BRAND_RULES.find((entry) => entry.test.test(name));
+    if (mapped) return mapped.brand;
+  }
+
   const letters = name.toUpperCase().replace(/[^A-Z]/g, '');
   return letters.padEnd(6, 'X').substring(0, 6);
 };
@@ -194,26 +227,6 @@ export const getLsa = (state: string) => {
   };
   return map[state ? state.toUpperCase() : ''] || randChoice(['A', 'D', 'G', 'K', 'M', 'P', 'T']);
 };
-
-const expandBillerAbbreviations = (name: string) => {
-  return name
-    .replace(/\bPvt\.?\b/gi, 'Private')
-    .replace(/\bLtd\.?\b/gi, 'Limited')
-    .replace(/\bCo\.?\b/gi, 'Company')
-    .replace(/\bSr\.?\b/gi, 'Senior')
-    .replace(/\bInst\.?\b/gi, 'Institute')
-    .replace(/\bIntl\.?\b/gi, 'International')
-    .replace(/\s{2,}/g, ' ')
-    .trim();
-};
-
-export const getDisplayBillerName = (billerNameFromJson: string, format: NameFormat) => {
-  if (format === 'full_name') {
-    return expandBillerAbbreviations(billerNameFromJson);
-  }
-  return billerNameFromJson;
-};
-
 
 const stateShort = (state: string) => (state || 'NA').replace(/[^A-Z]/gi, '').toUpperCase().slice(0, 2).padEnd(2, 'X');
 

@@ -1,0 +1,22 @@
+[
+  {
+    "Biller Name": "Bharat Gas (BPCL) - Commercial",
+    "State": "MAHARASHTRA",
+    "Billers": "LPG Gas"
+  },
+  {
+    "Biller Name": "Bharat Gas (BPCL)",
+    "State": "MAHARASHTRA",
+    "Billers": "LPG Gas"
+  },
+  {
+    "Biller Name": "HP Gas (HPCL)",
+    "State": "MAHARASHTRA",
+    "Billers": "LPG Gas"
+  },
+  {
+    "Biller Name": "Indane Gas (Indian Oil)",
+    "State": "MAHARASHTRA",
+    "Billers": "LPG Gas"
+  }
+]

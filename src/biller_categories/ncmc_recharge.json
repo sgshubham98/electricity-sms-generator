@@ -1,0 +1,37 @@
+[
+  {
+    "Biller Name": "Airtel Payments Bank RuPay NCMC",
+    "State": "DELHI",
+    "Billers": "NCMC Recharge"
+  },
+  {
+    "Biller Name": "HDFC Bank NCMC Pune Metro",
+    "State": "MAHARASHTRA",
+    "Billers": "NCMC Recharge"
+  },
+  {
+    "Biller Name": "Consumer Choice Payments NCMC",
+    "State": "MAHARASHTRA",
+    "Billers": "NCMC Recharge"
+  },
+  {
+    "Biller Name": "MufinPay NCMC",
+    "State": "DELHI",
+    "Billers": "NCMC Recharge"
+  },
+  {
+    "Biller Name": "Pine Labs RuPay NCMC Card Top-Up",
+    "State": "HARYANA",
+    "Billers": "NCMC Recharge"
+  },
+  {
+    "Biller Name": "PNB NCMC Credit Card",
+    "State": "DELHI",
+    "Billers": "NCMC Recharge"
+  },
+  {
+    "Biller Name": "State Bank of India NCMC Card Top-Up",
+    "State": "MAHARASHTRA",
+    "Billers": "NCMC Recharge"
+  }
+]

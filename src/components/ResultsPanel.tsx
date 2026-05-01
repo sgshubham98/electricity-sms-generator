@@ -86,6 +86,12 @@ export function ResultsPanel({ data, view, setView, onExportCSV, onExportJSON, o
                   <span style={{ color: 'var(--primary)', fontSize: '12px', background: 'var(--primary-weak)', padding: '2px 6px', borderRadius: '10px' }}>{r.category}</span>
                 </div>
                 <div style={{ background: 'var(--bg-elev)', border: '1px solid var(--border)', padding: '12px', borderRadius: '8px', fontSize: '14px', lineHeight: '1.5', color: 'var(--text)', fontFamily: 'system-ui' }}>{r.sms}</div>
+                {r.paidSms && (
+                  <div style={{ marginTop: '8px', background: 'var(--bg-elev)', border: '1px solid var(--border)', borderLeft: '3px solid var(--success)', padding: '12px', borderRadius: '8px', fontSize: '14px', lineHeight: '1.5', color: 'var(--text)', fontFamily: 'system-ui' }}>
+                    <div style={{ fontSize: '11px', color: 'var(--success)', marginBottom: '4px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Payment Confirmation</div>
+                    {r.paidSms}
+                  </div>
+                )}
               </div>
             </div>
           ))}

@@ -1,6 +1,5 @@
 export type ViewMode = 'table' | 'card';
 export type FilterType = 'state' | 'board';
-export type NameFormat = 'full_name' | 'full_name_with_abbrv' | 'none';
 
 export type BillerItem = {
   "Biller Name"?: string;
@@ -24,4 +23,5 @@ export type GeneratedRow = {
   billDate: string;
   dueDate: string;
   sms: string;
+  paidSms?: string;
 };

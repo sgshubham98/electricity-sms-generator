@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { billersByCategory, missingCategoryFiles } from '../lib/data/billersData';
-import { buildBillerSpecificSms, getAmtLimits } from '../lib/sms/rules';
-import { getBrand, getDisplayBillerName, getIdentifierForBiller, getLsa } from '../lib/sms/identifiers';
+import { buildBillerSpecificSms, buildBillerPaidSms, getAmtLimits } from '../lib/sms/rules';
+import { getBrand, getIdentifierForBiller, getLsa } from '../lib/sms/identifiers';
 import { randChoice, randFloat, randInt } from '../lib/utils/random';
-import type { BillerItem, FilterType, GeneratedRow, NameFormat, StateCount, ViewMode } from '../components/types';
+import type { BillerItem, FilterType, GeneratedRow, StateCount, ViewMode } from '../components/types';
 
 const TSP_CODES = ['A', 'J', 'V', 'B', 'T'] as const;
 const BOARD_ONLY_FILTER_CATEGORIES = new Set([
@@ -26,7 +26,8 @@ function buildGeneratedRows(
   tab: string,
   count: number,
   all: boolean,
-  nameFormat: NameFormat,
+  fixedDueDate: Date | null,
+  includePaidSms: boolean,
 ): GeneratedRow[] {
   const result: GeneratedRow[] = [];
   const currentDate = new Date();
@@ -45,8 +46,9 @@ function buildGeneratedRows(
 
     const daysPast = randInt(0, 35);
     const billDateObj = new Date(currentDate.getTime() - daysPast * 24 * 3600 * 1000);
-    const dueDaysFromToday = randInt(0, 3);
-    const dueDateObj = new Date(currentDate.getTime() + dueDaysFromToday * 24 * 3600 * 1000);
+    const dueDateObj = fixedDueDate
+      ? new Date(fixedDueDate)
+      : new Date(currentDate.getTime() + randInt(0, 3) * 24 * 3600 * 1000);
 
     const mths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const monthStr = `${mths[billDateObj.getMonth()]}-${billDateObj.getFullYear()}`;
@@ -57,24 +59,37 @@ function buildGeneratedRows(
     const limits = getAmtLimits(tab);
     const numAmt = randFloat(limits.min, limits.max);
 
-    const outName = getDisplayBillerName(billerName, nameFormat);
     const identifier = getIdentifierForBiller(tab, billerName, state).value;
-    const smsBillerName = tab === 'Credit Card' ? billerName : outName;
     const sms = buildBillerSpecificSms({
       category: tab,
-      billerName: smsBillerName,
+      billerName,
       state,
       amount: numAmt,
       dueDate: dueDateStr,
+      dueDateRaw: dueDateObj,
       billDate: billDateStr,
       month: monthStr,
       identifier,
     });
 
+    const paidSms = includePaidSms
+      ? buildBillerPaidSms({
+          category: tab,
+          billerName,
+          state,
+          amount: numAmt,
+          dueDate: dueDateStr,
+          dueDateRaw: dueDateObj,
+          billDate: billDateStr,
+          month: monthStr,
+          identifier,
+        })
+      : undefined;
+
     result.push({
       id: i + 1,
       senderId: `${tsp}${lsa}-${brand}-${suffix}`,
-      board: outName,
+      board: billerName,
       state,
       category: tab,
       consumerNo: identifier,
@@ -82,6 +97,7 @@ function buildGeneratedRows(
       billDate: billDateStr,
       dueDate: dueDateStr,
       sms,
+      paidSms,
     });
   }
 
@@ -105,7 +121,9 @@ function getFilteredValidBillers(
 
 function exportCsv(data: GeneratedRow[], download: DownloadFn) {
   if (!data.length) return;
+  const hasPaidSms = data.some((r) => r.paidSms);
   const header: Array<keyof GeneratedRow> = ['id', 'senderId', 'board', 'state', 'category', 'consumerNo', 'amount', 'billDate', 'dueDate', 'sms'];
+  if (hasPaidSms) header.push('paidSms');
   const rows = data.map((r) => header.map((h) => `"${(r[h] || '').toString().replace(/"/g, '""')}"`).join(','));
   const csv = [header.join(','), ...rows].join('\n');
   download(csv, 'biller_sms_data.csv', 'text/csv');
@@ -130,8 +148,9 @@ export function useSmsGeneratorPage() {
   const [filterType, setFilterType] = useState<FilterType>('state');
   const [activeState, setActiveState] = useState<string | null>(null);
   const [activeBoards, setActiveBoards] = useState<string[]>([]);
-  const [nameFormat, setNameFormat] = useState<NameFormat>('none');
   const [count, setCount] = useState(1);
+  const [dueDate, setDueDate] = useState('');
+  const [includePaidSms, setIncludePaidSms] = useState(false);
   const [view, setView] = useState<ViewMode>('card');
   const [data, setData] = useState<GeneratedRow[]>([]);
   const [showInfo, setShowInfo] = useState(false);
@@ -172,6 +191,7 @@ export function useSmsGeneratorPage() {
     setData([]);
     setSearchTerm('');
     setShowCategoryDropdown(false);
+    setDueDate('');
   }, [tab]);
 
   useEffect(() => {
@@ -201,7 +221,8 @@ export function useSmsGeneratorPage() {
     const valid = getFilteredValidBillers(activeDataList, effectiveFilterType, activeState, activeBoards);
     if (!valid.length) return;
 
-    const result = buildGeneratedRows(valid, tab, count, all, nameFormat);
+    const fixedDueDate = dueDate ? new Date(`${dueDate}T00:00:00`) : null;
+    const result = buildGeneratedRows(valid, tab, count, all, fixedDueDate, includePaidSms);
     setData(result);
   };
 
@@ -229,10 +250,12 @@ export function useSmsGeneratorPage() {
     setActiveState,
     activeBoards,
     setActiveBoards,
-    nameFormat,
-    setNameFormat,
     count,
     setCount,
+    dueDate,
+    setDueDate,
+    includePaidSms,
+    setIncludePaidSms,
     view,
     setView,
     data,

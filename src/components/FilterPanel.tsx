@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FilterType, NameFormat, StateCount, BillerItem } from './types';
+import type { FilterType, StateCount, BillerItem } from './types';
 
 type FilterPanelProps = {
   tab: string;
@@ -20,8 +20,10 @@ type FilterPanelProps = {
   toggleBoard: (name: string) => void;
   count: number;
   setCount: (value: number) => void;
-  nameFormat: NameFormat;
-  setNameFormat: (value: NameFormat) => void;
+  dueDate: string;
+  setDueDate: (value: string) => void;
+  includePaidSms: boolean;
+  setIncludePaidSms: (value: boolean) => void;
   onGenerateRandom: () => void;
   onGenerateAllSelected: () => void;
 };
@@ -45,8 +47,10 @@ export function FilterPanel({
   toggleBoard,
   count,
   setCount,
-  nameFormat,
-  setNameFormat,
+  dueDate,
+  setDueDate,
+  includePaidSms,
+  setIncludePaidSms,
   onGenerateRandom,
   onGenerateAllSelected,
 }: FilterPanelProps) {
@@ -204,36 +208,34 @@ export function FilterPanel({
           <span>records</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '16px', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Display Name Format:</span>
-          {([
-            { value: 'full_name', label: 'Full Name' },
-            { value: 'full_name_with_abbrv', label: 'Full Name with Abbrv' },
-            { value: 'none', label: 'None / Deselect' },
-          ] as const).map((option) => {
-            const isActive = nameFormat === option.value;
-            return (
-              <button
-                key={option.value}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => setNameFormat(isActive ? 'none' : option.value)}
-                style={{
-                  background: isActive ? 'var(--primary-weak)' : 'var(--bg-muted)',
-                  color: 'var(--text)',
-                  border: `1px solid ${isActive ? 'var(--primary)' : 'var(--border)'}`,
-                  padding: '8px 14px',
-                  borderRadius: '999px',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  transition: 'all 0.2s ease',
-                }}
-              >
-                {option.label}
-              </button>
-            );
-          })}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <label style={{ fontSize: '14px', color: 'var(--text-muted)' }} htmlFor="due-date-input">Due Date:</label>
+          <input
+            id="due-date-input"
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            style={{ background: 'var(--bg-muted)', border: '1px solid var(--border)', color: 'var(--text)', padding: '8px', borderRadius: '6px' }}
+          />
+          {dueDate && (
+            <button
+              onClick={() => setDueDate('')}
+              style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-muted)', padding: '6px 10px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}
+            >
+              Clear
+            </button>
+          )}
         </div>
+
+        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px', color: 'var(--text-muted)' }}>
+          <input
+            type="checkbox"
+            checked={includePaidSms}
+            onChange={(e) => setIncludePaidSms(e.target.checked)}
+            style={{ accentColor: 'var(--primary)', width: '16px', height: '16px' }}
+          />
+          Include paid SMS
+        </label>
 
         <button
           onClick={onGenerateRandom}
