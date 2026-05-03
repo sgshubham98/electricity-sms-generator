@@ -1570,7 +1570,7 @@ export const buildBillerSpecificSms = ({ category, billerName, state, amount, du
 };
 
 const getElectricityBoardCode = (billerName: string): string => {
-  const abbrev = billerName.match(/\(([A-Z][A-Z0-9]{1,7})\)/);
+  const abbrev = billerName.match(/\(([A-Z]{2,8})\)/);
   if (abbrev) return abbrev[1];
   if (/maharashtra state electricity distbn|msedcl/i.test(billerName)) return 'MSEDCL';
   if (/uppcl/i.test(billerName)) return 'UPPCL';
