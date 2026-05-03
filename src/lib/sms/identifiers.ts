@@ -162,6 +162,47 @@ const BROADBAND_SENDER_BRAND_RULES: Array<{ test: RegExp; brand: string }> = [
   { test: /tata.*play.*fiber|tata.*fiber|tata.*sky.*broadband/i, brand: 'TATAPL' },
 ];
 
+// Curated from observed DLT-registered sender brands for City Gas Distribution (CGD) companies.
+// Paid SMS (payment confirmation) uses the same sender as bill generation for all gas billers.
+const GAS_SENDER_BRAND_RULES: Array<{ test: RegExp; brand: string }> = [
+  { test: /indraprastha gas|igl\b/i, brand: 'IGLPNG' },
+  { test: /mahanagar gas|mgl\b/i, brand: 'MGLGAS' },
+  { test: /gujarat gas/i, brand: 'GUJGAS' },
+  { test: /gail gas/i, brand: 'GAILGS' },
+  { test: /gail india|gail limited/i, brand: 'GAILND' },
+  { test: /adani total gas/i, brand: 'ATGLPG' },
+  { test: /maharashtra natural gas|mngl\b/i, brand: 'MNGLXX' },
+  { test: /sabarmati gas/i, brand: 'SGLGAS' },
+  { test: /torrent gas/i, brand: 'TORGAS' },
+  { test: /aavantika gas/i, brand: 'AAVGAS' },
+  { test: /assam gas/i, brand: 'AGCGAS' },
+  { test: /bengal gas/i, brand: 'BENGAS' },
+  { test: /bhagyanagar gas/i, brand: 'BGLGAS' },
+  { test: /bharat petroleum.*png|bpcl.*png/i, brand: 'BPCLNG' },
+  { test: /central u\.?p\.? gas/i, brand: 'CUGLXX' },
+  { test: /charotar gas/i, brand: 'CHRGAZ' },
+  { test: /goa natural gas/i, brand: 'GOAGAS' },
+  { test: /godavari gas/i, brand: 'GODGAS' },
+  { test: /green gas/i, brand: 'GREGAS' },
+  { test: /hp oil gas/i, brand: 'HPOGAZ' },
+  { test: /hpr falcon gas/i, brand: 'HPRGAS' },
+  { test: /haridwar natural gas/i, brand: 'HNGPLX' },
+  { test: /haryana city gas/i, brand: 'HCGDLX' },
+  { test: /hindustan petroleum.*piped|hpcl.*piped/i, brand: 'HPCLNG' },
+  { test: /irm energy/i, brand: 'IRMNRG' },
+  { test: /indian oil.*piped|iocl.*piped/i, brand: 'IOCLPG' },
+  { test: /indian oil.?adani gas/i, brand: 'IOAGPL' },
+  { test: /agp cgd|agp city gas/i, brand: 'AGPCGD' },
+  { test: /megha gas/i, brand: 'MEGGAS' },
+  { test: /naveriya gas/i, brand: 'NAVGAS' },
+  { test: /purba bharati gas/i, brand: 'PBGGAS' },
+  { test: /rajasthan state gas/i, brand: 'RSGLXX' },
+  { test: /think gas/i, brand: 'THKGAS' },
+  { test: /tripura natural gas/i, brand: 'TNGLXX' },
+  { test: /unique central piped|ucpgpl\b/i, brand: 'UCPGPL' },
+  { test: /vadodara gas/i, brand: 'VGLGAS' },
+];
+
 const getCreditCardBrand = (billerName: string) => {
   const mapped = CREDIT_CARD_SENDER_BRAND_RULES.find((entry) => entry.test.test(billerName));
   if (mapped) return mapped.brand;
@@ -213,6 +254,11 @@ export const getBrand = (category: string, name: string) => {
 
   if ((category || '').toLowerCase() === 'broadband postpaid') {
     const mapped = BROADBAND_SENDER_BRAND_RULES.find((entry) => entry.test.test(name));
+    if (mapped) return mapped.brand;
+  }
+
+  if ((category || '').toLowerCase() === 'gas') {
+    const mapped = GAS_SENDER_BRAND_RULES.find((entry) => entry.test.test(name));
     if (mapped) return mapped.brand;
   }
 
