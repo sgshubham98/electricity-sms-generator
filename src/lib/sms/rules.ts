@@ -258,553 +258,553 @@ const billerSpecificRules: BillerRule[] = [
   // Electricity - State Boards (Primary 5 — explicit per-board logic)
   {
     test: (n) => /bescom|bangalore electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Valued Consumer, Your ${billerName} electricity bill for the billing period ${month} has been generated. Your RR No. is ${identifier} and the total payable amount is Rs. ${amount}/-. We kindly request you to clear the outstanding dues on or before ${dueDate} to ensure uninterrupted power supply to your premises. You may pay online at bescom.co.in, via BBPS, or at any Bangalore One / GRAMA ONE service centre. Thank You for being our esteemed customer. -BESCOM`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Valued Consumer, Your BESCOM electricity bill for the billing period ${month} has been generated. Your RR No. is ${identifier} and the total payable amount is Rs. ${amount}/-. We kindly request you to clear the outstanding dues on or before ${dueDate} to ensure uninterrupted power supply to your premises. You may pay online at bescom.co.in, via BBPS, or at any Bangalore One / GRAMA ONE service centre. Thank You for being our esteemed customer. -BESCOM`,
   },
   {
     test: (n) => /kseb|ksebl|kerala state electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear KSEBL Consumer, your electricity bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Please pay on or before ${dueDate} at wss.kseb.in or nearest KSEB office, BBPS, or K-SMART kiosk to avoid disconnection. For assistance call Helpline 1912. Thank You. -${billerName}`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear KSEBL Consumer, your electricity bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Please pay on or before ${dueDate} at wss.kseb.in or nearest KSEB office, BBPS, or K-SMART kiosk to avoid disconnection. For assistance call Helpline 1912. Thank You. -KSEBL`,
   },
   {
     test: (n) => /tangedco|tneb|tamil nadu.*electric|tnpdcl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, Your ${billerName} electricity bill for Service Connection No. ${identifier} for the period ${month} is Rs. ${amount}/-. Last date for payment: ${dueDate}. Pay online at www.tangedco.org or through BBPS / NeSL / Common Service Centre to avoid disconnection. Helpline: 04428520131. -TNEB`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Your TANGEDCO electricity bill for Service Connection No. ${identifier} for the period ${month} is Rs. ${amount}/-. Last date for payment: ${dueDate}. Pay online at www.tangedco.org or through BBPS / NeSL / Common Service Centre to avoid disconnection. Helpline: 04428520131. -TNEB`,
   },
   {
     test: (n) => /msedcl|mahadiscom|maharashtra state electricity distbn/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, dueDateRaw }) => {
+    buildSms: ({ identifier, amount, dueDate, dueDateRaw }) => {
       const earlyDateObj = new Date(dueDateRaw.getTime() - 5 * 24 * 3600 * 1000);
       const earlyDateStr = fmtDDMMYYYY(earlyDateObj);
       const earlyAmt = Math.round((amount - 10) * 100) / 100;
-      return `Rs. ${amount}/- is the electricity bill for Consumer No. ${identifier}. If paid by ${earlyDateStr} pay only Rs. ${earlyAmt}/- (early payment discount). Due Date: ${dueDate}. Pay online at wss.mahadiscom.in or scan UPI QR on your physical bill. -${billerName}`;
+      return `Rs. ${amount}/- is the electricity bill for Consumer No. ${identifier}. If paid by ${earlyDateStr} pay only Rs. ${earlyAmt}/- (early payment discount). Due Date: ${dueDate}. Pay online at wss.mahadiscom.in or scan UPI QR on your physical bill. -MSEDCL`;
     },
   },
   {
     test: (n) => /uppcl|uttar pradesh power/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at uppclonline.com, BBPS, or nearest Jan Suvidha/Mitra centre. -${billerName}`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at uppclonline.com, BBPS, or nearest Jan Suvidha/Mitra centre. -UPPCL`,
   },
 
   // UP Distribution Companies — Account No., uppclonline.com payment portal
   {
     test: (n) => /pvvnl|paschimanchal vidyut/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at pvvnl.org or uppclonline.com / BBPS to avoid disconnection. -PVVNL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, PVVNL electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at pvvnl.org or uppclonline.com / BBPS to avoid disconnection. -PVVNL`,
   },
   {
     test: (n) => /dvvnl|dakshinanchal vidyut/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at dvvnl.org or uppclonline.com / BBPS to avoid disconnection. -DVVNL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, DVVNL electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at dvvnl.org or uppclonline.com / BBPS to avoid disconnection. -DVVNL`,
   },
   {
     test: (n) => /mvvnl|madhyanchal vidyut/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at mvvnl.org or uppclonline.com / BBPS to avoid disconnection. -MVVNL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, MVVNL electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at mvvnl.org or uppclonline.com / BBPS to avoid disconnection. -MVVNL`,
   },
   {
     test: (n) => /puvvnl|purvanchal vidyut/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at puvvnl.gov.in or uppclonline.com / BBPS to avoid disconnection. -PuVVNL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, PuVVNL electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at puvvnl.gov.in or uppclonline.com / BBPS to avoid disconnection. -PuVVNL`,
   },
   {
     test: (n) => /kesco|kanpur electricity supply/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at kesco.co.in or BBPS to avoid disconnection. -KESCO`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, KESCO electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at kesco.co.in or BBPS to avoid disconnection. -KESCO`,
   },
   {
     test: (n) => /hescom|hubli electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Kindly pay on or before ${dueDate} at hescom.co.in or BBPS / nearest HESCOM payment counter. Thank you. -HESCOM`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, HESCOM electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Kindly pay on or before ${dueDate} at hescom.co.in or BBPS / nearest HESCOM payment counter. Thank you. -HESCOM`,
   },
   {
     test: (n) => /cescom|chamundeshwari/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at cescom.co.in or nearest BBPS outlet. Disconnection will follow non-payment. -CESCOM`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, CESCOM electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at cescom.co.in or nearest BBPS outlet. Disconnection will follow non-payment. -CESCOM`,
   },
   {
     test: (n) => /mescom|mangalore electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mescom.co.in or via BBPS. Avoid service interruption by paying on time. -MESCOM`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, MESCOM electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mescom.co.in or via BBPS. Avoid service interruption by paying on time. -MESCOM`,
   },
   {
     test: (n) => /gescom|gulbarga electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Last date: ${dueDate}. Pay at gescom.in or BBPS to avoid disconnection. -GESCOM`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, GESCOM electricity bill for RR No. ${identifier} for ${month} is Rs. ${amount}/-. Last date: ${dueDate}. Pay at gescom.in or BBPS to avoid disconnection. -GESCOM`,
   },
 
   // Gujarat boards — 11-digit consumer no, fetch-and-pay phrasing
   {
     test: (n) => /dgvcl|dakshin gujarat vij/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dgvcl.com or nearest PGVCL Common Service Centre / BBPS. -DGVCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your DGVCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dgvcl.com or nearest PGVCL Common Service Centre / BBPS. -DGVCL`,
   },
   {
     test: (n) => /mgvcl|madhya gujarat vij/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at bil.mgvcl.com or nearest CSC / BBPS. -MGVCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your MGVCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at bil.mgvcl.com or nearest CSC / BBPS. -MGVCL`,
   },
   {
     test: (n) => /pgvcl|paschim gujarat vij/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at pgvcl.com or nearest Common Service Centre / BBPS. -PGVCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your PGVCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at pgvcl.com or nearest Common Service Centre / BBPS. -PGVCL`,
   },
   {
     test: (n) => /ugvcl|uttar gujarat vij/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at ugvcl.com or BBPS / nearest CSC. -UGVCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your UGVCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at ugvcl.com or BBPS / nearest CSC. -UGVCL`,
   },
 
   // Punjab — 12-digit account no
   {
     test: (n) => /pspcl|punjab state power/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, Your ${billerName} electricity bill for A/C No. ${identifier} for ${month} is Rs. ${amount}/-. Last date of payment is ${dueDate}. Pay at pspcl.in or nearest PSPCL SDO office / BBPS to avoid disconnection. -PSPCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Your PSPCL electricity bill for A/C No. ${identifier} for ${month} is Rs. ${amount}/-. Last date of payment is ${dueDate}. Pay at pspcl.in or nearest PSPCL SDO office / BBPS to avoid disconnection. -PSPCL`,
   },
 
   // West Bengal — CESC 11-digit CA no
   {
     test: (n) => /cesc\b|cesc limited/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName} bill for CA No. ${identifier} for ${month} is Rs. ${amount}/-. Please pay by ${dueDate} at cesc.co.in, CESC app, or any designated Kolkata bank branch. -CESC`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `CESC bill for CA No. ${identifier} for ${month} is Rs. ${amount}/-. Please pay by ${dueDate} at cesc.co.in, CESC app, or any designated Kolkata bank branch. -CESC`,
   },
 
   // Haryana — DHBVN / UHBVN, 12-digit account no
   {
     test: (n) => /dhbvn|dakshin haryana bijli/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for A/C No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at dhbvn.org.in or BBPS to avoid load reduction / disconnection. -DHBVN`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, DHBVN electricity bill for A/C No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at dhbvn.org.in or BBPS to avoid load reduction / disconnection. -DHBVN`,
   },
   {
     test: (n) => /uhbvn|uttar haryana bijli/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for A/C No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at uhbvn.org.in or BBPS to avoid disconnection. -UHBVN`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, UHBVN electricity bill for A/C No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at uhbvn.org.in or BBPS to avoid disconnection. -UHBVN`,
   },
 
   // Rajasthan — K. No. (K + 12 digits)
   {
     test: (n) => /jvvnl|jaipur vidyut/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for K.No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at jaipurdiscom.com or energy.rajasthan.gov.in / BBPS. -JVVNL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your JVVNL electricity bill for K.No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at jaipurdiscom.com or energy.rajasthan.gov.in / BBPS. -JVVNL`,
   },
   {
     test: (n) => /avvnl|ajmer vidyut/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for K.No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at avvnl.com or energy.rajasthan.gov.in / BBPS. -AVVNL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your AVVNL electricity bill for K.No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at avvnl.com or energy.rajasthan.gov.in / BBPS. -AVVNL`,
   },
   {
     test: (n) => /jdvvnl|jodhpur vidyut/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for K.No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at jdvvnl.com or energy.rajasthan.gov.in / BBPS. -JDVVNL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your JDVVNL electricity bill for K.No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at jdvvnl.com or energy.rajasthan.gov.in / BBPS. -JDVVNL`,
   },
 
   // Jharkhand — 12-digit consumer no
   {
     test: (n) => /jbvnl|jharkhand bijli/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Last payment date: ${dueDate}. Pay at jbvnl.co.in or BBPS / CSC. -JBVNL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, JBVNL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Last payment date: ${dueDate}. Pay at jbvnl.co.in or BBPS / CSC. -JBVNL`,
   },
   {
     test: (n) => /jamshedpur utilities|jusco\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName} bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay via juscoservices.com or BBPS. -JUSCO`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `JUSCO bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay via juscoservices.com or BBPS. -JUSCO`,
   },
 
   // Telangana — 10-digit SC no
   {
     test: (n) => /southern power distribution.*telangana|tsspdcl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, Your ${billerName} bill for SC No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tssouthernpower.com or call 1912 / BBPS. -TSSPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Your TSSPDCL bill for SC No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tssouthernpower.com or call 1912 / BBPS. -TSSPDCL`,
   },
   {
     test: (n) => /northern power distribution.*telangana|tsnpdcl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, Your ${billerName} bill for SC No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tsnpdcl.in or call 1912 / BBPS. -TSNPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Your TSNPDCL bill for SC No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tsnpdcl.in or call 1912 / BBPS. -TSNPDCL`,
   },
 
   // Andhra Pradesh — 10-digit IVRS no
   {
     test: (n) => /andhra pradesh central power|apcpdcl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for IVRS No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apcpdcl.in or nearest MeeSeva / BBPS. -APCPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, APCPDCL electricity bill for IVRS No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apcpdcl.in or nearest MeeSeva / BBPS. -APCPDCL`,
   },
 
   // Bihar — 11-digit CA no
   {
     test: (n) => /north bihar power|nbpdcl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for CA No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at nbpdcl.co.in or BBPS / CSC. -NBPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your NBPDCL electricity bill for CA No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at nbpdcl.co.in or BBPS / CSC. -NBPDCL`,
   },
   {
     test: (n) => /south bihar power|sbpdcl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for CA No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at sbpdcl.co.in or BBPS / CSC. -SBPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your SBPDCL electricity bill for CA No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at sbpdcl.co.in or BBPS / CSC. -SBPDCL`,
   },
 
   // Madhya Pradesh — 11-digit consumer no
   {
     test: (n) => /mp madhya kshetra/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mpcz.co.in or BBPS / nearest collection centre. -MPCZ`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your MPCZ electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mpcz.co.in or BBPS / nearest collection centre. -MPCZ`,
   },
   {
     test: (n) => /mp poorv kshetra/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mpez.co.in or BBPS / nearest collection centre. -MPEZ`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your MPEZ electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mpez.co.in or BBPS / nearest collection centre. -MPEZ`,
   },
   {
     test: (n) => /mp paschim kshetra/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mppkvvcl.co.in or BBPS. -MPPKVVCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your MPPKVVCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mppkvvcl.co.in or BBPS. -MPPKVVCL`,
   },
 
   // Torrent Power — prompt pay concession phrasing (specific regions before generic)
   {
     test: (n) => /torrent power surat/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Rs. ${amount}/- is due for ${billerName} Consumer No. ${identifier} against ${month}. Due: ${dueDate}. Pay at torrentpower.com to avail prompt payment concession. -Torrent Power Surat`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Rs. ${amount}/- is due for Torrent Power Surat Consumer No. ${identifier} against ${month}. Due: ${dueDate}. Pay at torrentpower.com to avail prompt payment concession. -Torrent Power Surat`,
   },
   {
     test: (n) => /torrent power bhiwandi/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Rs. ${amount}/- is due for ${billerName} Consumer No. ${identifier} against ${month}. Due: ${dueDate}. Pay at torrentpower.com to avail prompt payment concession. -Torrent Power Bhiwandi`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Rs. ${amount}/- is due for Torrent Power Bhiwandi Consumer No. ${identifier} against ${month}. Due: ${dueDate}. Pay at torrentpower.com to avail prompt payment concession. -Torrent Power Bhiwandi`,
   },
   {
     test: (n) => /torrent power/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month, portal }) =>
-      `Rs. ${amount}/- is due for ${billerName} Consumer No. ${identifier} against ${month}. Due: ${dueDate}.${portal ? ` Pay at ${portal}` : ' Pay at torrentpower.com'} to avail prompt payment concession. -Torrent Power`,
+    buildSms: ({ identifier, amount, dueDate, month, portal }) =>
+      `Rs. ${amount}/- is due for Torrent Power Consumer No. ${identifier} against ${month}. Due: ${dueDate}.${portal ? ` Pay at ${portal}` : ' Pay at torrentpower.com'} to avail prompt payment concession. -Torrent Power`,
   },
   {
     test: (n) => /adani electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, portal }) =>
-      `${billerName} bill for Acct No. ${identifier} is Rs. ${amount}/-. Due: ${dueDate}.${portal ? ` Pay via ${portal}` : ' Pay via adanielectricity.com'} to avoid disconnection. -Adani Electricity`,
+    buildSms: ({ identifier, amount, dueDate, portal }) =>
+      `Adani Electricity bill for Acct No. ${identifier} is Rs. ${amount}/-. Due: ${dueDate}.${portal ? ` Pay via ${portal}` : ' Pay via adanielectricity.com'} to avoid disconnection. -Adani Electricity`,
   },
   {
     test: (n) => /tata power|tpddl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month, portal }) =>
-      `Your ${billerName} bill for CA No ${identifier} for ${month} is Rs. ${amount}/-. Pls pay by Due Dt ${dueDate}${portal ? ` via ${portal}` : ' via tatapower.com'} to avoid DP Surcharge. -Tata Power`,
+    buildSms: ({ identifier, amount, dueDate, month, portal }) =>
+      `Your Tata Power bill for CA No ${identifier} for ${month} is Rs. ${amount}/-. Pls pay by Due Dt ${dueDate}${portal ? ` via ${portal}` : ' via tatapower.com'} to avoid DP Surcharge. -Tata Power`,
   },
   {
     test: (n) => /bses/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Rs. ${amount}/- is due against ${billerName} CA No. ${identifier} for ${month}. Due Date: ${dueDate}. Pay via bsesdelhi.com or BBPS. Late Payment Surcharge applicable post due date. -BSES`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Rs. ${amount}/- is due against BSES CA No. ${identifier} for ${month}. Due Date: ${dueDate}. Pay via bsesdelhi.com or BBPS. Late Payment Surcharge applicable post due date. -BSES`,
   },
   {
     test: (n) => /ndmc|new delhi municipal council.*electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName} bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at ndmc.gov.in or via NDMC 311 App / BBPS. -NDMC`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `NDMC bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay online at ndmc.gov.in or via NDMC 311 App / BBPS. -NDMC`,
   },
 
   // West Bengal Electricity (WBSEDCL) — Consumer ID WB + 9 digits
   {
     test: (n) => /wbsedcl|west bengal.*electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, your ${billerName} electricity bill for Consumer ID ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at wbsedcl.in, Jibika kiosks, or BBPS to avoid disconnection. -WBSEDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, your WBSEDCL electricity bill for Consumer ID ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at wbsedcl.in, Jibika kiosks, or BBPS to avoid disconnection. -WBSEDCL`,
   },
   {
     test: (n) => /durgapur projects/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dpl.org.in or BBPS. -DPL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `DPL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dpl.org.in or BBPS. -DPL`,
   },
 
   // BEST Mumbai — 6-digit Consumer No.
   {
     test: (n) => /best\b.*mumbai|brihanmumbai electric/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at bestundertaking.com or nearest BEST cash office / BBPS. -BEST`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your BEST electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at bestundertaking.com or nearest BEST cash office / BBPS. -BEST`,
   },
 
   // Andhra Pradesh remaining boards — IVRS No.
   {
     test: (n) => /apepdcl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for IVRS No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apepdcl.in or nearest AP Seva / BBPS. -APEPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, APEPDCL electricity bill for IVRS No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apepdcl.in or nearest AP Seva / BBPS. -APEPDCL`,
   },
   {
     test: (n) => /apspdcl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for IVRS No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apspdcl.in or nearest AP Seva / BBPS. -APSPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, APSPDCL electricity bill for IVRS No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apspdcl.in or nearest AP Seva / BBPS. -APSPDCL`,
   },
 
   // Assam Power Distribution
   {
     test: (n) => /assam power|apdcl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apdcl.org or BBPS / CSC to avoid disconnection. -APDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, APDCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apdcl.org or BBPS / CSC to avoid disconnection. -APDCL`,
   },
 
   // Chhattisgarh State Power
   {
     test: (n) => /chhattisgarh.*power|cspdcl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at cspdcl.co.in or nearest BBPS / CSC outlet. -CSPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, CSPDCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at cspdcl.co.in or nearest BBPS / CSC outlet. -CSPDCL`,
   },
 
   // Chandigarh Electricity
   {
     test: (n) => /electricity.*chandigarh|chandigarh.*electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at chdpr.gov.in or BBPS. -Chandigarh Electricity`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Chandigarh Electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at chdpr.gov.in or BBPS. -Chandigarh Electricity`,
   },
 
   // Himachal Pradesh State Electricity Board
   {
     test: (n) => /himachal.*electricity|hpseb|hpsebl/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at hpseb.in or nearest HPSEB collection centre / BBPS. -HPSEB`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, HPSEB electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at hpseb.in or nearest HPSEB collection centre / BBPS. -HPSEB`,
   },
 
   // Uttarakhand Power Corporation
   {
     test: (n) => /uttarakhand power|upcl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at upcl.org or BBPS / nearest collection centre. -UPCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, UPCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at upcl.org or BBPS / nearest collection centre. -UPCL`,
   },
 
   // Noida Power
   {
     test: (n) => /noida power/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at noidapower.com or via BBPS to avoid late payment surcharge. -NPCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your Noida Power electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at noidapower.com or via BBPS to avoid late payment surcharge. -NPCL`,
   },
 
   // Goa Electricity Department
   {
     test: (n) => /goa.*electricity|electricity.*goa/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at goaelectricity.gov.in or nearest BBPS outlet. -Goa Electricity`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Goa Electricity Department electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at goaelectricity.gov.in or nearest BBPS outlet. -Goa Electricity`,
   },
 
   // Government of Puducherry Electricity Department
   {
     test: (n) => /puducherry.*electricity|electricity.*puducherry/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Service No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at electricity.py.gov.in or nearest BBPS centre. -Puducherry Electricity`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Puducherry Electricity Department bill for Service No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at electricity.py.gov.in or nearest BBPS centre. -Puducherry Electricity`,
   },
 
   // TP Ajmer Distribution Ltd
   {
     test: (n) => /tp.*ajmer|tpadl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tatapower-ddl.com or BBPS. -TPADL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, TPADL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tatapower-ddl.com or BBPS. -TPADL`,
   },
 
   // TP Odisha Distribution companies
   {
     test: (n) => /tp.*central.*odisha|tpcodl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpcodl.in or BBPS / CSC to avoid disconnection. -TPCODL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, TPCODL electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpcodl.in or BBPS / CSC to avoid disconnection. -TPCODL`,
   },
   {
     test: (n) => /tp.*northern.*odisha|tpnodl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpnodl.in or BBPS / CSC. -TPNODL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, TPNODL electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpnodl.in or BBPS / CSC. -TPNODL`,
   },
   {
     test: (n) => /tp.*southern.*odisha|tpsodl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpsodl.in or BBPS / CSC. -TPSODL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, TPSODL electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpsodl.in or BBPS / CSC. -TPSODL`,
   },
   {
     test: (n) => /tp.*western.*odisha|tpwodl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpwodl.in or BBPS. -TPWODL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, TPWODL electricity bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tpwodl.in or BBPS. -TPWODL`,
   },
   {
     test: (n) => /tp.*renewables.*microgrid/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Account No. ${identifier} energy bill for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay via tatapower.com or BBPS. -Tata Power`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Tata Power: Account No. ${identifier} energy bill for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay via tatapower.com or BBPS. -Tata Power`,
   },
 
   // Tripura Electricity
   {
     test: (n) => /tripura electricity|tsecl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tsecl.in or nearest BBPS / CSC outlet. -TSECL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, TSECL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tsecl.in or nearest BBPS / CSC outlet. -TSECL`,
   },
 
   // Manipur State Power Distribution
   {
     test: (n) => /manipur.*power|mspdcl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mspdcl.com or nearest BBPS outlet. -MSPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, MSPDCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mspdcl.com or nearest BBPS outlet. -MSPDCL`,
   },
 
   // Meghalaya Power Distribution
   {
     test: (n) => /meghalaya.*power|mepdcl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mepdcl.com or BBPS. -MePDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, MePDCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mepdcl.com or BBPS. -MePDCL`,
   },
 
   // Mizoram Power
   {
     test: (n) => /mizoram.*power|power.*mizoram/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at powerdept.mizoram.gov.in or BBPS. -Mizoram Power`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Mizoram Power Department electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at powerdept.mizoram.gov.in or BBPS. -Mizoram Power`,
   },
 
   // Nagaland Power
   {
     test: (n) => /nagaland.*power|department.*power.*nagaland/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dpnagaland.nic.in or nearest BBPS centre. -Nagaland Power`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Nagaland Power Department electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dpnagaland.nic.in or nearest BBPS centre. -Nagaland Power`,
   },
 
   // Arunachal Pradesh Power
   {
     test: (n) => /arunachal.*power|department.*power.*arunachal/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apseb.in or nearest BBPS outlet. -APSEB`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, APSEB electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at apseb.in or nearest BBPS outlet. -APSEB`,
   },
 
   // Sikkim Power
   {
     test: (n) => /sikkim.*power/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at sikkimpower.org or BBPS. -Sikkim Power`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Sikkim Power electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at sikkimpower.org or BBPS. -Sikkim Power`,
   },
 
   // Jammu Power Distribution Corporation
   {
     test: (n) => /jammu power|jpdcl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at jpdcl.co.in or nearest BBPS / J&K Bank counter. -JPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, JPDCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at jpdcl.co.in or nearest BBPS / J&K Bank counter. -JPDCL`,
   },
 
   // Kashmir Power Distribution Corporation
   {
     test: (n) => /kashmir power|kpdcl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kpdcl.org.in or nearest BBPS / J&K Bank counter. -KPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, KPDCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kpdcl.org.in or nearest BBPS / J&K Bank counter. -KPDCL`,
   },
 
   // Ladakh Power
   {
     test: (n) => /ladakh.*power|lpdd\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at ladakhpower.gov.in or nearest BBPS outlet. -LPDD`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, LPDD electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at ladakhpower.gov.in or nearest BBPS outlet. -LPDD`,
   },
 
   // Lakshadweep Electricity
   {
     test: (n) => /lakshadweep.*electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Please pay at the nearest Electricity Department office or BBPS. -Lakshadweep Electricity`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Lakshadweep Electricity Department bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Please pay at the nearest Electricity Department office or BBPS. -Lakshadweep Electricity`,
   },
 
   // Andaman & Nicobar Islands (ANIIDCO)
   {
     test: (n) => /aniidco|andaman.*nicobar.*integrated/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at aniidco.nic.in or nearest BBPS outlet. -ANIIDCO`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, ANIIDCO electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at aniidco.nic.in or nearest BBPS outlet. -ANIIDCO`,
   },
 
   // Dadra and Nagar Haveli Power
   {
     test: (n) => /dadra.*nagar.*haveli.*power|dnhpdcl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dnhpdcl.gov.in or BBPS. -DNHPDCL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, DNHPDCL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at dnhpdcl.gov.in or BBPS. -DNHPDCL`,
   },
 
   // Rajasthan additional boards
   {
     test: (n) => /bikaner electricity|bkesl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at energy.rajasthan.gov.in or BBPS. -BkESL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your BkESL electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at energy.rajasthan.gov.in or BBPS. -BkESL`,
   },
   {
     test: (n) => /kota electricity|kedl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kedl.in or energy.rajasthan.gov.in / BBPS. -KEDL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Your KEDL electricity bill for Account No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kedl.in or energy.rajasthan.gov.in / BBPS. -KEDL`,
   },
 
   // AEML SEEPZ (Adani, special zone)
   {
     test: (n) => /aeml\b.*seepz|aeml seepz/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at adanielectricity.com or BBPS. -AEML`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `AEML: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at adanielectricity.com or BBPS. -AEML`,
   },
 
   // India Power Corporation
   {
     test: (n) => /india power.*corporation|ipcl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at indiapower.com or BBPS. -India Power`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, India Power electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at indiapower.com or BBPS. -India Power`,
   },
 
   // TTD Electricity
   {
     test: (n) => /ttd.*electricity|tirumala.*tirupati/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tirumala.org or BBPS. -TTD`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `TTD: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tirumala.org or BBPS. -TTD`,
   },
 
   // Specialty / private utilities
   {
     test: (n) => /gift power/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at giftpower.in or BBPS. -Gift Power`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Gift Power: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at giftpower.in or BBPS. -Gift Power`,
   },
   {
     test: (n) => /vaghani energy/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at vaghanienergy.com or BBPS. -Vaghani Energy`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Vaghani Energy: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at vaghanienergy.com or BBPS. -Vaghani Energy`,
   },
   {
     test: (n) => /kinesco power/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kinesco.co.in or BBPS. -Kinesco`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Kinesco: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kinesco.co.in or BBPS. -Kinesco`,
   },
   {
     test: (n) => /tata steel.*uisl|uisl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Contact your local collection centre for payment. -Tata Steel UISL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Tata Steel UISL: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Contact your local collection centre for payment. -Tata Steel UISL`,
   },
   {
     test: (n) => /thrissur.*electricity/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at thrissur.gov.in or KSEB-affiliated counters / BBPS. -Thrissur Corp`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Thrissur Corp electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at thrissur.gov.in or KSEB-affiliated counters / BBPS. -Thrissur Corp`,
   },
   {
     test: (n) => /co.?operative electric.*sircilla/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at the Society office or BBPS. -Sircilla CESS`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Sircilla CESS electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at the Society office or BBPS. -Sircilla CESS`,
   },
   {
     test: (n) => /kanan devan hills/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Contact your estate office or nearest KSEB counter for payment. -KDHP`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `KDHP: Electricity bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Contact your estate office or nearest KSEB counter for payment. -KDHP`,
   },
   {
     test: (n) => /bangalore water supply|bwssb/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} water & sewerage charges for Property No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at bwssb.gov.in or nearest BBPS outlet. -BWSSB`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, BWSSB water & sewerage charges for Property No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at bwssb.gov.in or nearest BBPS outlet. -BWSSB`,
   },
   {
     test: (n) => /delhi jal board/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} water bill for K No. ${identifier} for ${month} is Rs. ${amount}/-. Last date: ${dueDate}. Pay at delhijalboard.nic.in, Jal Sahulat app, or nearest BBPS centre. -DJB`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, Delhi Jal Board water bill for K No. ${identifier} for ${month} is Rs. ${amount}/-. Last date: ${dueDate}. Pay at delhijalboard.nic.in, Jal Sahulat app, or nearest BBPS centre. -DJB`,
   },
   {
     test: (n) => /cmwssb|chennai metro water/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} water charges for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at chennaimetrowater.tn.gov.in or BBPS. -CMWSSB`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, CMWSSB water charges for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at chennaimetrowater.tn.gov.in or BBPS. -CMWSSB`,
   },
   {
     test: (n) => /hmwssb|hyderabad metro water/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} water charges for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at hmwssb.gov.in or BBPS. -HMWSSB`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, HMWSSB water charges for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at hmwssb.gov.in or BBPS. -HMWSSB`,
   },
   {
     test: (n) => /kerala water authority|kwa\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} water bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kwa.kerala.gov.in or BBPS / K-SMART kiosks. -KWA`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, KWA water bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at kwa.kerala.gov.in or BBPS / K-SMART kiosks. -KWA`,
   },
   {
     test: (n) => /mcgm water/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear Consumer, ${billerName} water charges for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at mcgm.gov.in or portal.mcgm.gov.in / BBPS. -MCGM`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Consumer, MCGM water charges for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Pay before ${dueDate} at mcgm.gov.in or portal.mcgm.gov.in / BBPS. -MCGM`,
   },
   {
     test: (n) => /water|water supply|water board|jal/i.test(n),
@@ -840,183 +840,183 @@ const billerSpecificRules: BillerRule[] = [
   // Gas boards
   {
     test: (n) => /indraprastha gas|igl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear IGL Customer, gas bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Pay by ${dueDate} at iglonline.net or IGL mobile app / BBPS. Auto-deduction scheduled if registered. -IGL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Customer, Your Gas Bill for BP No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Last date of payment is ${dueDate}. Pay at www.iglonline.net or IGL Connect app. -IGL`,
   },
   {
     test: (n) => /mahanagar gas|mgl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} gas bill for CA No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mahanagargas.com or BBPS / MGL app. -MGL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear MGL Customer, Your Gas Bill for CA No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Last Date of Payment is ${dueDate}. Pay at mahanagargas.com or use MyMGL app. Helpline: 19131. -MGL`,
   },
   {
     test: (n) => /gujarat gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at gujaratgas.com or BBPS. -Gujarat Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Customer, Your Gujarat Gas Bill for Customer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Last Date of Payment is ${dueDate}. Pay at gujaratgas.com or through BBPS. -Gujarat Gas`,
   },
   {
     test: (n) => /gail gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear GAIL Gas Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at gailgasltd.com or BBPS. -GAIL Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear GAIL Gas Customer, Your Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at gailgasltd.com or BBPS. -GAIL Gas`,
   },
   {
     test: (n) => /adani total gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} gas bill for Customer ID ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at adanitotalgas.in or BBPS / ATG app. -Adani Total Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear ATG Customer, Your Gas Bill for Customer ID ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at adanitotalgas.in or BBPS / ATG app. -Adani Total Gas`,
   },
   {
     test: (n) => /maharashtra natural gas|mngl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mngl.co.in or BBPS / MNGL app. -MNGL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear MNGL Customer, Your Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at mngl.co.in or BBPS / MNGL app. -MNGL`,
   },
   {
     test: (n) => /sabarmati gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at sabarmatigas.com or BBPS. -Sabarmati Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Customer, Your Sabarmati Gas Bill for Customer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Last Date of Payment is ${dueDate}. Pay at sabarmatigas.com or BBPS. -SGL`,
   },
   {
     test: (n) => /torrent gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at torrentgas.com or BBPS to avoid supply disruption. -Torrent Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Customer, Your Torrent Gas Bill for Customer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Last Date of Payment is ${dueDate}. Pay at torrentgas.com or BBPS to avoid supply disruption. -Torrent Gas`,
   },
   {
     test: (n) => /aavantika gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at aavantikagas.com or BBPS. -Aavantika Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Aavantika Gas Customer, Your Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at aavantikagas.com or BBPS. -Aavantika Gas`,
   },
   {
     test: (n) => /assam gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at assamgas.org or BBPS. -Assam Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Assam Gas Customer, Your Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at assamgas.org or BBPS. -Assam Gas`,
   },
   {
     test: (n) => /bengal gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at bengalgas.co.in or BBPS. -Bengal Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Customer, Your Bengal Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at bengalgas.co.in or BBPS. -Bengal Gas`,
   },
   {
     test: (n) => /bhagyanagar gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear ${billerName} Customer, gas bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at bhagyanagargas.com or BBPS / nearest outlet. -BGL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear BGL Customer, Your Gas Bill for BP No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at bhagyanagargas.com or BBPS / nearest outlet. -BGL`,
   },
   {
     test: (n) => /bharat petroleum.*png|bpcl.*png/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Monthly gas invoice for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at bharatgas.com or BBPS. -BPCL PNG`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `BPCL PNG: Monthly gas invoice for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at bharatgas.com or BBPS. -BPCL PNG`,
   },
   {
     test: (n) => /central u\.?p\.? gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at cugasl.com or BBPS. -CUGL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear CUGL Customer, Your Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at cugasl.com or BBPS. -CUGL`,
   },
   {
     test: (n) => /charotar gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at charotargas.co.in or BBPS. -Charotar Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Customer, Your Charotar Gas Bill for Customer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at charotargas.co.in or BBPS. -Charotar Gas`,
   },
   {
     test: (n) => /gail india|gail limited/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at gail.nic.in or BBPS. -GAIL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear GAIL Customer, Your Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at gail.nic.in or BBPS. -GAIL`,
   },
   {
     test: (n) => /goa natural gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at goanaturalgas.com or BBPS. -Goa Natural Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Goa Natural Gas: Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at goanaturalgas.com or BBPS. -GNG`,
   },
   {
     test: (n) => /godavari gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at godavarigas.com or BBPS. -Godavari Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Godavari Gas Customer, Your Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at godavarigas.com or BBPS. -Godavari Gas`,
   },
   {
     test: (n) => /green gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at greengas.net.in or BBPS. -Green Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Customer, Your Green Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at greengas.net.in or BBPS. -Green Gas`,
   },
   {
     test: (n) => /hp oil gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at hpoilgas.com or BBPS. -HP Oil Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `HP Oil Gas: Gas Bill for Customer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at hpoilgas.com or BBPS. -HP Oil Gas`,
   },
   {
     test: (n) => /hpr falcon gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at hprfalcongas.com or BBPS. -HPR Falcon Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `HPR Falcon Gas: Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at hprfalcongas.com or BBPS. -HPR Falcon Gas`,
   },
   {
     test: (n) => /haridwar natural gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at haridwarnaturalgas.com or BBPS. -HNGPL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear HNGPL Customer, Your Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at haridwarnaturalgas.com or BBPS. -HNGPL`,
   },
   {
     test: (n) => /haryana city gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear ${billerName} Customer, gas bill for BP No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at hcgdl.co.in or BBPS. -Haryana City Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear HCGDL Customer, Your Gas Bill for BP No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at hcgdl.co.in or BBPS. -HCGDL`,
   },
   {
     test: (n) => /hindustan petroleum.*piped|hpcl.*piped/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Monthly gas invoice for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at hindustanpetroleum.com or BBPS. -HPCL PNG`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `HPCL PNG: Monthly gas invoice for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at hindustanpetroleum.com or BBPS. -HPCL PNG`,
   },
   {
     test: (n) => /irm energy/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at irmenergy.com or BBPS. -IRM Energy`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `IRM Energy: Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at irmenergy.com or BBPS. -IRM Energy`,
   },
   {
     test: (n) => /indian oil.*piped|iocl.*piped/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Monthly gas invoice for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at iocl.com or BBPS. -IOCL PNG`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `IndianOil PNG: Monthly gas invoice for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at iocl.com or BBPS. -IOCL PNG`,
   },
   {
     test: (n) => /indian oil.?adani gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at ioagpl.com or BBPS. -IO-Adani Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Indian Oil-Adani Gas: Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at ioagpl.com or BBPS. -IO-Adani Gas`,
   },
   {
     test: (n) => /agp cgd|agp city gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at agpcgd.com or BBPS. -AGP Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `AGP Gas: Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at agpcgd.com or BBPS. -AGP Gas`,
   },
   {
     test: (n) => /megha gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at meghagas.com or BBPS. -Megha Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Megha Gas: Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at meghagas.com or BBPS. -Megha Gas`,
   },
   {
     test: (n) => /naveriya gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at naveriyagas.com or BBPS. -Naveriya Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Naveriya Gas: Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at naveriyagas.com or BBPS. -Naveriya Gas`,
   },
   {
     test: (n) => /purba bharati gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at purbabharatigas.co.in or BBPS. -Purba Bharati Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Purba Bharati Gas: Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at purbabharatigas.co.in or BBPS. -Purba Bharati Gas`,
   },
   {
     test: (n) => /rajasthan state gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at rsgl.co.in or BBPS. -RSGL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear RSGL Customer, Your Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at rsgl.co.in or BBPS. -RSGL`,
   },
   {
     test: (n) => /think gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at thinkgas.in or BBPS. -Think Gas`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Think Gas: Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at thinkgas.in or BBPS. -Think Gas`,
   },
   {
     test: (n) => /tripura natural gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Dear ${billerName} Customer, gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tngl.in or nearest BBPS outlet. -TNGL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Tripura Natural Gas Customer, Your Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due Date: ${dueDate}. Pay at tngl.in or nearest BBPS outlet. -TNGL`,
   },
   {
     test: (n) => /unique central piped|ucpgpl\b/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `${billerName}: Gas bill for Consumer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at ucpgpl.com or BBPS. -UCPGPL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `UCPGPL: Gas Bill for Consumer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at ucpgpl.com or BBPS. -UCPGPL`,
   },
   {
     test: (n) => /vadodara gas/i.test(n),
-    buildSms: ({ billerName, identifier, amount, dueDate, month }) =>
-      `Your ${billerName} gas bill for Customer No. ${identifier} for ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at vgl.co.in or BBPS. -VGL`,
+    buildSms: ({ identifier, amount, dueDate, month }) =>
+      `Dear Customer, Your Vadodara Gas Bill for Customer No. ${identifier} for the month of ${month} is Rs. ${amount}/-. Due: ${dueDate}. Pay at vgl.co.in or BBPS. -VGL`,
   },
   {
     test: (n) => /gas|lpg|fuel/i.test(n),
@@ -1569,6 +1569,41 @@ export const buildBillerSpecificSms = ({ category, billerName, state, amount, du
     : `${billerName}: Payment alert for ${idSpec.label} ${identifier}. Amount Rs. ${amount}, due ${dueDate}.`;
 };
 
+const getElectricityBoardCode = (billerName: string): string => {
+  const abbrev = billerName.match(/\(([A-Z]{2,8})\)/);
+  if (abbrev) return abbrev[1];
+  if (/maharashtra state electricity distbn|msedcl/i.test(billerName)) return 'MSEDCL';
+  if (/uppcl/i.test(billerName)) return 'UPPCL';
+  if (/torrent power surat/i.test(billerName)) return 'Torrent Power Surat';
+  if (/torrent power bhiwandi/i.test(billerName)) return 'Torrent Power Bhiwandi';
+  if (/torrent power/i.test(billerName)) return 'Torrent Power';
+  if (/tata power/i.test(billerName)) return 'Tata Power';
+  if (/adani electricity/i.test(billerName)) return 'Adani Electricity';
+  if (/bses\s+rajdhani/i.test(billerName)) return 'BSES Rajdhani';
+  if (/bses\s+yamuna/i.test(billerName)) return 'BSES Yamuna';
+  if (/bses/i.test(billerName)) return 'BSES';
+  if (/cesc\b/i.test(billerName)) return 'CESC';
+  if (/west bengal electricity|wbsedcl/i.test(billerName)) return 'WBSEDCL';
+  if (/durgapur projects/i.test(billerName)) return 'DPL';
+  if (/best.*mumbai|brihanmumbai/i.test(billerName)) return 'BEST';
+  if (/ndmc|new delhi municipal council.*electricity/i.test(billerName)) return 'NDMC';
+  if (/noida power/i.test(billerName)) return 'Noida Power';
+  if (/india power.*corporation/i.test(billerName)) return 'India Power';
+  if (/ttd.*electricity|tirumala.*tirupati/i.test(billerName)) return 'TTD';
+  if (/gift power/i.test(billerName)) return 'Gift Power';
+  if (/vaghani energy/i.test(billerName)) return 'Vaghani Energy';
+  if (/kinesco power/i.test(billerName)) return 'Kinesco';
+  if (/tata steel.*uisl|uisl\b/i.test(billerName)) return 'Tata Steel UISL';
+  if (/thrissur.*electricity/i.test(billerName)) return 'Thrissur Corp';
+  if (/sircilla/i.test(billerName)) return 'Sircilla CESS';
+  if (/kanan devan/i.test(billerName)) return 'KDHP';
+  return billerName
+    .replace(/\s*\(.*?\)/g, '')
+    .replace(/\s*-\s*(Fetch\s+and\s+Pay|Smart\s+Prepaid\s+Meter\s+Recharge|Postpaid\s+and\s+Smart\s+Prepaid\s+Meter\s+Recharge|Rural|Urban)/i, '')
+    .replace(/\s+(Private\s+Limited|Limited|Corporation|Company|Ltd\.?)(\s|$)/gi, ' ')
+    .trim();
+};
+
 export const buildBillerPaidSms = ({ category, billerName, amount, dueDateRaw, identifier }: SmsContext): string => {
   const payDate = fmtDDMMYYYY(dueDateRaw);
   const n = billerName;
@@ -1598,8 +1633,120 @@ export const buildBillerPaidSms = ({ category, billerName, amount, dueDateRaw, i
     return `Payment of Rs. ${amount}/- received for Account No. ${identifier} on ${payDate}. Your broadband service continues. -${ispName}`;
   }
   if ((category || '').toLowerCase() === 'electricity') {
-    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for your prompt payment. -${billerName}`;
+    const boardCode = getElectricityBoardCode(billerName);
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for your prompt payment. -${boardCode}`;
   }
+
+  // Gas billers — biller-specific payment confirmation SMS
+  if (/indraprastha gas|igl\b/i.test(n)) {
+    return `Dear IGL Customer, we have received Rs. ${amount}/- towards your gas bill for BP No. ${identifier} on ${payDate}. Thank you for your prompt payment. For queries call 1800-2101-551 (Toll Free). -IGL`;
+  }
+  if (/mahanagar gas|mgl\b/i.test(n)) {
+    return `Dear MGL Customer, payment of Rs. ${amount}/- for CA No. ${identifier} has been received on ${payDate}. Your account is updated. Thank you for choosing MGL. -MGL`;
+  }
+  if (/gujarat gas/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Customer No. ${identifier} received on ${payDate}. Thank you for choosing Gujarat Gas Limited. -Gujarat Gas`;
+  }
+  if (/gail gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Your GAIL Gas account is updated. Thank you. -GAIL Gas`;
+  }
+  if (/gail india|gail limited/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} has been received on ${payDate}. Thank you for using GAIL India services. -GAIL`;
+  }
+  if (/adani total gas/i.test(n)) {
+    return `Dear ATG Customer, Rs. ${amount}/- received for Customer ID ${identifier} on ${payDate}. Your gas account is updated. Visit adanitotalgas.in for details. -Adani Total Gas`;
+  }
+  if (/maharashtra natural gas|mngl\b/i.test(n)) {
+    return `Dear MNGL Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for using MNGL services. -MNGL`;
+  }
+  if (/sabarmati gas/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Customer No. ${identifier} received on ${payDate}. Thank you for paying your Sabarmati Gas bill. -SGL`;
+  }
+  if (/torrent gas/i.test(n)) {
+    return `Dear Torrent Gas Customer, Rs. ${amount}/- received for Customer No. ${identifier} on ${payDate}. Thank you for your prompt payment. -Torrent Gas`;
+  }
+  if (/aavantika gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Aavantika Gas. -Aavantika Gas`;
+  }
+  if (/assam gas/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for using Assam Gas Company services. -Assam Gas`;
+  }
+  if (/bengal gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for choosing Bengal Gas Company. -Bengal Gas`;
+  }
+  if (/bhagyanagar gas/i.test(n)) {
+    return `Dear BGL Customer, Rs. ${amount}/- received for BP No. ${identifier} on ${payDate}. Your account is updated. Thank you. -BGL`;
+  }
+  if (/bharat petroleum.*png|bpcl.*png/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for paying your BPCL Piped Gas bill. -BPCL PNG`;
+  }
+  if (/central u\.?p\.? gas/i.test(n)) {
+    return `Dear CUGL Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Your account is updated. Thank you. -CUGL`;
+  }
+  if (/charotar gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Customer No. ${identifier} on ${payDate}. Thank you for using Charotar Gas. -Charotar Gas`;
+  }
+  if (/goa natural gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Goa Natural Gas. -GNG`;
+  }
+  if (/godavari gas/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for using Godavari Gas services. -Godavari Gas`;
+  }
+  if (/green gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Your Green Gas account is updated. Thank you. -Green Gas`;
+  }
+  if (/hp oil gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Customer No. ${identifier} on ${payDate}. Thank you for using HP Oil Gas services. -HP Oil Gas`;
+  }
+  if (/hpr falcon gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using HPR Falcon Gas. -HPR Falcon Gas`;
+  }
+  if (/haridwar natural gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Haridwar Natural Gas services. -HNGPL`;
+  }
+  if (/haryana city gas/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for BP No. ${identifier} received on ${payDate}. Thank you for using Haryana City Gas. -HCGDL`;
+  }
+  if (/hindustan petroleum.*piped|hpcl.*piped/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for paying your HPCL Piped Gas bill. -HPCL PNG`;
+  }
+  if (/irm energy/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using IRM Energy. -IRM Energy`;
+  }
+  if (/indian oil.*piped|iocl.*piped/i.test(n)) {
+    return `Dear Customer, payment of Rs. ${amount}/- for Consumer No. ${identifier} received on ${payDate}. Thank you for paying your IndianOil Piped Gas bill. -IOCL PNG`;
+  }
+  if (/indian oil.?adani gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Indian Oil-Adani Gas. -IO-Adani Gas`;
+  }
+  if (/agp cgd|agp city gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using AGP Gas services. -AGP Gas`;
+  }
+  if (/megha gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Megha Gas. -Megha Gas`;
+  }
+  if (/naveriya gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Naveriya Gas. -Naveriya Gas`;
+  }
+  if (/purba bharati gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Purba Bharati Gas. -Purba Bharati Gas`;
+  }
+  if (/rajasthan state gas/i.test(n)) {
+    return `Dear RSGL Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Your account is updated. Thank you. -RSGL`;
+  }
+  if (/think gas/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for choosing Think Gas. -Think Gas`;
+  }
+  if (/tripura natural gas/i.test(n)) {
+    return `Dear Customer, Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using Tripura Natural Gas services. -TNGL`;
+  }
+  if (/unique central piped|ucpgpl\b/i.test(n)) {
+    return `Payment of Rs. ${amount}/- received for Consumer No. ${identifier} on ${payDate}. Thank you for using UCPGPL services. -UCPGPL`;
+  }
+  if (/vadodara gas/i.test(n)) {
+    return `Dear VGL Customer, Rs. ${amount}/- received for Customer No. ${identifier} on ${payDate}. Your account is updated. Thank you. -VGL`;
+  }
+
   return `Payment of Rs. ${amount}/- received for ${identifier} on ${payDate}. Thank you. -${billerName}`;
 };
 
